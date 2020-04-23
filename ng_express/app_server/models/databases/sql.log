@@ -1,0 +1,86 @@
+timestamp: 2020-01-06T11:10:00.796613
+CREATE TABLE "auth_user"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "first_name" CHAR(128),
+    "last_name" CHAR(128),
+    "email" CHAR(512),
+    "password" CHAR(512),
+    "registration_key" CHAR(512),
+    "reset_password_key" CHAR(512),
+    "registration_id" CHAR(512)
+);
+success!
+timestamp: 2020-01-06T11:10:00.970221
+CREATE TABLE "auth_group"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "role" CHAR(512),
+    "description" TEXT
+);
+success!
+timestamp: 2020-01-06T11:10:01.083241
+CREATE TABLE "auth_membership"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2020-01-06T11:10:01.235590
+CREATE TABLE "auth_permission"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  ,
+    "name" CHAR(512),
+    "table_name" CHAR(512),
+    "record_id" INTEGER
+);
+success!
+timestamp: 2020-01-06T11:10:01.368880
+CREATE TABLE "auth_event"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "time_stamp" TIMESTAMP,
+    "client_ip" CHAR(512),
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "origin" CHAR(512),
+    "description" TEXT
+);
+success!
+timestamp: 2020-01-06T11:10:01.477002
+CREATE TABLE "auth_cas"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "created_on" TIMESTAMP,
+    "service" CHAR(512),
+    "ticket" CHAR(512),
+    "renew" CHAR(1)
+);
+success!
+timestamp: 2020-01-06T11:10:01.584766
+CREATE TABLE "doc_type"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    Type CHAR(256) UNIQUE
+);
+success!
+timestamp: 2020-01-06T11:10:01.708828
+CREATE TABLE "doc_shelf"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    Shelf CHAR(256) UNIQUE
+);
+success!
+timestamp: 2020-01-06T11:10:01.849205
+CREATE TABLE "doc_author"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    Author CHAR(256) NOT NULL DEFAULT '?' UNIQUE
+);
+success!
+timestamp: 2020-01-06T11:10:01.949497
+CREATE TABLE "doc"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    Favorite CHAR(1),
+    Document CHAR(256) NOT NULL,
+    Hex CHAR(256),
+    "author" INTEGER REFERENCES "doc_author" ("id") ON DELETE CASCADE  ,
+    "type" INTEGER REFERENCES "doc_type" ("id") ON DELETE CASCADE  ,
+    "shelf" INTEGER REFERENCES "doc_shelf" ("id") ON DELETE CASCADE  ,
+    Keywords TEXT,
+    Trash CHAR(1)
+);
+success!

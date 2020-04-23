@@ -1,0 +1,12 @@
+doctype html
+html(ng-app="myHello")
+  head
+    title= title
+    script(src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular.js")
+    script.
+        angular.module('myHello',[]);
+        angular.module('myHello').controller('myController', 
+            ['$scope',function($scope){$scope.myInput = "your name?";}]);
+    
+  body(ng-controller="myController")
+    block content
