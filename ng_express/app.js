@@ -4,6 +4,8 @@ var path         = require('path');
 var cookieParser = require('cookie-parser');
 var logger       = require('morgan');
 var db           = require('./app_server/models/db.js');
+const request = require('request');
+
 
 var app = express();
 
@@ -11,12 +13,14 @@ var app = express();
 var indexRouter = require('./routes/index.js');
 var apiRouter   = require('./app_api/routes.js');
 
+// server side request handling 
 app.use('/',        indexRouter);
-app.use("/edms",    express.static(path.join(__dirname, 'public')));
 app.use('/api',     apiRouter);
-app.use("/js",      express.static(__dirname + "/public/js"));
-app.use("/css",     express.static(__dirname + "/public/css"));
-// app.use("/express", express.static(__dirname + "/public/angular"));
+// client side SPA files
+app.use("/",        express.static(__dirname + "/public"));
+app.use("/edms",    express.static(__dirname + "/app_client"));
+app.use("/js",      express.static(__dirname + "/app_client/js"));
+app.use("/css",     express.static(__dirname + "/app_client/css"));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
