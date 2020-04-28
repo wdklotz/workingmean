@@ -36,7 +36,7 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
 
     $scope.gridOptions1.data = data;
     $scope.gridOptions1.paginationPageSizes = calculatePageSizes(data);
-    console.log("$scope.gridOptions1.paginationPageSizes= ",$scope.gridOptions1.paginationPageSizes);
+    // console.log("$scope.gridOptions1.paginationPageSizes= ",$scope.gridOptions1.paginationPageSizes);
   });
 
   $http.get('http://127.0.0.1:3000/api/lib')
