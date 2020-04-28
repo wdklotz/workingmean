@@ -18,7 +18,7 @@ const documents = function(req,res) {      // http://127.0.0.1:3000/api/lib
         }
         let content = [];
         const from = 100;
-        const anz = 100;
+        const anz  = 100;
         for (let i=0; i<=(anz-1); i++) {
             content[i]=rows[i+from];
         }

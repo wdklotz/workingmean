@@ -7,8 +7,8 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
     useCustomPagination: true,
     columnDefs: [
       { name: 'Document', enableSorting: false },
-      { name: 'author', enableSorting: false },
-      { name: 'type', enableSorting: false }
+      { name: 'Keywords', enableSorting: false }
+      // { name: 'type', enableSorting: false }
     ]
   };
 
@@ -17,9 +17,11 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
     useCustomPagination: true,
     useExternalPagination : true,
     columnDefs: [
+      { name: 'id', enableSorting: false },
       { name: 'Document', enableSorting: false },
       { name: 'author', enableSorting: false },
-      { name: 'type', enableSorting: false }
+      { name: 'type', enableSorting: false },
+      { name: 'shelf', enableSorting: false }
     ],
     onRegisterApi: function(gridApi) {
       gridApi.pagination.on.paginationChanged($scope, function (pageNumber, pageSize) {
@@ -46,24 +48,6 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
     $scope.gridOptions2.paginationPageSizes = calculatePageSizes(data);
     $scope.gridOptions2.data = getPage($scope.grid2data, 1);
   });
-
-  // $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/100_ASC.json')
-  // .then(function (response) {
-    // var data = response.data;
-
-    // $scope.gridOptions1.data = data;
-    // $scope.gridOptions1.paginationPageSizes = calculatePageSizes(data);
-  // });
-
-  // $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/100.json')
-  // .then(function (response) {
-    // var data = response.data;
-
-    // $scope.grid2data = data;
-    // $scope.gridOptions2.totalItems = 0;//data.length;
-    // $scope.gridOptions2.paginationPageSizes = calculatePageSizes(data);
-    // $scope.gridOptions2.data = getPage($scope.grid2data, 1);
-  // });
 
   function calculatePageSizes(data) {
     var initials = [];
