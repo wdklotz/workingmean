@@ -1,6 +1,6 @@
 angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
 
-.controller('MainCtrl', ['$scope', '$http', 'uiGridConstants', function($scope, $http, uiGridConstants) {  
+.controller('ng-appCtrl', ['$scope', '$http', 'uiGridConstants', function($scope, $http, uiGridConstants) {  
   $scope.gridOptions1 = {
     paginationPageSizes: null,
     useCustomPagination: true,
