@@ -8,7 +8,7 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
     columnDefs: [
       { name: 'Document', enableSorting: false },
       { name: 'Keywords', enableSorting: false }
-      // { name: 'type', enableSorting: false }
+      // { name: 'type',  enableSorting: false }
     ]
   };
 
@@ -17,11 +17,11 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
     useCustomPagination: true,
     useExternalPagination : true,
     columnDefs: [
-      { name: 'id', enableSorting: false },
+      { name: 'id',       enableSorting: false },
       { name: 'Document', enableSorting: true },
-      { name: 'author', enableSorting: true },
-      { name: 'type', enableSorting: true },
-      { name: 'shelf', enableSorting: true },
+      { name: 'author',   enableSorting: true },
+      { name: 'type',     enableSorting: true },
+      { name: 'shelf',    enableSorting: true },
       { name: 'Keywords', enableSorting: true }
 
     ],
@@ -32,6 +32,7 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
     }
   };
 
+// call DB-API
   $http.get('http://127.0.0.1:3000/api/lib')
   .then(function (response) {
     var data = response.data;
@@ -41,6 +42,7 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
     // console.log("$scope.gridOptions1.paginationPageSizes= ",$scope.gridOptions1.paginationPageSizes);
   });
 
+// call DB-API
   $http.get('http://127.0.0.1:3000/api/lib')
   .then(function (response) {
     var data = response.data;
@@ -66,8 +68,7 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
     }, []);
   }
 
-  function getPage(data, pageNumber)
-  {
+  function getPage(data, pageNumber) {
     var initials = [];
     return data.reduce(function(pages, row) {
       var initial = row.Document.charAt(0);
