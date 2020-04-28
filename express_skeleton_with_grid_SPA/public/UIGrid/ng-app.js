@@ -18,10 +18,12 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
     useExternalPagination : true,
     columnDefs: [
       { name: 'id', enableSorting: false },
-      { name: 'Document', enableSorting: false },
-      { name: 'author', enableSorting: false },
-      { name: 'type', enableSorting: false },
-      { name: 'shelf', enableSorting: false }
+      { name: 'Document', enableSorting: true },
+      { name: 'author', enableSorting: true },
+      { name: 'type', enableSorting: true },
+      { name: 'shelf', enableSorting: true },
+      { name: 'Keywords', enableSorting: true }
+
     ],
     onRegisterApi: function(gridApi) {
       gridApi.pagination.on.paginationChanged($scope, function (pageNumber, pageSize) {
@@ -85,3 +87,6 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
   }
 }]);
 
+/*
+* for reduce see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
+*/
