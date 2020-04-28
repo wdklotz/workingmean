@@ -1,14 +1,13 @@
 angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
 
 .controller('ng-appCtrl', ['$scope', '$http', 'uiGridConstants', function($scope, $http, uiGridConstants) {  
-
   $scope.gridOptions1 = {
     paginationPageSizes: null,
     useCustomPagination: true,
     columnDefs: [
-      { name: 'Document', enableSorting: false },
-      { name: 'author', enableSorting: false },
-      { name: 'type', enableSorting: false }
+      { name: 'name', enableSorting: false },
+      { name: 'gender', enableSorting: false },
+      { name: 'company', enableSorting: false }
     ]
   };
 
@@ -17,9 +16,9 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
     useCustomPagination: true,
     useExternalPagination : true,
     columnDefs: [
-      { name: 'Document', enableSorting: false },
-      { name: 'author', enableSorting: false },
-      { name: 'type', enableSorting: false }
+      { name: 'name', enableSorting: false },
+      { name: 'gender', enableSorting: false },
+      { name: 'company', enableSorting: false }
     ],
     onRegisterApi: function(gridApi) {
       gridApi.pagination.on.paginationChanged($scope, function (pageNumber, pageSize) {
@@ -28,16 +27,15 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
     }
   };
 
-  $http.get('http://127.0.0.1:3000/api/lib')
+  $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/100_ASC.json')
   .then(function (response) {
     var data = response.data;
 
     $scope.gridOptions1.data = data;
     $scope.gridOptions1.paginationPageSizes = calculatePageSizes(data);
-    console.log("$scope.gridOptions1.paginationPageSizes= ",$scope.gridOptions1.paginationPageSizes);
   });
 
-  $http.get('http://127.0.0.1:3000/api/lib')
+  $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/100.json')
   .then(function (response) {
     var data = response.data;
 
@@ -47,28 +45,11 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
     $scope.gridOptions2.data = getPage($scope.grid2data, 1);
   });
 
-  // $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/100_ASC.json')
-  // .then(function (response) {
-    // var data = response.data;
-
-    // $scope.gridOptions1.data = data;
-    // $scope.gridOptions1.paginationPageSizes = calculatePageSizes(data);
-  // });
-
-  // $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/100.json')
-  // .then(function (response) {
-    // var data = response.data;
-
-    // $scope.grid2data = data;
-    // $scope.gridOptions2.totalItems = 0;//data.length;
-    // $scope.gridOptions2.paginationPageSizes = calculatePageSizes(data);
-    // $scope.gridOptions2.data = getPage($scope.grid2data, 1);
-  // });
 
   function calculatePageSizes(data) {
     var initials = [];
     return data.reduce(function(pageSizes, row) {
-      var initial = row.Document.charAt(0);
+      var initial = row.name.charAt(0);
       var index = initials.indexOf(initial);
       if(index < 0)
       {
@@ -84,7 +65,7 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
   {
     var initials = [];
     return data.reduce(function(pages, row) {
-      var initial = row.Document.charAt(0);
+      var initial = row.name.charAt(0);
 
       if(!pages[initial]) pages[initial] = [];
       pages[initial].push(row);
