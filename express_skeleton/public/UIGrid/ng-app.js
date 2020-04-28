@@ -1,12 +1,6 @@
-var app = angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination']);
+angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
 
-// app.controller('MainCtrl', ['$scope', '$http', 'uiGridConstants', function($scope, $http, uiGridConstants) {  []?????
-// app.controller('MainCtrl', function($scope, $http) {   // same as above
-    
-// function myController($scope, $http) {j
-let myController = function ($scope, $http) {     // same as above
-// let myController = new function ($scope, $http) {     // same as above ? no! why?
-
+.controller('MainCtrl', ['$scope', '$http', 'uiGridConstants', function($scope, $http, uiGridConstants) {  
   $scope.gridOptions1 = {
     paginationPageSizes: null,
     useCustomPagination: true,
@@ -86,7 +80,5 @@ let myController = function ($scope, $http) {     // same as above
 
     }, {})[initials[pageNumber - 1]] || [];
   }
-};
-// app.controller('MainCtrl',['$scope', '$http', myController]);  // []????
-app.controller('MainCtrl', myController);   // same as above
+}]);
 
