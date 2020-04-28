@@ -1,6 +1,7 @@
 <!doctype html>
 <html ng-app="app">
   <head>
+    <base href="/" />
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular-touch.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular-animate.js"></script>
@@ -13,14 +14,11 @@
     <!-- <script src="http://ui-grid.info/docs/grunt-scripts/excel-builder.dist.js"></script> -->
     <script src="http://ui-grid.info/release/ui-grid.js"></script>
     <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css">
-    <link rel="stylesheet" href="main.css" type="text/css">
+    <link rel="stylesheet" href="./styles.css" type="text/css">
   </head>
   
     <body>
-    <div ng-controller="MainCtrl">
-        <div ui-grid="gridOptions1" ui-grid-pagination class="grid"></div>
-        <div ui-grid="gridOptions2" ui-grid-pagination class="grid"></div>
-    </div>
-    <script src="app.js"></script>
+    <div ng-view id="main"></div>
+    <script src="./app.js"></script>
     </body>
 </html>

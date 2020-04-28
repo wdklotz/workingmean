@@ -1,26 +1,18 @@
-<!doctype html>
-<html ng-app="ng-app">
-  <head>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular-touch.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular-animate.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular-aria.js"></script>
-    <!-- <script src="http://ui-grid.info/docs/grunt-scripts/csv.js"></script> -->
-    <!-- <script src="http://ui-grid.info/docs/grunt-scripts/pdfmake.js"></script> -->
-    <!-- <script src="http://ui-grid.info/docs/grunt-scripts/vfs_fonts.js"></script> -->
-    <!-- <script src="http://ui-grid.info/docs/grunt-scripts/lodash.min.js"></script> -->
-    <!-- <script src="http://ui-grid.info/docs/grunt-scripts/jszip.min.js"></script> -->
-    <!-- <script src="http://ui-grid.info/docs/grunt-scripts/excel-builder.dist.js"></script> -->
-    <script src="http://ui-grid.info/release/ui-grid.js"></script>
-    <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css">
-    <link rel="stylesheet" href="/css/edms.css" type="text/css">
-  </head>
-  
-    <body>
-    <div ng-controller="MainCtrl">
-        <div ui-grid="gridOptions1" ui-grid-pagination class="grid"></div>
-        <!-- <div ui-grid="gridOptions2" ui-grid-pagination class="grid"></div> -->
-    </div>
-    <script src="/js/edms.js"></script>
-    </body>
+<!DOCTYPE html>
+<html ng-app="myHello">
+<head>
+    <!-- <base href="/" /> -->
+    <meta charset="utf-8" />
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script> -->
+</head>
+
+<body ng-controller="myController">
+<input type="text" ng-model="myInput">
+<h1>Hello <span>{{ myInput }}</span></h1>
+
+<script src="lib/angular/angular.js"></script>
+<script src="lib/angular-route/angular-route.js"></script>
+<script src="myHello.js"></script>
+</body>
+
 </html>
