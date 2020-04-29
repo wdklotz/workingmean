@@ -3,7 +3,6 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.re
 .controller('ng-appCtrl', ['$scope', '$http', 'uiGridConstants', function($scope, $http, uiGridConstants) {  
 
   $scope.grid1Options = {
-    paginationPageSizes: null,
     useCustomPagination: false,
     useExternalPagination : false,
     enableFiltering: true,
@@ -27,12 +26,7 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.re
     var data = response.data;
     // console.log("data: ",data);
     // console.log("data.length: ",data.length);
-
     $scope.grid1data = data;
-    // $scope.grid1Options.paginationPageSizes = calculatePageSizes(data);
-    // $scope.grid1Options.paginationPageSizes = 10;
-    // console.log("$scope.grid1Options: ",$scope.grid1Options);
-    // $scope.grid1Options.data = getPage1($scope.grid1data, 1);
     $scope.grid1Options.data = $scope.grid1data;
     });
 /*
