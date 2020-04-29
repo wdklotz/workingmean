@@ -13,11 +13,11 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.re
     enableColumnResizing: true,
     columnDefs: [
       { name: 'id',       enableSorting: true, width: '5%' },
-      { name: 'Document', enableSorting: true, width: '25%' },
+      { name: 'Document', enableSorting: true, width: '25%', cellTooltip: true },
       { name: 'author',   enableSorting: true, width: '10%'  },
       { name: 'type',     enableSorting: true, width: '10%'  },
       { name: 'shelf',    enableSorting: true, width: '10%'  },
-      { name: 'Keywords', enableSorting: true}
+      { name: 'Keywords', enableSorting: true, cellTooltip: true}
     ]};
 
 
