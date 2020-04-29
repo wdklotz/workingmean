@@ -12,13 +12,14 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.re
     enableGridMenu: true,
     enableColumnResizing: true,
     columnDefs: [
-      { name: 'id',       enableSorting: true },
-      { name: 'Document', enableSorting: true },
-      { name: 'author',   enableSorting: true },
-      { name: 'type',     enableSorting: true },
-      { name: 'shelf',    enableSorting: true },
-      { name: 'Keywords', enableSorting: true }
+      { name: 'id',       enableSorting: true, width: '5%' },
+      { name: 'Document', enableSorting: true, width: '25%' },
+      { name: 'author',   enableSorting: true, width: '10%'  },
+      { name: 'type',     enableSorting: true, width: '10%'  },
+      { name: 'shelf',    enableSorting: true, width: '10%'  },
+      { name: 'Keywords', enableSorting: true}
     ]};
+
 
 // call DB-API
   $http.get('http://127.0.0.1:3000/api/lib').then(function (response) {
