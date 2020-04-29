@@ -1,23 +1,46 @@
-angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
+angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns'])
 
 .controller('ng-appCtrl', ['$scope', '$http', 'uiGridConstants', function($scope, $http, uiGridConstants) {  
 
-  $scope.gridOptions1 = {
+  $scope.grid1Options = {
     paginationPageSizes: null,
-    useCustomPagination: true,
+    useCustomPagination: false,
+    useExternalPagination : false,
+    enableFiltering: true,
+    paginationPageSizes: [10, 15, 20, 30, 50, 100],
+    paginationPageSize: 20,
+    enableGridMenu: true,
+    enableColumnResizing: true,
     columnDefs: [
-      { name: 'Document', enableSorting: false },
-      { name: 'Keywords', enableSorting: false }
-      // { name: 'type',  enableSorting: false }
-    ]
-  };
+      { name: 'id',       enableSorting: true },
+      { name: 'Document', enableSorting: true },
+      { name: 'author',   enableSorting: true },
+      { name: 'type',     enableSorting: true },
+      { name: 'shelf',    enableSorting: true },
+      { name: 'Keywords', enableSorting: true }
+    ]};
 
-  $scope.gridOptions2 = {
+// call DB-API
+  $http.get('http://127.0.0.1:3000/api/lib').then(function (response) {
+    console.log('$http response: ',response);
+    var data = response.data;
+    // console.log("data: ",data);
+    // console.log("data.length: ",data.length);
+
+    $scope.grid1data = data;
+    // $scope.grid1Options.paginationPageSizes = calculatePageSizes(data);
+    // $scope.grid1Options.paginationPageSizes = 10;
+    // console.log("$scope.grid1Options: ",$scope.grid1Options);
+    // $scope.grid1Options.data = getPage1($scope.grid1data, 1);
+    $scope.grid1Options.data = $scope.grid1data;
+    });
+/*
+  $scope.grid2Options = {
     paginationPageSizes: null,
     useCustomPagination: true,
     useExternalPagination : true,
     columnDefs: [
-      { name: 'id',       enableSorting: false },
+      { name: 'id',       enableSorting: true },
       { name: 'Document', enableSorting: true },
       { name: 'author',   enableSorting: true },
       { name: 'type',     enableSorting: true },
@@ -27,32 +50,22 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
     ],
     onRegisterApi: function(gridApi) {
       gridApi.pagination.on.paginationChanged($scope, function (pageNumber, pageSize) {
-        $scope.gridOptions2.data = getPage($scope.grid2data, pageNumber);
+        $scope.grid2Options.data = getPage($scope.grid2data, pageNumber);
       });
     }
   };
-
+*/
+/* 
 // call DB-API
-  $http.get('http://127.0.0.1:3000/api/lib')
-  .then(function (response) {
+  $http.get('http://127.0.0.1:3000/api/lib').then(function (response) {
     var data = response.data;
-
-    $scope.gridOptions1.data = data;
-    $scope.gridOptions1.paginationPageSizes = calculatePageSizes(data);
-    // console.log("$scope.gridOptions1.paginationPageSizes= ",$scope.gridOptions1.paginationPageSizes);
-  });
-
-// call DB-API
-  $http.get('http://127.0.0.1:3000/api/lib')
-  .then(function (response) {
-    var data = response.data;
-
     $scope.grid2data = data;
-    $scope.gridOptions2.totalItems = 0;//data.length;
-    $scope.gridOptions2.paginationPageSizes = calculatePageSizes(data);
-    $scope.gridOptions2.data = getPage($scope.grid2data, 1);
+    $scope.grid2Options.totalItems = 0;    //data.length;
+    $scope.grid2Options.paginationPageSizes = calculatePageSizes(data);
+    $scope.grid2Options.data = getPage($scope.grid2data, 1);
   });
-
+*/
+/*
   function calculatePageSizes(data) {
     var initials = [];
     return data.reduce(function(pageSizes, row) {
@@ -67,7 +80,8 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
       return pageSizes;
     }, []);
   }
-
+*/
+/*
   function getPage(data, pageNumber) {
     var initials = [];
     return data.reduce(function(pages, row) {
@@ -86,7 +100,9 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination'])
 
     }, {})[initials[pageNumber - 1]] || [];
   }
+*/
 }]);
+
 
 /*
 * for reduce see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce

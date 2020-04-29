@@ -3,26 +3,30 @@ var {n_log, i_was_here} = require('../../app_helper.js');
 
 const sendJsonResponse = function (res, status, content) {
     // i_was_here("api:sendJsonResponse");
-    n_log("api:sendJsonResponse",content);
+    // n_log("api:sendJsonResponse",content);
     res.status(status);
     res.json(content);
 };
 
 const documents = function(req,res) {      // http://127.0.0.1:3000/api/lib
     const sql = "SELECT * FROM doc";
-    n_log("api:documents",req.baseUrl);
-    n_log("api:documents",sql);
+    // n_log("api:documents",req.baseUrl);
+    // n_log("api:documents",sql);
     db.all(sql, [], (err, rows) => {
         if (err) {
           return console.error(err.message);
+        };
+        if(false) {   // (from...to) limits on table-rows
+            let content = [];
+            const from = 0;
+            const anz  = 20;
+            for (let i=0; i<=(anz-1); i++) {
+                content[i]=rows[i+from];
+                }
+             sendJsonResponse(res,200,content);
+       } else {     // all table-rows
+            sendJsonResponse(res,200,rows);
         }
-        let content = [];
-        const from = 100;
-        const anz  = 100;
-        for (let i=0; i<=(anz-1); i++) {
-            content[i]=rows[i+from];
-        }
-        sendJsonResponse(res,200,content);
     })  
 };
 
