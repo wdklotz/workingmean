@@ -9,7 +9,12 @@ const sendJsonResponse = function (res, status, content) {
 };
 
 const documents = function(req,res) {      // http://127.0.0.1:3000/api/lib
-    const sql = "SELECT * FROM doc";
+
+    const sql = `SELECT d.*, a.Author, t.Type, s.Shelf FROM doc As d
+        INNER JOIN doc_author AS a ON a.id = d.author 
+        INNER JOIN doc_type   AS t ON t.id = d.type 
+        INNER JOIN doc_shelf  AS s ON s.id = d.shelf`;
+    
     // n_log("api:documents",req.baseUrl);
     // n_log("api:documents",sql);
     db.all(sql, [], (err, rows) => {

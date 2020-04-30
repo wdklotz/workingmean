@@ -1,10 +1,11 @@
 .grid {
   width: 1300px;
-  height: 735px;
+  height: 745px;
 }
 .ui-grid-filter-input {
     height: 25px;
 }
+
 .ui-grid {
   border: 2px solid #f1c40f;
   box-sizing: content-box;
@@ -17,6 +18,7 @@
   -ms-transform: translateZ(0);
   transform: translateZ(0);
 }
+
 .ui-grid-vertical-bar {
   position: absolute;
   right: 0;

@@ -13,9 +13,9 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.re
     columnDefs: [
       { name: 'id',       enableSorting: true, width: '5%' },
       { name: 'Document', enableSorting: true, width: '25%', cellTooltip: true },
-      { name: 'author',   enableSorting: true, width: '10%'  },
-      { name: 'type',     enableSorting: true, width: '10%'  },
-      { name: 'shelf',    enableSorting: true, width: '10%'  },
+      { name: 'Author',   enableSorting: true, width: '10%'  },
+      { name: 'Type',     enableSorting: true, width: '10%'  },
+      { name: 'Shelf',    enableSorting: true, width: '10%'  },
       { name: 'Keywords', enableSorting: true, cellTooltip: true}
     ]};
 
