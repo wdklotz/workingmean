@@ -19,6 +19,10 @@
   transform: translateZ(0);
 }
 
+.ui-grid-pager-row-count-picker {
+    padding: 10px 10px;
+}
+
 .ui-grid-vertical-bar {
   position: absolute;
   right: 0;
@@ -654,7 +658,7 @@ border-top-right-radius: 0px;
   width: 1em;
   margin-right: .2em;
   text-align: center;
-  /* opacity: .8; */
+  opacity: .4;
   /* For safety - reset parent styles, that can break glyph codes*/
   font-variant: normal;
   text-transform: none;
@@ -890,5 +894,5 @@ border-top-right-radius: 0px;
 }
 .ui-grid-header,
 .ui-grid-column-menu {
-  color: #faeada;
+  color: #2b2605;
 }
