@@ -1,8 +1,12 @@
-angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns'])
+angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.cellNav'])
 
 .controller('ng-appCtrl', ['$scope', '$http', 'uiGridConstants', function($scope, $http, uiGridConstants) {  
 
   $scope.grid1Options = {
+    enableRowSelection: true,
+    enableSelectAll: true,
+    multiSelect: true,
+    selectionRowHeaderWidth: 35,
     useCustomPagination: false,
     useExternalPagination : false,
     enableFiltering: true,
@@ -19,6 +23,15 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.re
       { name: 'Keywords', enableSorting: true, cellTooltip: true}
     ]};
 
+    $scope.grid1Options.onRegisterApi = function(gridApi){
+      //set gridApi on scope
+      $scope.gridApi = gridApi;
+      gridApi.selection.on.rowSelectionChanged($scope,function(row){
+        var msg = 'row changed ';
+        console.log(msg,row);
+        console.log(gridApi.selection.getSelectedRows());
+      });
+    };
 
 // call DB-API
   $http.get('http://127.0.0.1:3000/api/lib').then(function (response) {

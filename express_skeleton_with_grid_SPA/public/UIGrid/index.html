@@ -15,13 +15,14 @@
 
     <!-- <script src="http://ui-grid.info/release/ui-grid.js"></script> -->
     <script src="./release/ui-grid.min.js"></script>
-    <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css">
+    <!-- <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.8.3/ui-grid.min.css" integrity="sha256-iXhoZl57FEps+MAc6BpyQgLIQF07nIliPm9nYCudmPc=" crossorigin="anonymous" />    
     <link rel="stylesheet" href="./ng-styles.css" type="text/css">
   </head>
   
     <body>
     <div ng-controller="ng-appCtrl">
-        <div ui-grid="grid1Options" ui-grid-pagination ui-grid-resize-columns class="grid"></div>
+        <div ui-grid="grid1Options" ui-grid-pagination ui-grid-resize-columns ui-grid-selection ui-grid-cellnav class="grid"></div>
         <!-- <div ui-grid="grid2Options" ui-grid-pagination ui-grid-resizeColumns class="grid"></div> -->
     </div>
     <script src="./ng-app.js"></script>
