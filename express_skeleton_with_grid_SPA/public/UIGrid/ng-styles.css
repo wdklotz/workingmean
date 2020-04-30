@@ -5,7 +5,14 @@
 .ui-grid-filter-input {
     height: 25px;
 }
-
+.ui-grid-pager-row-count-picker {
+    padding: 10px 10px;
+}
+.ui-grid-header,
+.ui-grid-column-menu {
+  color: #2b2605;
+}
+/* ********* above my modifications *********** */
 .ui-grid {
   border: 2px solid #f1c40f;
   box-sizing: content-box;
@@ -17,10 +24,6 @@
   -o-transform: translateZ(0);
   -ms-transform: translateZ(0);
   transform: translateZ(0);
-}
-
-.ui-grid-pager-row-count-picker {
-    padding: 10px 10px;
 }
 
 .ui-grid-vertical-bar {
@@ -891,8 +894,4 @@ border-top-right-radius: 0px;
 */
 .ui-grid {
   color: #242729;
-}
-.ui-grid-header,
-.ui-grid-column-menu {
-  color: #2b2605;
 }
