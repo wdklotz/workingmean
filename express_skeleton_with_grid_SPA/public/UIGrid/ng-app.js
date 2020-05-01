@@ -1,12 +1,12 @@
-angular.module('ng-app', [
+var myApp = angular.module('ng-app', [
     'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 
-    'ui.bootstrap'])
+    'ui.bootstrap']);
 
-.controller('ng-appCtrl', [
+myApp.controller('ng-appCtrl', [
         '$scope', '$http', 'uiGridConstants', 
         function($scope, $http, uiGridConstants) {  
-
-  $scope.grid1Options = {
+  var self = $scope;
+  self.grid1Options = {
     enableRowSelection: true,
     enableSelectAll: true,
     multiSelect: true,
@@ -29,14 +29,16 @@ angular.module('ng-app', [
       { name: 'Trash',    enableSorting: true, width: 65, displayName: 'tr'}
     ]};
 
-    $scope.grid1Options.onRegisterApi = function(gridApi){
+    self.grid1Options.onRegisterApi = function(gridApi){
       //set gridApi on scope
-      $scope.gridApi = gridApi;
+      self.gridApi = gridApi;
+      /*
       gridApi.selection.on.rowSelectionChanged($scope,function(row){
         var msg = 'row changed ';
         console.log(msg,row);
         console.log(gridApi.selection.getSelectedRows());
       });
+      */
     };
 
 // call DB-API
@@ -45,15 +47,80 @@ angular.module('ng-app', [
     var data = response.data;
     // console.log("data: ",data);
     // console.log("data.length: ",data.length);
-    $scope.grid1data = data;
-    $scope.grid1Options.data = $scope.grid1data;
+    self.grid1data = data;
+    self.grid1Options.data = self.grid1data;
     });
-}])
+}]);
 
-.controller('ButtonsCtrl', function ($scope, $log) {
-/*
-* TODO......
-*/
+myApp.controller('ButtonsCtrl', ['$scope','$uibModal','$document', function ($scope,$uibModal,$document) {
+    /*
+    * TODO......
+    */
+    var self = $scope;
+    var $ctrl = this;
+    $ctrl.items = ['item1', 'item2', 'item3'];
+    $ctrl.animationsEnabled = true;
+    
+    $ctrl.uploadClicked = function () {
+        console.log("uploadClicked");  
+        };
+    $ctrl.viewClicked = function () {
+        console.log("viewClicked");  
+        };
+    $ctrl.editClicked = function (size, parentSelector) {
+        let selectedRows = self.gridApi.selection.getSelectedRows();
+        console.log("editClicked: " + selectedRows.length + ' rows selected');
+
+        let parentElem = parentSelector ? angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined; 
+        
+        var modalInstance = $uibModal.open({
+          animation: $ctrl.animationsEnabled,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          templateUrl: 'myModalContent.html',
+          controller: 'ModalInstanceCtrl',
+          controllerAs: '$ctrl',
+          size: size,
+          appendTo: parentElem,
+          resolve: {
+            items: function () {
+              return $ctrl.items;
+            }
+          }
+        });
+        
+        modalInstance.result.then(function (selectedItem) {
+          $ctrl.selected = selectedItem;
+          console.log(selectedItem);
+        }, function () {
+          console.log('Modal dismissed at: ' + new Date());
+        });
+    };
+    $ctrl.deleteClicked = function () {
+        console.log("deleteClicked");  
+        };
+    $ctrl.favoriteClicked = function () {
+        console.log("favoriteClicked");  
+        };
+    $ctrl.trashClicked = function () {
+        console.log("trashClicked");  
+        };
+}]);
+
+angular.module('ng-app').controller('ModalInstanceCtrl', function ($uibModalInstance, items) {
+  var $ctrl = this;
+  $ctrl.items = items;
+  $ctrl.selected = {
+    item: $ctrl.items[0]
+  };
+
+  $ctrl.ok = function () {
+    $uibModalInstance.close($ctrl.selected.item);
+  };
+
+  $ctrl.cancel = function () {
+    $uibModalInstance.dismiss('cancel');
+  };
 });
 
 /*
