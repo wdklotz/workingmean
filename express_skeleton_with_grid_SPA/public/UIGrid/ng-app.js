@@ -121,7 +121,7 @@ angular.module('ng-app', [
   }
 */
 }])
-.controller('DropdownCtrl', function ($scope, $log) {
+.controller('ButtonsCtrl', function ($scope, $log) {
 /*
       $scope.items = [
         'The first choice!',
