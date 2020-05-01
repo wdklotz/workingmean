@@ -48,98 +48,11 @@ angular.module('ng-app', [
     $scope.grid1data = data;
     $scope.grid1Options.data = $scope.grid1data;
     });
-/*   
-    $scope.editDocument = function () {
-        console.log("editDocument");
-    }
-*/
-/*
-    $scope.grid2Options = {
-    paginationPageSizes: null,
-    useCustomPagination: true,
-    useExternalPagination : true,
-    columnDefs: [
-      { name: 'id',       enableSorting: true },
-      { name: 'Document', enableSorting: true },
-      { name: 'author',   enableSorting: true },
-      { name: 'type',     enableSorting: true },
-      { name: 'shelf',    enableSorting: true },
-      { name: 'Keywords', enableSorting: true }
-
-    ],
-    onRegisterApi: function(gridApi) {
-      gridApi.pagination.on.paginationChanged($scope, function (pageNumber, pageSize) {
-        $scope.grid2Options.data = getPage($scope.grid2data, pageNumber);
-      });
-    }
-  };
-*/
-/* 
-// call DB-API
-  $http.get('http://127.0.0.1:3000/api/lib').then(function (response) {
-    var data = response.data;
-    $scope.grid2data = data;
-    $scope.grid2Options.totalItems = 0;    //data.length;
-    $scope.grid2Options.paginationPageSizes = calculatePageSizes(data);
-    $scope.grid2Options.data = getPage($scope.grid2data, 1);
-  });
-*/
-/*
-  function calculatePageSizes(data) {
-    var initials = [];
-    return data.reduce(function(pageSizes, row) {
-      var initial = row.Document.charAt(0);
-      var index = initials.indexOf(initial);
-      if(index < 0)
-      {
-        index = initials.length;
-        initials.push(initial);
-      }
-      pageSizes[index] = (pageSizes[index] || 0) + 1;
-      return pageSizes;
-    }, []);
-  }
-*/
-/*
-  function getPage(data, pageNumber) {
-    var initials = [];
-    return data.reduce(function(pages, row) {
-      var initial = row.Document.charAt(0);
-
-      if(!pages[initial]) pages[initial] = [];
-      pages[initial].push(row);
-
-      if(initials.indexOf(initial) < 0)
-      {
-        initials.push(initial);
-        initials.sort();
-      }
-
-      return pages;
-
-    }, {})[initials[pageNumber - 1]] || [];
-  }
-*/
 }])
+
 .controller('ButtonsCtrl', function ($scope, $log) {
 /*
-      $scope.items = [
-        'The first choice!',
-        'And another choice for you.',
-        'but wait! A third!'
-      ];
-      $scope.status = {
-        isopen: false
-      };
-      $scope.toggled = function(open) {
-        $log.log('Dropdown is now: ', open);
-      };
-      $scope.toggleDropdown = function($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-        $scope.status.isopen = !$scope.status.isopen;
-      };
-      $scope.appendToEl = angular.element(document.querySelector('#dropdown-long-content'));
+* TODO......
 */
 });
 
