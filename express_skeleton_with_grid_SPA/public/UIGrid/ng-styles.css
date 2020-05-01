@@ -1,12 +1,12 @@
 .grid {
   width: 1300px;
-  height: 745px;
+  height: 729px;
 }
 .ui-grid-filter-input {
     height: 25px;
 }
 .ui-grid-pager-row-count-picker {
-    padding: 10px 10px;
+    padding: 5px 10px;
 }
 .ui-grid-header,
 .ui-grid-column-menu {

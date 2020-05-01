@@ -1,6 +1,10 @@
-angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.cellNav'])
+angular.module('ng-app', [
+    'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 
+    'ui.bootstrap'])
 
-.controller('ng-appCtrl', ['$scope', '$http', 'uiGridConstants', function($scope, $http, uiGridConstants) {  
+.controller('ng-appCtrl', [
+        '$scope', '$http', 'uiGridConstants', 
+        function($scope, $http, uiGridConstants) {  
 
   $scope.grid1Options = {
     enableRowSelection: true,
@@ -37,15 +41,20 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.re
 
 // call DB-API
   $http.get('http://127.0.0.1:3000/api/lib').then(function (response) {
-    console.log('$http response: ',response);
+    // console.log('$http response: ',response);
     var data = response.data;
     // console.log("data: ",data);
     // console.log("data.length: ",data.length);
     $scope.grid1data = data;
     $scope.grid1Options.data = $scope.grid1data;
     });
+/*   
+    $scope.editDocument = function () {
+        console.log("editDocument");
+    }
+*/
 /*
-  $scope.grid2Options = {
+    $scope.grid2Options = {
     paginationPageSizes: null,
     useCustomPagination: true,
     useExternalPagination : true,
@@ -111,9 +120,30 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.re
     }, {})[initials[pageNumber - 1]] || [];
   }
 */
-}]);
-
+}])
+.controller('DropdownCtrl', function ($scope, $log) {
+/*
+      $scope.items = [
+        'The first choice!',
+        'And another choice for you.',
+        'but wait! A third!'
+      ];
+      $scope.status = {
+        isopen: false
+      };
+      $scope.toggled = function(open) {
+        $log.log('Dropdown is now: ', open);
+      };
+      $scope.toggleDropdown = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.status.isopen = !$scope.status.isopen;
+      };
+      $scope.appendToEl = angular.element(document.querySelector('#dropdown-long-content'));
+*/
+});
 
 /*
 * for reduce see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
+* for UI Bootstrap see: https://angular-ui.github.io/bootstrap/
 */
