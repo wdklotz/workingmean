@@ -107,7 +107,7 @@ myApp.controller('ButtonsCtrl', ['$scope','$uibModal','$document', function ($sc
         };
 }]);
 
-angular.module('ng-app').controller('ModalInstanceCtrl', function ($uibModalInstance, items) {
+myApp.controller('ModalInstanceCtrl', function ($uibModalInstance, items) {
   var $ctrl = this;
   $ctrl.items = items;
   $ctrl.selected = {

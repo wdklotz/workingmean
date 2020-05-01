@@ -1,67 +1,65 @@
 <!doctype html>
 <html ng-app="ng-app">
-  <head>
-    <!-- Angular -->
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular-touch.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular-animate.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular-aria.js"></script>
+    <head>
+        <!-- Angular -->
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular-touch.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular-animate.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular-aria.js"></script>
 
-    <!-- Bootstrap -->
-    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap -->
+        <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- UI-Grid -->
-    <!-- <script src="http://ui-grid.info/release/ui-grid.js"></script> -->
-    <script src="./release/ui-grid.min.js"></script>
-    <!-- <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css"> -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.8.3/ui-grid.min.css" integrity="sha256-iXhoZl57FEps+MAc6BpyQgLIQF07nIliPm9nYCudmPc=" crossorigin="anonymous" />    
+        <!-- UI-Grid -->
+        <!-- <script src="http://ui-grid.info/release/ui-grid.js"></script> -->
+        <script src="./release/ui-grid.min.js"></script>
+        <!-- <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css"> -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.8.3/ui-grid.min.css" integrity="sha256-iXhoZl57FEps+MAc6BpyQgLIQF07nIliPm9nYCudmPc=" crossorigin="anonymous" />    
 
-    <!-- this App -->
-    <link rel="stylesheet" href="./ng-styles.css" type="text/css">
-  </head>
+        <!-- this App -->
+        <link rel="stylesheet" href="./ng-styles.css" type="text/css">
+    </head>
   
     <body ng-controller="ng-appCtrl">
- 
-    <!-- Action buttons -->
-    <!-- <div ng-controller="ButtonsCtrl"> -->
-    <div ng-controller="ButtonsCtrl as $ctrl" class="modal-demo">
-    &ensp; Documents: 
-    <button type="button" class="btn btn-primary" ng-click="$ctrl.uploadClicked()" ng-model="singleModel"> Upload </button>
-    &emsp; Selection:
-    <button type="button" class="btn btn-primary" ng-click="$ctrl.viewClicked()" ng-model="singleModel"> View </button>
-    
+        <!-- Action buttons -->
+        <div ng-controller="ButtonsCtrl as $ctrl" class="modal-demo">
+        &ensp; Documents: 
+        <button type="button" class="btn btn-primary" ng-click="$ctrl.uploadClicked()"   ng-model="singleModel"> Upload </button>
+        &emsp; Selection:
+        <button type="button" class="btn btn-primary" ng-click="$ctrl.viewClicked()"     ng-model="singleModel"> View </button>
+        <button type="button" class="btn btn-primary" ng-click="$ctrl.editClicked('lg')" ng-model="singleModel"> Edit </button>
+        <button type="button" class="btn btn-primary" ng-click="$ctrl.deleteClicked()"   ng-model="singleModel"> Delete </button>
+        &emsp; Mark as:
+        <button type="button" class="btn btn-primary" ng-click="$ctrl.favoriteClicked()" ng-model="singleModel"> Favorite </button>
+        <button type="button" class="btn btn-primary" ng-click="$ctrl.trashClicked()"    ng-model="singleModel"> Trash </button>
+        </div>
+       
+        <!-- the Grid -->
+        <div>
+            <div ui-grid="grid1Options" ui-grid-pagination ui-grid-resize-columns ui-grid-selection ui-grid-cellnav class="grid"></div>
+        </div>
+        <!-- <div w3-include-html="./myModalContent.html"></div> -->
+        
+        <!-- modal Doc-Editor-Template -->
+        <script id="myModalContent.html" type="text/ng-template">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">Document Editor</h3>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <ul>
+                    <li ng-repeat="item in $ctrl.items">
+                        <a href="#" ng-click="$event.preventDefault(); $ctrl.selected.item = item">{{ item }}</a>
+                    </li>
+                </ul>
+                Selected: <b>{{ $ctrl.selected.item }}</b>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+                <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+            </div>
+        </script>
 
-    <script type="text/ng-template" id="myModalContent.html">
-        <div class="modal-header">
-            <h3 class="modal-title" id="modal-title">I'm a modal!</h3>
-        </div>
-        <div class="modal-body" id="modal-body">
-            <ul>
-                <li ng-repeat="item in $ctrl.items">
-                    <a href="#" ng-click="$event.preventDefault(); $ctrl.selected.item = item">{{ item }}</a>
-                </li>
-            </ul>
-            Selected: <b>{{ $ctrl.selected.item }}</b>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
-        </div>
-    </script>
-    <button type="button" class="btn btn-primary" ng-click="$ctrl.editClicked()" ng-model="singleModel"> Edit </button>
-    
-    
-    <button type="button" class="btn btn-primary" ng-click="$ctrl.deleteClicked()" ng-model="singleModel"> Delete </button>
-    &emsp; Mark as:
-    <button type="button" class="btn btn-primary" ng-click="$ctrl.favoriteClicked()" ng-model="singleModel"> Favorite </button>
-    <button type="button" class="btn btn-primary" ng-click="$ctrl.trashClicked()" ng-model="singleModel"> Trash </button>
-    </div>
-   
-   <!-- the Grid -->
-    <div>
-        <div ui-grid="grid1Options" ui-grid-pagination ui-grid-resize-columns ui-grid-selection ui-grid-cellnav class="grid"></div>
-    </div>
-    <script src="./ng-app.js"></script>
+        <script src="./ng-app.js"></script>
     </body>
 </html>
