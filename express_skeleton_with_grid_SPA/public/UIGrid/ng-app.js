@@ -20,7 +20,9 @@ angular.module('ng-app', ['ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.re
       { name: 'Author',   enableSorting: true, width: '10%'  },
       { name: 'Type',     enableSorting: true, width: '10%'  },
       { name: 'Shelf',    enableSorting: true, width: '10%'  },
-      { name: 'Keywords', enableSorting: true, cellTooltip: true}
+      { name: 'Keywords', enableSorting: true, cellTooltip: true},
+      { name: 'Favorite', enableSorting: true, width: 63, displayName: 'fav'},
+      { name: 'Trash',    enableSorting: true, width: 65, displayName: 'tr'}
     ]};
 
     $scope.grid1Options.onRegisterApi = function(gridApi){
