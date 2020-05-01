@@ -11,14 +11,6 @@
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- grunt: do I need this here ??-->
-    <!-- <script src="http://ui-grid.info/docs/grunt-scripts/csv.js"></script> -->
-    <!-- <script src="http://ui-grid.info/docs/grunt-scripts/pdfmake.js"></script> -->
-    <!-- <script src="http://ui-grid.info/docs/grunt-scripts/vfs_fonts.js"></script> -->
-    <!-- <script src="http://ui-grid.info/docs/grunt-scripts/lodash.min.js"></script> -->
-    <!-- <script src="http://ui-grid.info/docs/grunt-scripts/jszip.min.js"></script> -->
-    <!-- <script src="http://ui-grid.info/docs/grunt-scripts/excel-builder.dist.js"></script> -->
-
     <!-- UI-Grid -->
     <!-- <script src="http://ui-grid.info/release/ui-grid.js"></script> -->
     <script src="./release/ui-grid.min.js"></script>
@@ -31,28 +23,22 @@
   
     <body ng-controller="ng-appCtrl">
  
-    <!-- Actions button -->
+    <!-- Action buttons -->
     <div ng-controller="ButtonsCtrl">
     &ensp; Documents: 
     <button type="button" class="btn btn-primary" ng-model="singleModel" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0"> Upload </button>
-
     &emsp; Selection:
     <button type="button" class="btn btn-primary" ng-model="singleModel" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0"> View </button>
-
     <button type="button" class="btn btn-primary" ng-model="singleModel" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0"> Edit </button>
-    
     <button type="button" class="btn btn-primary" ng-model="singleModel" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0"> Delete </button>
-    
     &emsp; Mark as:
     <button type="button" class="btn btn-primary" ng-model="singleModel" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0"> Favorite </button>
-
     <button type="button" class="btn btn-primary" ng-model="singleModel" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0"> Trash </button>
     </div>
    
    <!-- the Grid -->
     <div>
         <div ui-grid="grid1Options" ui-grid-pagination ui-grid-resize-columns ui-grid-selection ui-grid-cellnav class="grid"></div>
-        <!-- <div ui-grid="grid2Options" ui-grid-pagination ui-grid-resizeColumns class="grid"></div> -->
     </div>
     <script src="./ng-app.js"></script>
     </body>
