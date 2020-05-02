@@ -125,5 +125,7 @@ myApp.controller('ModalInstanceCtrl', function ($uibModalInstance, items) {
 
 /*
 * for reduce see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
-* for UI Bootstrap see: https://angular-ui.github.io/bootstrap/
+* for ui-bootstrap see: https://angular-ui.github.io/bootstrap/
+* for uibModal see: https://github.com/angular-ui/bootstrap/tree/master/src/modal
+* for <script type="text/ng-template> a.k.a. inlined template see : https://docs.angularjs.org/api/ng/directive/script
 */
