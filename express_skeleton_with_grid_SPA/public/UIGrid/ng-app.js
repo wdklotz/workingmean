@@ -52,7 +52,8 @@ myApp.controller('ng-appCtrl', [
     });
 }]);
 
-myApp.controller('ButtonsCtrl', ['$scope','$uibModal','$document', function ($scope,$uibModal,$document) {
+myApp.controller('ButtonsCtrl', ['$scope','$uibModal','$document', 
+    function ($scope,$uibModal,$document) {
     /*
     * TODO......
     */
