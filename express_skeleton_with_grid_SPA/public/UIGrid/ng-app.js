@@ -52,8 +52,7 @@ myApp.controller('ng-appCtrl', [
     });
 }]);
 
-myApp.controller('ButtonsCtrl', ['$scope','$uibModal','$document', 
-    function ($scope,$uibModal,$document) {
+myApp.controller('ButtonsCtrl', ['$scope','$uibModal','$document', function ($scope,$uibModal,$document) {
     /*
     * TODO......
     */
@@ -68,35 +67,34 @@ myApp.controller('ButtonsCtrl', ['$scope','$uibModal','$document',
     $ctrl.viewClicked = function () {
         console.log("viewClicked");  
         };
-    $ctrl.editClicked = function (size, parentSelector) {
+    $ctrl.editClicked = function (size) {
         let selectedRows = self.gridApi.selection.getSelectedRows();
         console.log("editClicked: " + selectedRows.length + ' rows selected');
-
-        let parentElem = parentSelector ? angular.element($document[0].querySelector('.modal-demo ' + parentSelector)) : undefined; 
         
-        var modalInstance = $uibModal.open({
-          animation: $ctrl.animationsEnabled,
-          ariaLabelledBy: 'modal-title',
-          ariaDescribedBy: 'modal-body',
-          templateUrl: 'myModalContent.html',
-          controller: 'ModalInstanceCtrl',
-          controllerAs: '$ctrl',
-          size: size,
-          appendTo: parentElem,
-          resolve: {
-            items: function () {
-              return $ctrl.items;
-            }
-          }
-        });
+        var modalInstance = $uibModal.open( { animation: $ctrl.animationsEnabled,  // instantiate modal instance ctrl
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: 'modalEditContent.html',
+            controller: 'ModalInstanceCtrl',
+            controllerAs: '$ctrl',
+            size: size,
+            resolve: {
+                items: function () {
+                  return $ctrl.items;
+                  },
+                size: function() {
+                  return size;
+                }
+                }
+            });
         
         modalInstance.result.then(function (selectedItem) {
-          $ctrl.selected = selectedItem;
-          console.log(selectedItem);
-        }, function () {
-          console.log('Modal dismissed at: ' + new Date());
-        });
-    };
+            $ctrl.selected = selectedItem;
+            console.log(selectedItem);
+            }, function () {
+            console.log('Modal dismissed at: ' + new Date());
+            });
+        };
     $ctrl.deleteClicked = function () {
         console.log("deleteClicked");  
         };
@@ -108,17 +106,16 @@ myApp.controller('ButtonsCtrl', ['$scope','$uibModal','$document',
         };
 }]);
 
-myApp.controller('ModalInstanceCtrl', function ($uibModalInstance, items) {
+myApp.controller('ModalInstanceCtrl', function ($uibModalInstance, items, size) {
   var $ctrl = this;
+  console.log(items, size);
   $ctrl.items = items;
   $ctrl.selected = {
     item: $ctrl.items[0]
   };
-
   $ctrl.ok = function () {
     $uibModalInstance.close($ctrl.selected.item);
   };
-
   $ctrl.cancel = function () {
     $uibModalInstance.dismiss('cancel');
   };

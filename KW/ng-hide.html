@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>
+AngularJs show, hide div elements on click example
+</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script>
+var app = angular.module("AngularshowhideApp", []);
+app.controller('showhidectrl', function ($scope) {
+$scope.showval = true;
+$scope.hideval = false;
+$scope.isShowHide = function (param) {
+if (param == "show") {
+$scope.showval = true;
+$scope.hideval = true;
+}
+else if (param == "hide") {
+$scope.showval = false;
+$scope.hideval = false;
+}
+else {
+$scope.showval = true;
+$scope.hideval = false;
+}
+}
+});
+</script>
+</head>
+<body ng-app="AngularshowhideApp">
+<h2>AngularJs Show, Hide Div Elements on Click Example</h2>
+<div ng-controller="showhidectrl">
+Enter Name to Display :
+<input type="button" ng-click="isShowHide('show')" value="Show Div"> 
+<input type="button" ng-click="isShowHide('hide')" value="Hide Div">
+<br />
+<!--Show Div Based on showval-->
+<div ng-show="showval">Show Div: I will Appear on Show Click</div><br />
+<!--Hide Div Based on showval-->
+<div ng-hide="hideval">Hide Div: I will Appear on Hide Click</div>
+</div>
+</body>
+</html>

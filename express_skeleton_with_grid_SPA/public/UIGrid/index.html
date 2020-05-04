@@ -30,24 +30,36 @@
     <!-- Action buttons -->
     <div ng-controller="ButtonsCtrl as $ctrl" class="modal-demo">
     &ensp; Documents: 
-    <button type="button" class="btn btn-primary" ng-click="$ctrl.uploadClicked()"   ng-model="singleModel"> Upload </button>
+    <button type="button" class="btn btn-primary" ng-click="$ctrl.uploadClicked()" ng-model="singleModel"> Upload </button>
     &emsp; Selection:
     <button type="button" class="btn btn-primary" ng-click="$ctrl.viewClicked()"     ng-model="singleModel"> View </button>
-    <button type="button" class="btn btn-primary" ng-click="$ctrl.editClicked('lg')" ng-model="singleModel"> Edit </button>
+    <button type="button" class="btn btn-primary" ng-click="$ctrl.editClicked('wdk')" ng-model="singleModel"> Edit </button>
     <button type="button" class="btn btn-primary" ng-click="$ctrl.deleteClicked()"   ng-model="singleModel"> Delete </button>
     &emsp; Mark as:
     <button type="button" class="btn btn-primary" ng-click="$ctrl.favoriteClicked()" ng-model="singleModel"> Favorite </button>
     <button type="button" class="btn btn-primary" ng-click="$ctrl.trashClicked()"    ng-model="singleModel"> Trash </button>
+     &emsp;&emsp;Test:
+    <button type="button" class="btn btn-primary" ng-click="showHideDiv = !showHideDiv"> Test </button>
+
+    <!-- Show-Hide-Div: toggled by Test-btn with ng-click and ng-show -->
+    <div ng-show="showHideDiv">
+        <div class="modal-header">
+            <!-- <h3 class="modal-title" id="modal-title">Show-Hide Test</h3> -->
+        </div>
+        <div class="modal-body" id="modal-body">
+           <h4>Show-Hide-Test Content</h4>  <h5>(click again to hide)</h5>
+        </div>
+        <div class="modal-footer">
+            <!-- <button class="btn btn-primary" type="button" ng-click="showHideDiv = !showHideDiv">Dismiss</button> -->
+        </div>
+    </div>
     </div>
 
     <!-- the Grid -->
-    <div>
-        <div ui-grid="grid1Options" ui-grid-pagination ui-grid-resize-columns ui-grid-selection ui-grid-cellnav class="grid"></div>
-    </div>
-    <!-- <div w3-include-html="./myModalContent.html"></div> -->
+    <div ui-grid="grid1Options" ui-grid-pagination ui-grid-resize-columns ui-grid-selection ui-grid-cellnav class="grid"></div>
 
-    <!-- modal Doc-Editor-Template -->
-    <script id="myModalContent.html" type="text/ng-template">
+    <!-- ButtonsCtrl-templates -->
+    <script id="modalEditContent.html" type="text/ng-template">
         <div class="modal-header">
             <h3 class="modal-title" id="modal-title">Document Editor</h3>
         </div>
@@ -66,5 +78,6 @@
     </script>
 
     <script src="./ng-app.js"></script>
+
 </body>
 </html>
