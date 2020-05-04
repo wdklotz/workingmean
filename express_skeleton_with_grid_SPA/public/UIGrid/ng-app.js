@@ -1,12 +1,13 @@
 var myApp = angular.module('ng-app', [
     'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 
-    'ui.bootstrap']);
+    'ui.bootstrap'
+    ]);
 
-myApp.controller('ng-appCtrl', [
+myApp.controller('AppCtrl', [
         '$scope', '$http', 'uiGridConstants', 
         function($scope, $http, uiGridConstants) {  
-  var self = $scope;
-  self.grid1Options = {
+  var scope = $scope;
+  scope.grid1Options = {
     enableRowSelection: true,
     enableSelectAll: true,
     multiSelect: true,
@@ -29,14 +30,14 @@ myApp.controller('ng-appCtrl', [
       { name: 'Trash',    enableSorting: true, width: 65, displayName: 'tr'}
     ]};
 
-    self.grid1Options.onRegisterApi = function(gridApi){
+    scope.grid1Options.onRegisterApi = function(gridApi){
       //set gridApi on scope
-      self.gridApi = gridApi;
+      scope.gridApi = gridApi;
       /*
       gridApi.selection.on.rowSelectionChanged($scope,function(row){
         var msg = 'row changed ';
         console.log(msg,row);
-        console.log(gridApi.selection.getSelectedRows());
+        console.log(gridApi.selection.getSelectedRows()); 
       });
       */
     };
@@ -47,40 +48,37 @@ myApp.controller('ng-appCtrl', [
     var data = response.data;
     // console.log("data: ",data);
     // console.log("data.length: ",data.length);
-    self.grid1data = data;
-    self.grid1Options.data = self.grid1data;
+    scope.grid1data = data;
+    scope.grid1Options.data = scope.grid1data;
     });
 }]);
 
 myApp.controller('ButtonsCtrl', ['$scope','$uibModal','$document', function ($scope,$uibModal,$document) {
-    /*
-    * TODO......
-    */
-    var self = $scope;
-    var $ctrl = this;
-    $ctrl.items = ['item1', 'item2', 'item3'];
-    $ctrl.animationsEnabled = true;
+    var scope = $scope;
+    var $btnCtrl = this;
+    $btnCtrl.items = ['item1', 'item2', 'item3'];
+    $btnCtrl.animationsEnabled = true;
     
-    $ctrl.uploadClicked = function () {
+    $btnCtrl.uploadClicked = function () {
         console.log("uploadClicked");  
         };
-    $ctrl.viewClicked = function () {
+    $btnCtrl.viewClicked = function () {
         console.log("viewClicked");  
         };
-    $ctrl.editClicked = function (size) {
-        let selectedRows = self.gridApi.selection.getSelectedRows();
+    $btnCtrl.editClicked = function (size) {
+        let selectedRows = scope.gridApi.selection.getSelectedRows();
         console.log("editClicked: " + selectedRows.length + ' rows selected');
         
-        var modalInstance = $uibModal.open( { animation: $ctrl.animationsEnabled,  // instantiate modal instance ctrl
+        var modalInstance = $uibModal.open( { animation: $btnCtrl.animationsEnabled,  // instantiate modal instance ctrl
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
             templateUrl: 'modalEditContent.html',
             controller: 'ModalInstanceCtrl',
-            controllerAs: '$ctrl',
+            controllerAs: '$modCtrl',
             size: size,
             resolve: {
                 items: function () {
-                  return $ctrl.items;
+                  return $btnCtrl.items;
                   },
                 size: function() {
                   return size;
@@ -89,37 +87,37 @@ myApp.controller('ButtonsCtrl', ['$scope','$uibModal','$document', function ($sc
             });
         
         modalInstance.result.then(function (selectedItem) {
-            $ctrl.selected = selectedItem;
+            $btnCtrl.selected = selectedItem;
             console.log(selectedItem);
             }, function () {
             console.log('Modal dismissed at: ' + new Date());
             });
         };
-    $ctrl.deleteClicked = function () {
+    $btnCtrl.deleteClicked = function () {
         console.log("deleteClicked");  
         };
-    $ctrl.favoriteClicked = function () {
+    $btnCtrl.favoriteClicked = function () {
         console.log("favoriteClicked");  
         };
-    $ctrl.trashClicked = function () {
+    $btnCtrl.trashClicked = function () {
         console.log("trashClicked");  
         };
 }]);
 
-myApp.controller('ModalInstanceCtrl', function ($uibModalInstance, items, size) {
-  var $ctrl = this;
-  console.log(items, size);
-  $ctrl.items = items;
-  $ctrl.selected = {
-    item: $ctrl.items[0]
-  };
-  $ctrl.ok = function () {
-    $uibModalInstance.close($ctrl.selected.item);
-  };
-  $ctrl.cancel = function () {
-    $uibModalInstance.dismiss('cancel');
-  };
-});
+myApp.controller('ModalInstanceCtrl', ['$uibModalInstance','items','size',function ($uibModalInstance, items, size) {
+    var $modCtrl = this;
+    console.log(items, size);
+    $modCtrl.items = items;
+    $modCtrl.selected = {
+    item: $modCtrl.items[0]
+    };
+    $modCtrl.ok = function () {
+        $uibModalInstance.close($modCtrl.selected.item);
+    };
+    $modCtrl.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+}]);
 
 /*
 * for reduce see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
