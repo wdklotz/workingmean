@@ -3,43 +3,45 @@ var myApp = angular.module('ng-app', [
     'ui.bootstrap'
     ]);
 
-myApp.controller('AppCtrl', [
+myApp.controller('ng-app-ctrl', [
         '$scope', '$http', 'uiGridConstants', 
         function($scope, $http, uiGridConstants) {  
-  var scope = $scope;
-  scope.grid1Options = {
-    enableRowSelection: true,
-    enableSelectAll: true,
-    multiSelect: true,
-    selectionRowHeaderWidth: 35,
-    useCustomPagination: false,
-    useExternalPagination : false,
-    enableFiltering: true,
-    paginationPageSizes: [10, 15, 20, 30, 50, 100],
-    paginationPageSize: 20,
-    enableGridMenu: true,
-    enableColumnResizing: true,
-    columnDefs: [
-      { name: 'id',       enableSorting: true, width: '5%' },
-      { name: 'Document', enableSorting: true, width: '25%', cellTooltip: true },
-      { name: 'Author',   enableSorting: true, width: '10%'  },
-      { name: 'Type',     enableSorting: true, width: '10%'  },
-      { name: 'Shelf',    enableSorting: true, width: '10%'  },
-      { name: 'Keywords', enableSorting: true, cellTooltip: true},
-      { name: 'Favorite', enableSorting: true, width: 63, displayName: 'fav'},
-      { name: 'Trash',    enableSorting: true, width: 65, displayName: 'tr'}
-    ]};
+
+    var scope = $scope;
+    scope.grid1Options = {
+        enableRowSelection: true,
+        enableSelectAll: true,
+        multiSelect: true,
+        selectionRowHeaderWidth: 35,
+        useCustomPagination: false,
+        useExternalPagination : false,
+        enableFiltering: true,
+        paginationPageSizes: [10, 15, 20, 30, 50, 100],
+        paginationPageSize: 20,
+        enableGridMenu: true,
+        enableColumnResizing: true,
+        columnDefs: [
+            { name: 'id',       enableSorting: true, width: '5%' },
+            { name: 'Document', enableSorting: true, width: '25%', cellTooltip: true },
+            { name: 'Author',   enableSorting: true, width: '10%'  },
+            { name: 'Type',     enableSorting: true, width: '10%'  },
+            { name: 'Shelf',    enableSorting: true, width: '10%'  },
+            { name: 'Keywords', enableSorting: true, cellTooltip: true},
+            { name: 'Favorite', enableSorting: true, width: 63, displayName: 'fav'},
+            { name: 'Trash',    enableSorting: true, width: 65, displayName: 'tr'}
+        ]};
 
     scope.grid1Options.onRegisterApi = function(gridApi){
-      //set gridApi on scope
-      scope.gridApi = gridApi;
-      /*
-      gridApi.selection.on.rowSelectionChanged($scope,function(row){
+        //set gridApi on scope
+        scope.gridApi = gridApi;
+
+        /*  ignore rowSelectionChanged event
+        gridApi.selection.on.rowSelectionChanged($scope,function(row){
         var msg = 'row changed ';
         console.log(msg,row);
         console.log(gridApi.selection.getSelectedRows()); 
-      });
-      */
+        });
+        */
     };
 
 // call DB-API
@@ -53,10 +55,9 @@ myApp.controller('AppCtrl', [
     });
 }]);
 
-myApp.controller('ButtonsCtrl', ['$scope','$uibModal','$document', function ($scope,$uibModal,$document) {
+myApp.controller('btns-ctrl', ['$scope','$uibModal','$document', function ($scope,$uibModal,$document) {
     var scope = $scope;
     var $btnCtrl = this;
-    $btnCtrl.items = ['item1', 'item2', 'item3'];
     $btnCtrl.animationsEnabled = true;
     
     $btnCtrl.uploadClicked = function () {
@@ -66,23 +67,25 @@ myApp.controller('ButtonsCtrl', ['$scope','$uibModal','$document', function ($sc
         console.log("viewClicked");  
         };
     $btnCtrl.editClicked = function (size) {
-        let selectedRows = scope.gridApi.selection.getSelectedRows();
-        console.log("editClicked: " + selectedRows.length + ' rows selected');
+        $btnCtrl.selectedRows = scope.gridApi.selection.getSelectedRows();
+        console.log("editClicked: " + $btnCtrl.selectedRows.length + ' rows selected');
         
-        var modalInstance = $uibModal.open( { animation: $btnCtrl.animationsEnabled,  // instantiate modal instance ctrl
+        // instantiate modal controller
+        var modalInstance = $uibModal.open( { 
+            animation: $btnCtrl.animationsEnabled,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
             templateUrl: 'modalEditContent.html',
-            controller: 'ModalInstanceCtrl',
+            controller: 'modal-edit-ctrl',
             controllerAs: '$modCtrl',
             size: size,
             resolve: {
-                items: function () {
-                  return $btnCtrl.items;
-                  },
                 size: function() {
                   return size;
-                }
+                    },
+                selection: function() {
+                    return $btnCtrl.selectedRows;
+                    }
                 }
             });
         
@@ -90,7 +93,7 @@ myApp.controller('ButtonsCtrl', ['$scope','$uibModal','$document', function ($sc
             $btnCtrl.selected = selectedItem;
             console.log(selectedItem);
             }, function () {
-            console.log('Modal dismissed at: ' + new Date());
+                console.log('Modal dismissed at: ' + new Date());
             });
         };
     $btnCtrl.deleteClicked = function () {
@@ -104,12 +107,14 @@ myApp.controller('ButtonsCtrl', ['$scope','$uibModal','$document', function ($sc
         };
 }]);
 
-myApp.controller('ModalInstanceCtrl', ['$uibModalInstance','items','size',function ($uibModalInstance, items, size) {
+myApp.controller('modal-edit-ctrl', ['$uibModalInstance','size','selection',function ($uibModalInstance,size,selection) {
     var $modCtrl = this;
-    console.log(items, size);
-    $modCtrl.items = items;
+    console.log(size, selection);
+    $modCtrl.selection = selection;
+    
+    // init selection with item[0]
     $modCtrl.selected = {
-    item: $modCtrl.items[0]
+        item: $modCtrl.selection[0]
     };
     $modCtrl.ok = function () {
         $uibModalInstance.close($modCtrl.selected.item);

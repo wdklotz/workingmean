@@ -26,46 +26,46 @@
     <link rel="stylesheet" href="./ng-styles.css" type="text/css">
 </head>
 
-<body ng-controller="AppCtrl">
+<body ng-controller="ng-app-ctrl">
     <!-- Action buttons -->
-    <div ng-controller="ButtonsCtrl as $btnCtrl" class="modal-demo">
-    &ensp; Documents: 
-    <button type="button" class="btn btn-primary" ng-click="$btnCtrl.uploadClicked()" ng-model="singleModel"> Upload </button>
-    &emsp; Selection:
-    <button type="button" class="btn btn-primary" ng-click="$btnCtrl.viewClicked()"     ng-model="singleModel"> View </button>
-    <button type="button" class="btn btn-primary" ng-click="$btnCtrl.editClicked('wdk')" ng-model="singleModel"> Edit </button>
-    <button type="button" class="btn btn-primary" ng-click="$btnCtrl.deleteClicked()"   ng-model="singleModel"> Delete </button>
-    &emsp; Mark as:
-    <button type="button" class="btn btn-primary" ng-click="$btnCtrl.favoriteClicked()" ng-model="singleModel"> Favorite </button>
-    <button type="button" class="btn btn-primary" ng-click="$btnCtrl.trashClicked()"    ng-model="singleModel"> Trash </button>
-     &emsp;&emsp;Test:
-    <button type="button" class="btn btn-primary" ng-click="showHideDiv = !showHideDiv"> Test </button>
+    <div ng-controller="btns-ctrl as $btnCtrl" class="modal-demo">
+        &ensp; Documents: 
+        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.uploadClicked()" ng-model="singleModel"> Upload </button>
+        &emsp; Selection:
+        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.viewClicked()"     ng-model="singleModel"> View </button>
+        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.editClicked('wdk')" ng-model="singleModel"> Edit </button>
+        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.deleteClicked()"   ng-model="singleModel"> Delete </button>
+        &emsp; Mark as:
+        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.favoriteClicked()" ng-model="singleModel"> Favorite </button>
+        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.trashClicked()"    ng-model="singleModel"> Trash </button>
+         &emsp;&emsp;Test:
+        <button type="button" class="btn btn-primary" ng-click="showHideDiv = !showHideDiv"> Test </button>
 
-    <!-- Show-Hide-Div: toggled by Test-btn with ng-click and ng-show -->
-    <div ng-show="showHideDiv">
-        <div class="modal-header">
-            <!-- <h3 class="modal-title" id="modal-title">Show-Hide Test</h3> -->
+        <!-- showHideDiv: toggled by Test-btn with ng-click and ng-show -->
+        <div ng-show="showHideDiv">
+            <div class="modal-header">
+                <!-- <h3 class="modal-title" id="modal-title">Show-Hide Test</h3> -->
+            </div>
+            <div class="modal-body" id="modal-body">
+               <h4>Show-Hide-Test Content</h4>  <h5>(click again to hide)</h5>
+            </div>
+            <div class="modal-footer">
+                <!-- <button class="btn btn-primary" type="button" ng-click="showHideDiv = !showHideDiv">Dismiss</button> -->
+            </div>
         </div>
-        <div class="modal-body" id="modal-body">
-           <h4>Show-Hide-Test Content</h4>  <h5>(click again to hide)</h5>
-        </div>
-        <div class="modal-footer">
-            <!-- <button class="btn btn-primary" type="button" ng-click="showHideDiv = !showHideDiv">Dismiss</button> -->
-        </div>
-    </div>
     </div>
 
     <!-- the Grid -->
     <div ui-grid="grid1Options" ui-grid-pagination ui-grid-resize-columns ui-grid-selection ui-grid-cellnav class="grid"></div>
 
-    <!-- ButtonsCtrl-templates -->
+    <!-- modalEditContent.html template -->
     <script id="modalEditContent.html" type="text/ng-template">
         <div class="modal-header">
             <h3 class="modal-title" id="modal-title">Document Editor</h3>
         </div>
         <div class="modal-body" id="modal-body">
             <ul>
-                <li ng-repeat="item in $modCtrl.items">
+                <li ng-repeat="item in $modCtrl.selection">
                     <a href="#" ng-click="$event.preventDefault();  $modCtrl.selected.item = item">{{ item }}</a>
                 </li>
             </ul>
