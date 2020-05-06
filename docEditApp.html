@@ -1,0 +1,102 @@
+<!-- spawned from angularjs-up-and-running-master/chapter2/ng-repeat-example-1.html (wdk)-->
+<html ng-app="docEditApp">
+<head>
+<title>Doc Edit App</title>
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"></head>
+ <style>
+ .doc-edit-table .label-col {
+    width: 120px;
+ }
+ </style>
+ 
+<body ng-controller="MainCtrl as ctrl">
+    <table class="table table-bordered doc-edit-table">
+    <tr>
+        <div class="input-group">
+            <td class="label-col"><span class="input-group-addon" id="basic-addon1">Id:</span></td>
+            <td><input type="text" class="form-control" ng-model="ctrl.doc.id"></td>
+        </div>
+    </tr><tr>
+        <div class="input-group">
+            <td class="label-col"><span class="input-group-addon" id="basic-addon1">Document:</span></td>
+            <td><input type="text" class="form-control" ng-model="ctrl.doc.Document"></td>
+        </div>
+    </tr><tr>
+        <div class="input-group">
+            <td class="label-col"><span class="input-group-addon" id="basic-addon1">Author:</span></td>
+            <td><input type="text" class="form-control" ng-model="ctrl.doc.Author"></td>
+        </div>
+    </tr><tr>
+        <div class="input-group">
+            <td class="label-col"><span class="input-group-addon" id="basic-addon1">Type:</span></td>
+            <td><input type="text" class="form-control" ng-model="ctrl.doc.Type"></td>
+        </div>
+    </tr><tr>
+        <div class="input-group">
+            <td class="label-col"><span class="input-group-addon" id="basic-addon1">Shelf:</span></td>
+            <td><input type="text" class="form-control" ng-model="ctrl.doc.Shelf"></td>
+        </div>
+    </tr><tr>
+        <div class="input-group">
+            <td class="label-col"><span class="input-group-addon" id="basic-addon1">Keywords:</span></td>
+            <td><input type="text" class="form-control" ng-model="ctrl.doc.Keywords"></td>
+        </div>
+    </tr><tr>
+        <div class="input-group">
+            <td class="label-col"><span class="input-group-addon" id="basic-addon1">Favorite:</span></td>
+            <td><input type="text" class="form-control" ng-model="ctrl.doc.F"></td>
+        </div>
+    </tr><tr>
+        <div class="input-group">
+            <td class="label-col"><span class="input-group-addon" id="basic-addon1">Trash:</span></td>
+            <td><input type="text" class="form-control" ng-model="ctrl.doc.T"></td>
+        </div>
+    </tr>
+    </table>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular.js"></script>
+    <!-- needed by bootstrap, must be loaded before bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+    <!-- Angular App -->
+    <script type="text/javascript">
+      angular.module('docEditApp', [])
+        .controller('MainCtrl', [function() {
+          var self = this;
+          var docs = [
+            {id: 24, 
+                Document: 'ssc-138.pdf', 
+                Author: 'Forest', 
+                Type:'Article',
+                Shelf:'Integrator',
+                Keywords:'canonical, integrator, circular',
+                F:'F',T:'F'},
+            {id: 25, 
+                Document: 'pramana_symplectic.pdf',
+                Author: 'Rangarajan', 
+                Type:'Article',
+                Shelf:'Integrator',
+                Keywords:'symplectic, integrator, runge-kutta, hamiltonian',
+                F:'T',T:'F'},
+            {id: 26, 
+                Document: 'P_J_Channell_1990_Nonlinearity_3_001.pdf',
+                Author: 'Diverse et.al', 
+                Type:'Article',
+                Shelf:'Accelerator',
+                Keywords:'symplectic, integrator, runge-kutta, hamiltonian',
+                F:'T',T:'F'},
+            {id: 27, 
+                Document: 'Generalized_Courant-Snyder...Quin.Davidson,Chung.Burby.pdf',
+                Author: 'Choose...', 
+                Type:'Article',
+                Shelf:'Linear Theory',
+                Keywords:'linear',
+                F:'F',T:'F'}
+          ];
+          self.doc = docs[0];
+        }]);
+    </script>
+</body>
+</html>

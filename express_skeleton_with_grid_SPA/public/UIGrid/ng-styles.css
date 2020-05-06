@@ -12,6 +12,9 @@
 .ui-grid-column-menu {
   color: #2b2605;
 }
+.modal-lg {
+    width:1300px;
+}
 /* ********* above my modifications *********** */
 .ui-grid {
   border: 2px solid #f1c40f;
