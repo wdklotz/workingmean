@@ -4,41 +4,66 @@
 <title>Doc Edit App</title>
  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"></head>
  <style>
- .doc-edit-table .label-col {
-    width: 120px;
+.input-group .label-col {
+    width: 130px;
+    color: #fff;
+    background-color: #337ab7;
+    border-radius: 4px;
+    border: 1px solid transparent;
  }
+.input-group .input-col {
+    width: 600px;
+    background-color: #ffc300;
+ }
+.input-group {
+    padding: 3px;
+}
+.container {
+    background-color: transparent;
+}
  </style>
- 
 <body ng-controller="MainCtrl as ctrl">
-    <table class="table table-bordered doc-edit-table">
-    <div class="input-group">
-        <tr>
-            <td class="label-col"><span class="input-group-addon" id="basic-addon1">Id:</span></td>
-            <td><input type="text" class="form-control" ng-model="ctrl.doc.id"></td>
-        </tr><tr>
-            <td class="label-col"><span class="input-group-addon" id="basic-addon1">Document:</span></td>
-            <td><input type="text" class="form-control" ng-model="ctrl.doc.Document"></td>
-        </tr><tr>
-            <td class="label-col"><span class="input-group-addon" id="basic-addon1">Author:</span></td>
-            <td><input type="text" class="form-control" ng-model="ctrl.doc.Author"></td>
-        </tr><tr>
-            <td class="label-col"><span class="input-group-addon" id="basic-addon1">Type:</span></td>
-            <td><input type="text" class="form-control" ng-model="ctrl.doc.Type"></td>
-        </tr><tr>
-            <td class="label-col"><span class="input-group-addon" id="basic-addon1">Shelf:</span></td>
-            <td><input type="text" class="form-control" ng-model="ctrl.doc.Shelf"></td>
-        </tr><tr>
-            <td class="label-col"><span class="input-group-addon" id="basic-addon1">Keywords:</span></td>
-            <td><input type="text" class="form-control" ng-model="ctrl.doc.Keywords"></td>
-        </tr><tr>
-            <td class="label-col"><span class="input-group-addon" id="basic-addon1">Favorite:</span></td>
-            <td><input type="text" class="form-control" ng-model="ctrl.doc.F"></td>
-        </tr><tr>
-            <td class="label-col"><span class="input-group-addon" id="basic-addon1">Trash:</span></td>
-            <td><input type="text" class="form-control" ng-model="ctrl.doc.T"></td>
-        </tr>
+    <div class="container">
+        <div class="input-group">
+        <span class="input-group-addon label-col" id="basic-addon1">Id:</span>
+        <input type="text" class="form-control input-col" ng-model="ctrl.doc.id">
+        </div>
+
+        <div class="input-group">
+        <span class="input-group-addon label-col" id="basic-addon1">Document:</span>
+        <input type="text" class="form-control input-col" ng-model="ctrl.doc.Document">
+        </div>
+
+        <div class="input-group">
+        <span class="input-group-addon label-col" id="basic-addon1">Author:</span>
+        <input type="text" class="form-control input-col" ng-model="ctrl.doc.Author">
+        </div>
+
+        <div class="input-group">
+        <span class="input-group-addon label-col" id="basic-addon1">Type:</span>
+        <input type="text" class="form-control input-col" ng-model="ctrl.doc.Type">
+        </div>
+
+        <div class="input-group">
+        <span class="input-group-addon label-col" id="basic-addon1">Shelf:</span>
+        <input type="text" class="form-control input-col" ng-model="ctrl.doc.Shelf">
+        </div>
+
+        <div class="input-group">
+        <span class="input-group-addon label-col" id="basic-addon1">Keywords:</span>
+        <input type="text" class="form-control input-col" ng-model="ctrl.doc.Keywords">
+        </div>
+
+        <div class="input-group">
+        <span class="input-group-addon label-col" id="basic-addon1">Favorite:</span>
+        <input type="text" class="form-control input-col" ng-model="ctrl.doc.F">
+        </div>
+
+        <div class="input-group">
+        <span class="input-group-addon label-col" id="basic-addon1">Trash:</span>
+        <input type="text" class="form-control input-col" ng-model="ctrl.doc.T">
+        </div>
     </div>
-    </table>
 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular.js"></script>
     <!-- needed by bootstrap, must be loaded before bootstrap -->
