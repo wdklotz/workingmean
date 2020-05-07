@@ -1,6 +1,5 @@
 var myApp = angular.module('ng-app', [
-    'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 
-    'ui.bootstrap'
+    'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 'ui.bootstrap'
     ]);
 
 myApp.controller('ng-app-ctrl', [
@@ -122,6 +121,60 @@ myApp.controller('modal-edit-ctrl', ['$uibModalInstance','size','selection',func
     $modCtrl.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
+}]);
+
+myApp.controller('edit-doc-ctrl', [function() {
+  var self = this;
+  const docs = [   // mock data base
+    {id: 24, 
+        Document: 'ssc-138.pdf', 
+        Author: 'Forest', 
+        Type:'Article',
+        Shelf:'Integrator',
+        Keywords:'canonical, integrator, circular',
+        F:'F',T:'F'},
+    {id: 25, 
+        Document: 'pramana_symplectic.pdf',
+        Author: 'Rangarajan', 
+        Type:'Article',
+        Shelf:'Integrator',
+        Keywords:'symplectic, integrator, runge-kutta, hamiltonian',
+        F:'T',T:'F'},
+    {id: 26, 
+        Document: 'P_J_Channell_1990_Nonlinearity_3_001.pdf',
+        Author: 'Diverse et.al', 
+        Type:'Article',
+        Shelf:'Accelerator',
+        Keywords:'symplectic, integrator, runge-kutta, hamiltonian',
+        F:'T',T:'F'},
+    {id: 27, 
+        Document: 'Generalized_Courant-Snyder...Quin.Davidson,Chung.Burby.pdf',
+        Author: 'Choose...', 
+        Type:'Article',
+        Shelf:'Linear Theory',
+        Keywords:'linear',
+        F:'F',T:'F'}
+  ];
+  
+  // cpy: shallow copy helper
+  let cpy = function(obj) {
+      return Object.assign({},obj);
+  }
+  
+  self.doc = cpy(docs[0]); //initial update from db (copy)
+  
+  self.formSubmit = function () {
+    docs[0] = cpy(self.doc);  //update db
+    docs[0].F = (docs[0].F)? "T":"F";
+    docs[0].T = (docs[0].T)? "T":"F";
+    console.log(docs[0]);
+  }
+  self.formCancel = function () {
+    self.doc = cpy(docs[0]); //reset view data from db
+    self.doc.F = (self.doc.F === 'T')? true:false
+    self.doc.T = (self.doc.T === 'T')? true:false
+    console.log(docs[0]);
+  }
 }]);
 
 /*
