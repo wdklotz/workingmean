@@ -66,7 +66,6 @@
 
     <!-- ===========document editor frame==================================== -->
     <!-- toggled by Edit-btn with ng-click and ng-show -->
-        <!-- <div ng-hide="!showHideDiv" ng-controller="doc-edit-ctrl as ctrl"> -->
         <div ng-if="showHideDiv" class="animate-if" ng-controller="doc-edit-ctrl as ctrl">
             <div class="modal-header">
                 <h3 class="modal-title" id="modal-title">Document Editor <small>(click Edit again to hide)</small></h3>
@@ -129,7 +128,6 @@
     <!-- ==================modalEditContent.html template====================== -->
     <script id="modalEditContent.html" type="text/ng-template">
         <div class="modal-header">
-            <!-- <h3 class="modal-title" id="modal-title">Document Editor</h3> -->
            <h4>Show-Hide-Test Content</h4>
         </div>
         <div class="modal-body" id="modal-body">
