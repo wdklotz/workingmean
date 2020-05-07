@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/api', apiRouter);
+app.use('/api', apiRouter);     // RESTFUL API routes
 
 /* NOTE: ./public/index.html makes the same....*/
 // app.get('/', function(req,res) {

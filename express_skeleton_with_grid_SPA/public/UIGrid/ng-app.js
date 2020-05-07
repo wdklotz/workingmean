@@ -1,5 +1,7 @@
 var myApp = angular.module('ng-app', [
-    'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 'ui.bootstrap'
+    'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 
+    'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 'ui.bootstrap',
+    'ngResource'
     ]);
 
 myApp.controller('ng-app-ctrl', [
@@ -123,7 +125,7 @@ myApp.controller('modal-edit-ctrl', ['$uibModalInstance','size','selection',func
     };
 }]);
 
-myApp.controller('doc-edit-ctrl', [function() {
+myApp.controller('doc-edit-ctrl', ['DataService',function(DataService) {
   var self = this;
   const docs = [   // mock data
     {id: 24, 
@@ -156,6 +158,9 @@ myApp.controller('doc-edit-ctrl', [function() {
         F:'F',T:'F'}
   ];
   
+  let data = DataService.query();
+  console.log(data);
+  
   // cpy: shallow copy helper
   let cpy = function(obj) {
       return Object.assign({},obj);
@@ -178,6 +183,10 @@ myApp.controller('doc-edit-ctrl', [function() {
   }
 }]);
 
+// RESTFUL data provider
+myApp.factory('DataService',['$resource', function($resource) {
+    return $resource('/api/lib/:id');
+}]);
 /*
 * for reduce see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
 * for ui-bootstrap see: https://angular-ui.github.io/bootstrap/
