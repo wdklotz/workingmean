@@ -58,12 +58,12 @@
 
         <div class="row">
             <div class="col-md-4">
-                <label> <input type="checkbox"> Favorite </label>
-                <label> <input type="checkbox"> Trash </label>
+                <label> <input type="checkbox" ng-model="ctrl.doc.F"> Favorite </label>
+                <label> <input type="checkbox" ng-model="ctrl.doc.T"> Trash </label>
             </div>
             <div class="col-md-4 col-md-offset-2">
-                <button type="submit" class="btn btn-success">Submit</button>
-                <button class="btn btn-danger">Cancel</button>
+                <button type="button" class="btn btn-success" ng-click="ctrl.formSubmit()">Submit</button>
+                <button type="button" class="btn btn-danger" ng-click="ctrl.formCancel()">Cancel</button>
             </div>
         </div>
 </form>
@@ -78,7 +78,7 @@
       angular.module('docEditApp', [])
         .controller('MainCtrl', [function() {
           var self = this;
-          var docs = [
+          const docs = [   // mock data base
             {id: 24, 
                 Document: 'ssc-138.pdf', 
                 Author: 'Forest', 
@@ -108,7 +108,20 @@
                 Keywords:'linear',
                 F:'F',T:'F'}
           ];
-          self.doc = docs[0];
+          self.doc = Object.assign({},docs[0]); //local update from db
+          self.doc.F = (self.doc.F === 'T')? true:false
+          self.doc.T = (self.doc.T === 'T')? true:false
+          
+          self.formSubmit = function () {
+            docs[0] = Object.assign({},self.doc);  //update db
+            docs[0].F = (docs[0].F)? "T":"F";
+            docs[0].T = (docs[0].T)? "T":"F";
+            console.log(docs[0]);
+          }
+          self.formCancel = function () {
+            self.doc = Object.assign({},docs[0]); //reset view data from db
+            console.log(docs[0]);
+          }
         }]);
     </script>
 </body>
