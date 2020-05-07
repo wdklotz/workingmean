@@ -123,9 +123,9 @@ myApp.controller('modal-edit-ctrl', ['$uibModalInstance','size','selection',func
     };
 }]);
 
-myApp.controller('edit-doc-ctrl', [function() {
+myApp.controller('doc-edit-ctrl', [function() {
   var self = this;
-  const docs = [   // mock data base
+  const docs = [   // mock data
     {id: 24, 
         Document: 'ssc-138.pdf', 
         Author: 'Forest', 
@@ -161,19 +161,20 @@ myApp.controller('edit-doc-ctrl', [function() {
       return Object.assign({},obj);
   }
   
-  self.doc = cpy(docs[0]); //initial update from db (copy)
+  const idx =1;
+  self.doc = cpy(docs[idx]); //initial update from db (copy)
   
   self.formSubmit = function () {
-    docs[0] = cpy(self.doc);  //update db
-    docs[0].F = (docs[0].F)? "T":"F";
-    docs[0].T = (docs[0].T)? "T":"F";
-    console.log(docs[0]);
+    docs[idx] = cpy(self.doc);  //update db
+    docs[idx].F = (docs[idx].F)? "T":"F";
+    docs[idx].T = (docs[idx].T)? "T":"F";
+    console.log(docs[idx]);
   }
   self.formCancel = function () {
-    self.doc = cpy(docs[0]); //reset view data from db
+    self.doc = cpy(docs[idx]); //reset view data from db
     self.doc.F = (self.doc.F === 'T')? true:false
     self.doc.T = (self.doc.T === 'T')? true:false
-    console.log(docs[0]);
+    console.log(docs[idx]);
   }
 }]);
 
