@@ -5,8 +5,8 @@ var myApp = angular.module('ng-app', [
     ]);
 
 myApp.controller('ng-app-ctrl', [
-        '$scope', '$http', 'uiGridConstants', 'DataService',
-        function($scope, $http, uiGridConstants, DataService) {  
+        '$scope', '$http', 'uiGridConstants', 'DocService',
+        function($scope, $http, uiGridConstants, DocService) {  
 
     var scope = $scope;
     scope.grid1Options = {
@@ -42,8 +42,8 @@ myApp.controller('ng-app-ctrl', [
         // });
     };
 
-    // call DB-API via DataService
-    scope.grid1Options.data = DataService.query();
+    // call DB-API via DocService
+    scope.grid1Options.data = DocService.query();
 /*
     // call DB-API via $http
     $http.get('/api/lib/38').then(function (response) {
@@ -124,7 +124,7 @@ myApp.controller('modal-edit-ctrl', ['$uibModalInstance','size','selection',func
     };
 }]);
 
-myApp.controller('doc-edit-ctrl', ['DataService',function(DataService) {
+myApp.controller('doc-edit-ctrl', ['DocService',function(DocService) {
   var self = this;
   const docs = [   // mock data
     {id: 24, 
@@ -157,9 +157,6 @@ myApp.controller('doc-edit-ctrl', ['DataService',function(DataService) {
         F:'F',T:'F'}
   ];
   
-  // let data = DataService.query();
-  // console.log(data);
-  
   // cpy: shallow copy helper
   let cpy = function(obj) {
       return Object.assign({},obj);
@@ -183,7 +180,7 @@ myApp.controller('doc-edit-ctrl', ['DataService',function(DataService) {
 }]);
 
 // RESTFUL data provider
-myApp.factory('DataService',['$resource', function($resource) {
+myApp.factory('DocService',['$resource', function($resource) {
     return $resource('/api/lib/:id');
 }]);
 /*

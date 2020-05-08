@@ -9,7 +9,7 @@ const sendJsonResponse = function (res, status, content) {
     res.end();
 };
 
-const documents = function(req,res) {      // http://127.0.0.1:3000/api/lib
+const documents = function(req,res) {      // all -> /api/lib
     const sql =`SELECT d.*, a.Author, t.Type, s.Shelf FROM doc As d
                 INNER JOIN doc_author AS a ON a.id = d.author 
                 INNER JOIN doc_type   AS t ON t.id = d.type 
@@ -35,7 +35,7 @@ const documents = function(req,res) {      // http://127.0.0.1:3000/api/lib
     })  
 };
 
-const documentById = function(req,res) {      // http://127.0.0.1:3000/api/lib/:id
+const documentById = function(req,res) {      // id:38 -> /api/lib/38
     const docId  = req.params.documentId;
     const sql = `SELECT d.*, a.Author, t.Type, s.Shelf FROM doc As d
                  INNER JOIN doc_author AS a ON a.id = d.author 
@@ -48,7 +48,7 @@ const documentById = function(req,res) {      // http://127.0.0.1:3000/api/lib/:
         if (err) {
            return console.error(err.message); 
         }
-        sendJsonResponse(res,200,[row]);
+        sendJsonResponse(res,200,[row]);   // return [row] as array
     })
 };
 
