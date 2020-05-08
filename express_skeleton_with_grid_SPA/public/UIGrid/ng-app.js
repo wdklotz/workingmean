@@ -5,8 +5,8 @@ var myApp = angular.module('ng-app', [
     ]);
 
 myApp.controller('ng-app-ctrl', [
-        '$scope', '$http', 'uiGridConstants', 
-        function($scope, $http, uiGridConstants) {  
+        '$scope', '$http', 'uiGridConstants', 'DataService',
+        function($scope, $http, uiGridConstants, DataService) {  
 
     var scope = $scope;
     scope.grid1Options = {
@@ -33,27 +33,26 @@ myApp.controller('ng-app-ctrl', [
         ]};
 
     scope.grid1Options.onRegisterApi = function(gridApi){
-        //set gridApi on scope
+        // set gridApi on scope but ignore rowSelectionChanged event
         scope.gridApi = gridApi;
-
-        /*  ignore rowSelectionChanged event
-        gridApi.selection.on.rowSelectionChanged($scope,function(row){
-        var msg = 'row changed ';
-        console.log(msg,row);
-        console.log(gridApi.selection.getSelectedRows()); 
-        });
-        */
+        // gridApi.selection.on.rowSelectionChanged($scope,function(row){
+        // var msg = 'row changed ';
+        // console.log(msg,row);
+        // console.log(gridApi.selection.getSelectedRows()); 
+        // });
     };
 
-// call DB-API
-  $http.get('http://127.0.0.1:3000/api/lib').then(function (response) {
-    // console.log('$http response: ',response);
-    var data = response.data;
-    // console.log("data: ",data);
-    // console.log("data.length: ",data.length);
-    scope.grid1data = data;
-    scope.grid1Options.data = scope.grid1data;
+    // call DB-API via DataService
+    scope.grid1Options.data = DataService.query();
+/*
+    // call DB-API via $http
+    $http.get('/api/lib/38').then(function (response) {
+        scope.grid1Options.data = response.data;
+        console.log('$http response: ',scope.grid1Options.data);
+    }, function(errResponse) {
+        console.error('Error while fetching document');
     });
+*/
 }]);
 
 myApp.controller('btns-ctrl', ['$scope','$uibModal','$document', function ($scope,$uibModal,$document) {
@@ -158,8 +157,8 @@ myApp.controller('doc-edit-ctrl', ['DataService',function(DataService) {
         F:'F',T:'F'}
   ];
   
-  let data = DataService.query();
-  console.log(data);
+  // let data = DataService.query();
+  // console.log(data);
   
   // cpy: shallow copy helper
   let cpy = function(obj) {

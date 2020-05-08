@@ -2,13 +2,17 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
 const dbURI = path.resolve(__dirname,'./db/storage.sqlite');
-const db = new sqlite3.Database(dbURI,sqlite3.OPEN_READONLY, (err) => {
+
+const db = new sqlite3.Database(dbURI,sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
         return console.error(err.message);
     }
     console.log("Connected to "+dbURI);
 });
 
+
+
+// ================shutdown=====================
 const gracefulShutdown = function(msg,callback) {
     console.log('Sqlite3 disconnected through ' + msg);
     callback();

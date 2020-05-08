@@ -4,18 +4,18 @@ var {n_log, i_was_here} = require('../../app_helper.js');
 const sendJsonResponse = function (res, status, content) {
     // i_was_here("api:sendJsonResponse");
     // n_log("api:sendJsonResponse",content);
-    res.status(status);
     res.json(content);
+    res.status(status);
+    res.end();
 };
 
 const documents = function(req,res) {      // http://127.0.0.1:3000/api/lib
-
-    const sql = `SELECT d.*, a.Author, t.Type, s.Shelf FROM doc As d
-        INNER JOIN doc_author AS a ON a.id = d.author 
-        INNER JOIN doc_type   AS t ON t.id = d.type 
-        INNER JOIN doc_shelf  AS s ON s.id = d.shelf`;
+    const sql =`SELECT d.*, a.Author, t.Type, s.Shelf FROM doc As d
+                INNER JOIN doc_author AS a ON a.id = d.author 
+                INNER JOIN doc_type   AS t ON t.id = d.type 
+                INNER JOIN doc_shelf  AS s ON s.id = d.shelf`;
     
-    // n_log("api:documents",req.baseUrl);
+    // n_log("api:documents",'baseURL: '+req.baseUrl+'  SQL: '+sql);
     // n_log("api:documents",sql);
     db.all(sql, [], (err, rows) => {
         if (err) {
@@ -24,7 +24,7 @@ const documents = function(req,res) {      // http://127.0.0.1:3000/api/lib
         if(false) {   // (from...to) limits on table-rows
             let content = [];
             const from = 0;
-            const anz  = 20;
+            const anz  = 1;
             for (let i=0; i<=(anz-1); i++) {
                 content[i]=rows[i+from];
                 }
@@ -35,12 +35,30 @@ const documents = function(req,res) {      // http://127.0.0.1:3000/api/lib
     })  
 };
 
-module.exports.documents = documents;
-module.exports.documentCreate = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
-module.exports.documentById   = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
-module.exports.documentUpdate = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
-module.exports.documentDelete = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
+const documentById = function(req,res) {      // http://127.0.0.1:3000/api/lib/:id
+    const docId  = req.params.documentId;
+    const sql = `SELECT d.*, a.Author, t.Type, s.Shelf FROM doc As d
+                 INNER JOIN doc_author AS a ON a.id = d.author 
+                 INNER JOIN doc_type   AS t ON t.id = d.type 
+                 INNER JOIN doc_shelf  AS s ON s.id = d.shelf
+                 WHERE d.id = ${docId}`;
+    
+    // n_log("api:documentById",sql);
+    db.get(sql, [], (err,row) => {
+        if (err) {
+           return console.error(err.message); 
+        }
+        sendJsonResponse(res,200,[row]);
+    })
+};
 
+module.exports.documents = documents;
+// module.exports.documentCreate = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
+module.exports.documentById   = documentById;
+// module.exports.documentUpdate = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
+// module.exports.documentDelete = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
+
+/*
 const apiOptions = {
     server: "http://localhost:3000"
 };
@@ -52,13 +70,13 @@ const requestOptions = {
         offset: "optional"
     }
 };
-// request(requestOptions,function(err,response,body) {
-    // if (err) {
-        // console.log(err);
-    // } else if (response.statusCode === 200) {
-        // console.log(body);
-    // } else {
-        // console.log(response.statusCode);
-    // }
-// });
-
+request(requestOptions,function(err,response,body) {
+    if (err) {
+        console.log(err);
+    } else if (response.statusCode === 200) {
+        console.log(body);
+    } else {
+        console.log(response.statusCode);
+    }
+});
+*/
