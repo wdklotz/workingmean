@@ -51,6 +51,10 @@
     .container {
         background-color: transparent;
     }
+    #s_box {
+        width: 1200px;
+        overflow-wrap: break-word;
+    }
     </style>
 </head>
 
@@ -74,7 +78,7 @@
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.trashClicked()"    ng-model="singleModel"> Trash </button>
         
          &emsp;&emsp;Test:
-        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.testClicked('lg')" ng-model="singleModel"> Test </button>
+        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.testClicked('lg')" ng-model="singleModel"> Details </button>
 
     <!-- ===========document editor frame==================================== -->
     <!-- show/hide toggled by Edit-btn with ng-click,ng-init and ng-if -->
@@ -142,7 +146,7 @@
     <!-- ==================modalEditContent.html template====================== -->
     <script id="modalEditContent.html" type="text/ng-template">
         <div class="modal-header">
-           <h4>Show-Hide-Test Content</h4>
+           <h4>Raw Content</h4>
         </div>
         <div class="modal-body" id="modal-body">
             <ul>
@@ -150,11 +154,11 @@
                     <a href="#" ng-click="$event.preventDefault();  $modCtrl.selected.item = item">{{ item }}</a>
                 </li>
             </ul>
-            Selected: <b>{{ $modCtrl.selected.item }}</b>
+            Selected: <div id="s_box"><h5><b>{{ $modCtrl.selected.item }}</b></h5></div>
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary" type="button" ng-click="$modCtrl.ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="$modCtrl.cancel()">Cancel</button>
+            <!-- <button class="btn btn-warning" type="button" ng-click="$modCtrl.cancel()">Cancel</button> -->
         </div>
     </script>
     <!-- ^^^^^^^^^^^^^^^^^^modalEditContent.html template^^^^^^^^^^^^^^^^^^^^^^ -->

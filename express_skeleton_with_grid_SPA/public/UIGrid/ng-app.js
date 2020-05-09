@@ -127,7 +127,8 @@ myApp.controller('modal-edit-ctrl', ['$uibModalInstance','size','selection',func
 myApp.controller('doc-edit-ctrl', ['$scope','DocService',function($scope,DocService) {
     var vm = this;
     var scope = $scope;
-    var docs = scope.gridApi.selection.getSelectedRows();
+    var selection = scope.gridApi.selection;
+    var docs = selection.getSelectedRows();
     console.log("editClicked: " + docs.length + ' docs selected');
 
 /*  // mock data
@@ -169,6 +170,7 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocService',function($scope,DocServ
     }
 
     const idx = 0;
+    selection.unSelectRow(docs[idx]);   // unselect first
     vm.doc = cpy(docs[idx]); //initial update from db (copy)
 
     vm.formSubmit = function () {
