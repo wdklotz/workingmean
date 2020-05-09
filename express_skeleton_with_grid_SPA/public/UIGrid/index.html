@@ -146,7 +146,7 @@
     <!-- ==================modalEditContent.html template====================== -->
     <script id="modalEditContent.html" type="text/ng-template">
         <div class="modal-header">
-           <h4>Raw Content</h4>
+           <h4>Raw group selection content</h4>
         </div>
         <div class="modal-body" id="modal-body">
             <ul>
@@ -154,7 +154,7 @@
                     <a href="#" ng-click="$event.preventDefault();  $modCtrl.selected.item = item">{{ item }}</a>
                 </li>
             </ul>
-            Selected: <div id="s_box"><h5><b>{{ $modCtrl.selected.item }}</b></h5></div>
+            Selected item: <div id="s_box"><h5><b>{{ $modCtrl.selected.item }}</b></h5></div>
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary" type="button" ng-click="$modCtrl.ok()">OK</button>
