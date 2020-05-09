@@ -1,33 +1,35 @@
 <!doctype html>
 <html ng-app="ng-app">
 <head>
-    <!-- Angular -->
+<!-- Angular -->
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.js"></script> -->
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-touch.js"></script> -->
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-animate.js"></script> -->
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-resource.js"></script> -->
-    <script src="./lib/angular-1.7.9/angular.js"></script>
-    <script src="./lib/angular-1.7.9/angular-touch.js"></script>
-    <script src="./lib/angular-1.7.9/angular-animate.js"></script>
-    <script src="./lib/angular-1.7.9/angular-resource.js"></script>
+    <script src="./lib/angular1.7.9/angular.js"></script>
+    <script src="./lib/angular1.7.9/angular-touch.js"></script>
+    <script src="./lib/angular1.7.9/angular-animate.js"></script>
+    <script src="./lib/angular1.7.9/angular-resource.js"></script>
+<!-- Angular -->
 
-    <!-- Bootstrap -->
-    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
-    <!-- <script src="./lib/ui-bootstrap2.5.0/ui-bootstrap-tpls.js"></script> -->
-
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap -->
+    <!-- <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script> -->
+    <script src="./lib/ui-bootstrap2.5.0/ui-bootstrap-tpls.js"></script>
     <!-- <link href="./lib/ui-bootstrap2.5.0/ui-bootstrap-2.5.0-csp.css" rel="stylesheet"type="text/css"> -->
-    <!-- <link href="./lib/bootstrap3.3.7/bootstrap.min.css" rel="stylesheet"type="text/css"> -->
+    <link href="./lib/bootstrap3.3.7/bootstrap.min.css" rel="stylesheet"type="text/css">
+    <!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+<!-- Bootstrap -->
 
-    <!-- UI-Grid -->
-    <script src="http://ui-grid.info/release/ui-grid.js"></script>
-    <!-- <script src="./lib/ui-grid4.8.0/ui-grid.js"></script> -->
+<!-- UI-Grid -->
+    <!-- <script src="http://ui-grid.info/release/ui-grid.js"></script> -->
+    <script src="./lib/ui-grid4.8.0/ui-grid.js"></script>
+    <!-- <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css"> -->
+    <link  href="./lib/ui-grid4.8.0/ui-grid.css" rel="stylesheet" type="text/css"/>    
+<!-- UI-Grid -->
 
-    <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css">
-    <!-- <link  href="./lib/ui-grid4.8.0/ui-grid.css" rel="stylesheet" type="text/css"/>     -->
-
-    <!-- this App -->
+<!-- this App -->
     <link rel="stylesheet" href="./ng-styles.css" type="text/css">
+<!-- UI-Grid -->
 
     <!-- local css for editor frame -->
      <style>  
@@ -57,19 +59,25 @@
     <div ng-controller="btns-ctrl as $btnCtrl" class="modal-demo">
         &ensp; Documents: 
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.uploadClicked()" ng-model="singleModel"> Upload </button>
+        
         &emsp; Selection:
-        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.viewClicked()"     ng-model="singleModel"> View </button>
+        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.viewClicked()" ng-model="singleModel"> View </button>
+        
         <!-- <button type="button" class="btn btn-primary" ng-click="showHideDiv = !showHideDiv"> Edit </button> -->
         <button type="button" class="btn btn-primary" ng-model="showHideDiv" ng-init="showHideDiv=false" ng-click="showHideDiv=!showHideDiv"> Edit </button>
+        
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.deleteClicked()"   ng-model="singleModel"> Delete </button>
+        
         &emsp; Mark as:
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.favoriteClicked()" ng-model="singleModel"> Favorite </button>
+        
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.trashClicked()"    ng-model="singleModel"> Trash </button>
+        
          &emsp;&emsp;Test:
-        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.editClicked('lg')" ng-model="singleModel"> Test </button>
+        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.testClicked('lg')" ng-model="singleModel"> Test </button>
 
     <!-- ===========document editor frame==================================== -->
-    <!-- toggled by Edit-btn with ng-click and ng-show -->
+    <!-- show/hide toggled by Edit-btn with ng-click,ng-init and ng-if -->
         <div ng-if="showHideDiv" class="animate-if" ng-controller="doc-edit-ctrl as ctrl">
             <div class="modal-header">
                 <h3 class="modal-title" id="modal-title">Document Editor <small>(click Edit again to hide)</small></h3>
@@ -126,8 +134,10 @@
     <!-- ^^^^^^^^^^^document editor frame^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
     </div>
 
-    <!-- the Grid -->
-    <div ui-grid="grid1Options" ui-grid-pagination ui-grid-resize-columns ui-grid-selection ui-grid-cellnav class="grid"></div>
+    <!-- ==============================uiGrid================================== -->
+    <div ui-grid="grid1Options" ui-grid-pagination ui-grid-resize-columns ui-grid-selection ui-grid-cellnav class="grid">
+    </div>
+    <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^uiGrid^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
 
     <!-- ==================modalEditContent.html template====================== -->
     <script id="modalEditContent.html" type="text/ng-template">

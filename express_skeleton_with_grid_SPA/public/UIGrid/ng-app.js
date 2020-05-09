@@ -57,22 +57,22 @@ myApp.controller('ng-app-ctrl', [
 
 myApp.controller('btns-ctrl', ['$scope','$uibModal','$document', function ($scope,$uibModal,$document) {
     var scope = $scope;
-    var $btnCtrl = this;
-    $btnCtrl.animationsEnabled = true;
+    var vm = this;
+    vm.animationsEnabled = true;
     
-    $btnCtrl.uploadClicked = function () {
+    vm.uploadClicked = function () {
         console.log("uploadClicked");  
         };
-    $btnCtrl.viewClicked = function () {
+    vm.viewClicked = function () {
         console.log("viewClicked");  
         };
-    $btnCtrl.editClicked = function (size) {
-        $btnCtrl.selectedRows = scope.gridApi.selection.getSelectedRows();
-        console.log("editClicked: " + $btnCtrl.selectedRows.length + ' rows selected');
+    vm.testClicked = function (size) {
+        vm.selectedRows = scope.gridApi.selection.getSelectedRows();
+        console.log("testClicked: " + vm.selectedRows.length + ' docs selected');
         
         // instantiate modal controller
         var modalInstance = $uibModal.open( { 
-            animation: $btnCtrl.animationsEnabled,
+            animation: vm.animationsEnabled,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
             templateUrl: 'modalEditContent.html',
@@ -84,49 +84,54 @@ myApp.controller('btns-ctrl', ['$scope','$uibModal','$document', function ($scop
                   return size;
                     },
                 selection: function() {
-                    return $btnCtrl.selectedRows;
+                    return vm.selectedRows;
                     }
                 }
             });
         
         modalInstance.result.then(function (selectedItem) {
-            $btnCtrl.selected = selectedItem;
-            console.log(selectedItem);
+            vm.selected = selectedItem;
+            // console.log(selectedItem);
             }, function () {
-                console.log('Modal dismissed at: ' + new Date());
+                // console.log('Modal dismissed at: ' + new Date());
             });
         };
-    $btnCtrl.deleteClicked = function () {
+    vm.deleteClicked = function () {
         console.log("deleteClicked");  
         };
-    $btnCtrl.favoriteClicked = function () {
+    vm.favoriteClicked = function () {
         console.log("favoriteClicked");  
         };
-    $btnCtrl.trashClicked = function () {
+    vm.trashClicked = function () {
         console.log("trashClicked");  
         };
 }]);
 
 myApp.controller('modal-edit-ctrl', ['$uibModalInstance','size','selection',function ($uibModalInstance,size,selection) {
-    var $modCtrl = this;
-    console.log(size, selection);
-    $modCtrl.selection = selection;
+    var vm = this;
+    // console.log(size, selection);
+    vm.selection = selection;
     
     // init selection with item[0]
-    $modCtrl.selected = {
-        item: $modCtrl.selection[0]
+    vm.selected = {
+        item: vm.selection[0]
     };
-    $modCtrl.ok = function () {
-        $uibModalInstance.close($modCtrl.selected.item);
+    vm.ok = function () {
+        $uibModalInstance.close(vm.selected.item);
     };
-    $modCtrl.cancel = function () {
+    vm.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
 }]);
 
-myApp.controller('doc-edit-ctrl', ['DocService',function(DocService) {
-  var self = this;
-  const docs = [   // mock data
+myApp.controller('doc-edit-ctrl', ['$scope','DocService',function($scope,DocService) {
+    var vm = this;
+    var scope = $scope;
+    var docs = scope.gridApi.selection.getSelectedRows();
+    console.log("editClicked: " + docs.length + ' docs selected');
+
+/*  // mock data
+    const docs = [   
     {id: 24, 
         Document: 'ssc-138.pdf', 
         Author: 'Forest', 
@@ -155,28 +160,29 @@ myApp.controller('doc-edit-ctrl', ['DocService',function(DocService) {
         Shelf:'Linear Theory',
         Keywords:'linear',
         F:'F',T:'F'}
-  ];
-  
-  // cpy: shallow copy helper
-  let cpy = function(obj) {
-      return Object.assign({},obj);
-  }
-  
-  const idx =1;
-  self.doc = cpy(docs[idx]); //initial update from db (copy)
-  
-  self.formSubmit = function () {
-    docs[idx] = cpy(self.doc);  //update db
+    ];
+*/    
+
+    // cpy: shallow copy helper
+    let cpy = function(obj) {
+        return Object.assign({},obj);
+    }
+
+    const idx = 0;
+    vm.doc = cpy(docs[idx]); //initial update from db (copy)
+
+    vm.formSubmit = function () {
+    docs[idx] = cpy(vm.doc);  //update db
     docs[idx].F = (docs[idx].F)? "T":"F";
     docs[idx].T = (docs[idx].T)? "T":"F";
-    console.log(docs[idx]);
-  }
-  self.formCancel = function () {
-    self.doc = cpy(docs[idx]); //reset view data from db
-    self.doc.F = (self.doc.F === 'T')? true:false
-    self.doc.T = (self.doc.T === 'T')? true:false
-    console.log(docs[idx]);
-  }
+    // console.log(docs[idx]);
+    }
+    vm.formCancel = function () {
+    vm.doc = cpy(docs[idx]); //reset view data from db
+    vm.doc.F = (vm.doc.F === 'T')? true:false
+    vm.doc.T = (vm.doc.T === 'T')? true:false
+    // console.log(docs[idx]);
+    }
 }]);
 
 // RESTFUL data provider
