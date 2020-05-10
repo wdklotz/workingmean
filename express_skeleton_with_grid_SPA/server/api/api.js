@@ -3,7 +3,7 @@ var {n_log, i_was_here} = require('../../app_helper.js');
 
 const sendJsonResponse = function (res, status, content) {
     // i_was_here("api:sendJsonResponse");
-    // n_log("api:sendJsonResponse",content);
+    n_log("api:sendJsonResponse",content);
     res.json(content);
     res.status(status);
     res.end();
