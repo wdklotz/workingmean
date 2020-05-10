@@ -48,15 +48,33 @@ const documentById = function(req,res) {      // id:38 -> /api/lib/38
         if (err) {
            return console.error(err.message); 
         }
-        sendJsonResponse(res,200,[row]);   // return [row] as array
-    })
+        sendJsonResponse(res,200,row);
+    });
 };
 
-module.exports.documents = documents;
-// module.exports.documentCreate = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
+const documentUpdate = function(req,res) {
+    const docId    = req.params.documentId;
+    const document = req.body;
+    
+    const sql = `UPDATE doc SET
+                 keywords = "${document.Keywords}",
+                 favorite = "${document.Favorite}",
+                 trash = "${document.Trash}"
+                 WHERE id = ${docId}`;
+    // console.log(sql);
+    db.run(sql, [], (err) => {
+        if (err) {
+           return console.error(err.message); 
+        }
+        console.log(`Row(s) updated: ${docId}`,document);
+    });
+};
+
+module.exports.documents      = documents;
+module.exports.documentCreate = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
 module.exports.documentById   = documentById;
-// module.exports.documentUpdate = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
-// module.exports.documentDelete = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
+module.exports.documentUpdate = documentUpdate;
+module.exports.documentDelete = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
 
 /*
 const apiOptions = {
