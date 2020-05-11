@@ -28,8 +28,10 @@ myApp.controller('ng-app-ctrl', [
             { name: 'Type',     enableSorting: true, width: '10%'  },
             { name: 'Shelf',    enableSorting: true, width: '10%'  },
             { name: 'Keywords', enableSorting: true, cellTooltip: true},
-            { name: 'Favorite', enableSorting: true, width: 63, displayName: 'fav'},
-            { name: 'Trash',    enableSorting: true, width: 65, displayName: 'tr'}
+            // { name: 'Favorite', enableSorting: true, width: 63, displayName: 'FAV', type: 'boolean'},
+            // { name: 'Trash',    enableSorting: true, width: 65, displayName: 'TR',  type: 'boolean'}
+            { name: 'Favorite', enableSorting: true, width: 63, displayName: 'FAV'},
+            { name: 'Trash',    enableSorting: true, width: 65, displayName: 'TR'}
         ]};
 
     scope.grid1Options.onRegisterApi = function(gridApi){
@@ -59,6 +61,7 @@ myApp.controller('btns-ctrl', ['$scope','$uibModal','$document', function ($scop
     var scope = $scope;
     var vm = this;
     vm.animationsEnabled = true;
+    vm.showHideDiv = false;
     
     vm.uploadClicked = function () {
         console.log("uploadClicked");  
@@ -66,6 +69,9 @@ myApp.controller('btns-ctrl', ['$scope','$uibModal','$document', function ($scop
     vm.viewClicked = function () {
         console.log("viewClicked");  
         };
+    vm.onEdit = function() {
+        vm.showHideDiv = !vm.showHideDiv;
+    };
     vm.testClicked = function (size) {
         vm.selectedRows = scope.gridApi.selection.getSelectedRows();
         console.log("testClicked: " + vm.selectedRows.length + ' docs selected');
@@ -127,9 +133,16 @@ myApp.controller('modal-edit-ctrl', ['$uibModalInstance','size','selection',func
 myApp.controller('doc-edit-ctrl', ['$scope','DocService',function($scope,DocService) {
     var vm = this;
     var scope = $scope;
+    const idx = 0;
     var selection = scope.gridApi.selection;
     var docs = selection.getSelectedRows();
-    console.log("editClicked: " + docs.length + ' docs selected');
+    vm.doc = docs[idx];
+    if (docs.length != 0) {
+        console.log('EDIT: docId: ',vm.doc.id,' vm.doc: ',vm.doc);
+        vm.favChecked   = (vm.doc.Favorite == 'T')? true:false;
+        vm.trashChecked = (vm.doc.Trash == 'T')? true:false;
+        selection.unSelectRow(docs[idx]);   // unselect first
+    }
 
 /*  // mock data
     const docs = [   
@@ -164,32 +177,27 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocService',function($scope,DocServ
     ];
 */    
 
-    // cpy: shallow copy helper
-    let cpy = function(obj) {
-        return Object.assign({},obj);
-    }
+    vm.formSubmit = function() {
+    if (docs.length != 0) {
+        vm.doc.Favorite = (vm.favChecked)? 'T':'F';
+        vm.doc.Trash    = (vm.trashChecked)? 'T':'F';
+        vm.doc.$update().then(function(doc){console.log('updated ',doc);});
+        }
+    };
 
-    const idx = 0;
-    selection.unSelectRow(docs[idx]);   // unselect first
-    vm.doc = cpy(docs[idx]); //initial update from db (copy)
-
-    vm.formSubmit = function () {
-    docs[idx] = cpy(vm.doc);  //update db
-    docs[idx].F = (docs[idx].F)? "T":"F";
-    docs[idx].T = (docs[idx].T)? "T":"F";
-    // console.log(docs[idx]);
-    }
     vm.formCancel = function () {
-    vm.doc = cpy(docs[idx]); //reset view data from db
-    vm.doc.F = (vm.doc.F === 'T')? true:false
-    vm.doc.T = (vm.doc.T === 'T')? true:false
-    // console.log(docs[idx]);
-    }
+        vm.doc = DocService.get({id:vm.doc.id}); //reset view data from db
+        vm.favChecked   = (vm.doc.Favorite == 'T')? true:false;
+        vm.trashChecked = (vm.doc.Trash == 'T')? true:false;
+    };
 }]);
 
 // RESTFUL data provider
 myApp.factory('DocService',['$resource', function($resource) {
-    return $resource('/api/lib/:id');
+    return $resource('/api/lib/:id',
+        {id:'@id'},
+        {update: {method: 'PUT'}} // there is no HTTP PUT support available per default !!!
+        );
 }]);
 /*
 * for reduce see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce

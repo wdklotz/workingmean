@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="./ng-styles.css" type="text/css">
 <!-- UI-Grid -->
 
-    <!-- local css for editor frame -->
+    <!-- local css for editor panel -->
      <style>  
     .input-group > .label-col {
         width: 130px;
@@ -62,27 +62,27 @@
     <!-- Action buttons -->
     <div ng-controller="btns-ctrl as $btnCtrl" class="modal-demo">
         &ensp; Documents: 
-        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.uploadClicked()" ng-model="singleModel"> Upload </button>
+        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.uploadClicked()"> Upload </button>
         
         &emsp; Selection:
-        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.viewClicked()" ng-model="singleModel"> View </button>
+        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.viewClicked()"> View </button>
         
         <!-- <button type="button" class="btn btn-primary" ng-click="showHideDiv = !showHideDiv"> Edit </button> -->
-        <button type="button" class="btn btn-primary" ng-model="showHideDiv" ng-init="showHideDiv=false" ng-click="showHideDiv=!showHideDiv"> Edit </button>
+        <button type="button" class="btn btn-primary" ng-model="$btnCtrl.showHideDiv" ng-click="$btnCtrl.onEdit()"> Edit </button>
         
-        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.deleteClicked()"   ng-model="singleModel"> Delete </button>
+        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.deleteClicked()"  > Delete </button>
         
         &emsp; Mark as:
-        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.favoriteClicked()" ng-model="singleModel"> Favorite </button>
+        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.favoriteClicked()"> Favorite </button>
         
-        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.trashClicked()"    ng-model="singleModel"> Trash </button>
+        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.trashClicked()"   > Trash </button>
         
          &emsp;&emsp;Test:
-        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.testClicked('lg')" ng-model="singleModel"> Details </button>
+        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.testClicked('lg')"> Details </button>
 
-    <!-- ===========document editor frame==================================== -->
+    <!-- ===========document editor panel==================================== -->
     <!-- show/hide toggled by Edit-btn with ng-click,ng-init and ng-if -->
-        <div ng-if="showHideDiv" class="animate-if" ng-controller="doc-edit-ctrl as ctrl">
+        <div ng-controller="doc-edit-ctrl as ctrl" ng-if="$btnCtrl.showHideDiv" class="animate-if" >
             <div class="modal-header">
                 <h3 class="modal-title" id="modal-title">Document Editor <small>(click Edit again to hide)</small></h3>
             </div>
@@ -121,8 +121,8 @@
 
                         <div class="row">
                             <div class="col-md-4">
-                                <label> <input type="checkbox" ng-model="ctrl.doc.F"> Favorite </label>
-                                <label> <input type="checkbox" ng-model="ctrl.doc.T"> Trash </label>
+                                <label> <input type="checkbox" ng-model="ctrl.favChecked"> Favorite </label>
+                                <label> <input type="checkbox" ng-model="ctrl.trashChecked"> Trash </label>
                             </div>
                             <div class="col-md-4 col-md-offset-2">
                                 <button type="button" class="btn btn-success" ng-click="ctrl.formSubmit()">Submit</button>
@@ -135,7 +135,7 @@
             <div class="modal-footer">
             </div>
         </div>
-    <!-- ^^^^^^^^^^^document editor frame^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
+    <!-- ^^^^^^^^^^^document editor panel^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
     </div>
 
     <!-- ==============================uiGrid================================== -->
@@ -146,7 +146,7 @@
     <!-- ==================modalEditContent.html template====================== -->
     <script id="modalEditContent.html" type="text/ng-template">
         <div class="modal-header">
-           <h4>Raw Content</h4>
+           <h4>Raw group selection content</h4>
         </div>
         <div class="modal-body" id="modal-body">
             <ul>
@@ -154,7 +154,7 @@
                     <a href="#" ng-click="$event.preventDefault();  $modCtrl.selected.item = item">{{ item }}</a>
                 </li>
             </ul>
-            Selected: <div id="s_box"><h5><b>{{ $modCtrl.selected.item }}</b></h5></div>
+            Selected item: <div id="s_box"><h5><b>{{ $modCtrl.selected.item }}</b></h5></div>
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary" type="button" ng-click="$modCtrl.ok()">OK</button>

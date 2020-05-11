@@ -1,11 +1,13 @@
-function n_log(name,content) {
-    console.log("=======< "+name+" >=======");
-    console.log(content);
-    console.log("=======< "+name+" >=======");
-}
+app_log = function() {
+    if(false) {
+        for(let i=0; i<arguments.length; i++) {
+            console.log(arguments[i]);
+        }
+    }
+};
 
-function i_was_here(name) {
-    n_log(name,"I was here");
-}
+i_was_here = function(name) {
+    if(false) console.log("============================< "+name+" >");
+};
 
-module.exports = {n_log, i_was_here};
+module.exports = {app_log, i_was_here};
