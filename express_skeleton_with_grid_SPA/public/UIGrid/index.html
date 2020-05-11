@@ -125,7 +125,8 @@
                                 <label> <input type="checkbox" ng-model="ctrl.trashChecked"> Trash </label>
                             </div>
                             <div class="col-md-4 col-md-offset-2">
-                                <button type="button" class="btn btn-success" ng-click="ctrl.formSubmit()">Submit</button>
+                                <!-- <button type="button" class="btn btn-success" ng-class="{done: btn-danger}" ng-model="ctrl.done"  ng-click="ctrl.formSubmit()">Submit</button> -->
+                                <button type="button" class="btn btn-success" ng-class="{'btn-link': ctrl.doc_submit}" ng-model="ctrl.doc_submit" ng-click="ctrl.formSubmit()">Submit</button>
                                 <button type="button" class="btn btn-danger" ng-click="ctrl.formCancel()">Cancel</button>
                             </div>
                         </div>

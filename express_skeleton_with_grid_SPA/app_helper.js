@@ -1,5 +1,5 @@
 app_log = function() {
-    if(false) {
+    if(true) {
         for(let i=0; i<arguments.length; i++) {
             console.log(arguments[i]);
         }
@@ -7,7 +7,7 @@ app_log = function() {
 };
 
 i_was_here = function(name) {
-    if(false) console.log("============================< "+name+" >");
+    if(true) console.log("============================< "+name+" >");
 };
 
 module.exports = {app_log, i_was_here};

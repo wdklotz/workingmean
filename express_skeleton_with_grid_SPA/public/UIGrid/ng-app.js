@@ -137,6 +137,7 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocService',function($scope,DocServ
     var selection = scope.gridApi.selection;
     var docs = selection.getSelectedRows();
     vm.doc = docs[idx];
+    vm.doc_submit = false;    // submit btn-toggle
     if (docs.length != 0) {
         console.log('EDIT: docId: ',vm.doc.id,' vm.doc: ',vm.doc);
         vm.favChecked   = (vm.doc.Favorite == 'T')? true:false;
@@ -181,7 +182,8 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocService',function($scope,DocServ
     if (docs.length != 0) {
         vm.doc.Favorite = (vm.favChecked)? 'T':'F';
         vm.doc.Trash    = (vm.trashChecked)? 'T':'F';
-        vm.doc.$update().then(function(doc){console.log('updated ',doc);});
+        vm.doc.$update();
+        vm.doc_submit = true;
         }
     };
 
