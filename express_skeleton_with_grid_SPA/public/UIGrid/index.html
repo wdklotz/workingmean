@@ -10,6 +10,7 @@
     <script src="./lib/angular1.7.9/angular-touch.js"></script>
     <script src="./lib/angular1.7.9/angular-animate.js"></script>
     <script src="./lib/angular1.7.9/angular-resource.js"></script>
+    <script src="./lib/angular1.7.9/angular-sanitize.js"></script>
 <!-- Angular -->
 
 <!-- Bootstrap -->
@@ -24,7 +25,7 @@
     <!-- <script src="http://ui-grid.info/release/ui-grid.js"></script> -->
     <script src="./lib/ui-grid4.8.0/ui-grid.js"></script>
     <!-- <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css"> -->
-    <link  href="./lib/ui-grid4.8.0/ui-grid.css" rel="stylesheet" type="text/css"/>    
+    <link  href="./lib/ui-grid4.8.0/ui-grid.css" rel="stylesheet" type="text/css"/>
 <!-- UI-Grid -->
 
 <!-- this App -->
@@ -101,7 +102,19 @@
 
                         <div class="input-group form-group">
                         <span class="input-group-addon label-col">Author:</span>
-                        <input type="text" class="form-control input-col" ng-model="ctrl.doc.Author">
+                        <!-- <input type="text" class="form-control input-col" ng-model="ctrl.doc.Author"> -->
+<ui-select ng-model="ctrl.person.selectedValue" theme="select2" ng-disabled="ctrl.disabled" style="min-width: 300px;" title="Choose Author">
+    <ui-select-match placeholder="Select Author in the list or search his name...">
+        {{$select.selected.value.name}}
+    </ui-select-match>
+	<ui-select-choices repeat="author.value as (key, author) in ctrl.authorObj | filter: { value: { name: $select.search }}">
+        <div ng-bind-html="Author.value.name | highlight: $select.search"></div>
+        <!-- <small> -->
+            <!-- email: {{person.value.email}} -->
+            <!-- age: {{person.value.age}} -->
+        <!-- </small> --> 
+    </ui-select-choices>
+</ui-select>
                         </div>
 
                         <div class="input-group form-group">
@@ -165,6 +178,9 @@
     <!-- ^^^^^^^^^^^^^^^^^^modalEditContent.html template^^^^^^^^^^^^^^^^^^^^^^ -->
 
     <script src="./ng-app.js"></script>
+    <!-- ui-select files -->
+    <script src="./lib/select/select.js"></script>
+    <link rel="stylesheet" href="./lib/select/select.css">
 
 </body>
 </html>
