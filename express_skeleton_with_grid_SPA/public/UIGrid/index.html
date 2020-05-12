@@ -13,6 +13,15 @@
     <script src="./lib/angular1.7.9/angular-sanitize.js"></script>
 <!-- Angular -->
 
+<!-- ui-select files -->
+    <script src="./lib/select/select.js"></script>
+    <link  href="./lib/select/select.css" rel="stylesheet">
+<!-- ui-select files -->
+
+<!-- Select2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css" rel="stylesheet">    
+<!-- Select2 -->
+
 <!-- Bootstrap -->
     <!-- <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script> -->
     <script src="./lib/ui-bootstrap2.5.0/ui-bootstrap-tpls.js"></script>
@@ -24,15 +33,15 @@
 <!-- UI-Grid -->
     <!-- <script src="http://ui-grid.info/release/ui-grid.js"></script> -->
     <script src="./lib/ui-grid4.8.0/ui-grid.js"></script>
-    <!-- <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css"> -->
+    <!-- <link href="http://ui-grid.info/release/ui-grid.css" type="text/css" rel="stylesheet"> -->
     <link  href="./lib/ui-grid4.8.0/ui-grid.css" rel="stylesheet" type="text/css"/>
 <!-- UI-Grid -->
 
 <!-- this App -->
-    <link rel="stylesheet" href="./ng-styles.css" type="text/css">
+    <link href="./ng-styles.css" type="text/css" rel="stylesheet">
 <!-- UI-Grid -->
 
-    <!-- local css for editor panel -->
+    <!-- local css for editor panel and Select2 -->
      <style>  
     .input-group > .label-col {
         width: 130px;
@@ -55,6 +64,14 @@
     #s_box {
         width: 1200px;
         overflow-wrap: break-word;
+    }
+    </style>
+    <!-- select2 -->
+    <style>
+    .select2 > .select2-choice.ui-select-match {
+        /* Because of the inclusion of Bootstrap */
+        height: 29px;
+        width: 600px;  /*wdk*/
     }
     </style>
 </head>
@@ -84,68 +101,65 @@
     <!-- ===========document editor panel==================================== -->
     <!-- show/hide toggled by Edit-btn with ng-click,ng-init and ng-if -->
         <div ng-controller="doc-edit-ctrl as ctrl" ng-if="$btnCtrl.showHideDiv" class="animate-if" >
+        <!-- Header -->
             <div class="modal-header">
                 <h3 class="modal-title" id="modal-title">Document Editor <small>(click Edit again to hide)</small></h3>
             </div>
+        <!-- Body   -->
             <div class="modal-body" id="modal-body">
-                <form>
-                    <div class="container">
-                        <div class="input-group form-group">
-                        <span class="input-group-addon label-col">Id:</span>
-                        <input type="text" class="form-control input-col" readonly ng-model="ctrl.doc.id">
-                        </div>
-
-                        <div class="input-group form-group">
-                        <span class="input-group-addon label-col">Document:</span>
-                        <input type="text" class="form-control input-col" readonly ng-model="ctrl.doc.Document">
-                        </div>
-
-                        <div class="input-group form-group">
-                        <span class="input-group-addon label-col">Author:</span>
-                        <!-- <input type="text" class="form-control input-col" ng-model="ctrl.doc.Author"> -->
-<ui-select ng-model="ctrl.person.selectedValue" theme="select2" ng-disabled="ctrl.disabled" style="min-width: 300px;" title="Choose Author">
-    <ui-select-match placeholder="Select Author in the list or search his name...">
-        {{$select.selected.value.name}}
-    </ui-select-match>
-	<ui-select-choices repeat="author.value as (key, author) in ctrl.authorObj | filter: { value: { name: $select.search }}">
-        <div ng-bind-html="Author.value.name | highlight: $select.search"></div>
-        <!-- <small> -->
-            <!-- email: {{person.value.email}} -->
-            <!-- age: {{person.value.age}} -->
-        <!-- </small> --> 
-    </ui-select-choices>
-</ui-select>
-                        </div>
-
-                        <div class="input-group form-group">
-                        <span class="input-group-addon label-col">Type:</span>
-                        <input type="text" class="form-control input-col" ng-model="ctrl.doc.Type">
-                        </div>
-
-                        <div class="input-group form-group">
-                        <span class="input-group-addon label-col">Shelf:</span>
-                        <input type="text" class="form-control input-col" ng-model="ctrl.doc.Shelf">
-                        </div>
-
-                        <div class="input-group form-group">
-                        <span class="input-group-addon label-col">Keywords:</span>
-                        <input type="text" class="form-control input-col" ng-model="ctrl.doc.Keywords">
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label> <input type="checkbox" ng-model="ctrl.favChecked"> Favorite </label>
-                                <label> <input type="checkbox" ng-model="ctrl.trashChecked"> Trash </label>
-                            </div>
-                            <div class="col-md-4 col-md-offset-2">
-                                <!-- <button type="button" class="btn btn-success" ng-class="{done: btn-danger}" ng-model="ctrl.done"  ng-click="ctrl.formSubmit()">Submit</button> -->
-                                <button type="button" class="btn btn-success" ng-class="{'btn-link': ctrl.doc_submit}" ng-model="ctrl.doc_submit" ng-click="ctrl.formSubmit()">Submit</button>
-                                <button type="button" class="btn btn-danger" ng-click="ctrl.formCancel()">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+        <form>
+            <div class="container">
+            <!-- ID -->
+            <div class="input-group form-group">
+            <span class="input-group-addon label-col">Id:</span>
+            <input type="text" class="form-control input-col" readonly ng-model="ctrl.doc.id">
             </div>
+            <!-- Document -->
+            <div class="input-group form-group">
+            <span class="input-group-addon label-col">Document:</span>
+            <input type="text" class="form-control input-col" readonly ng-model="ctrl.doc.Document">
+            </div>
+            <!-- Author select-->
+            <div class="input-group form-group" ng-controller="AuthCtrl as actrl">
+            <span class="input-group-addon label-col">Author:</span>
+            <ui-select ng-model="actrl.person.selectedValue" theme="select2" ng-disabled="actrl.disabled" style="min-width: 300px;" title="Choose a person">
+                <ui-select-match placeholder="Select Author in the list or search his name...">{{$select.selected.value.name}}</ui-select-match>
+                <ui-select-choices repeat="person.value as (key, person) in actrl.peopleObj | filter: { value: { name: $select.search }}">
+                    <div ng-bind-html="person.value.name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+            </div/*AuthCtrl*/>
+
+            <div class="input-group form-group">
+            <span class="input-group-addon label-col">Type:</span>
+            <input type="text" class="form-control input-col" ng-model="ctrl.doc.Type">
+            </div>
+
+            <div class="input-group form-group">
+            <span class="input-group-addon label-col">Shelf:</span>
+            <input type="text" class="form-control input-col" ng-model="ctrl.doc.Shelf">
+            </div>
+
+            <div class="input-group form-group">
+            <span class="input-group-addon label-col">Keywords:</span>
+            <input type="text" class="form-control input-col" ng-model="ctrl.doc.Keywords">
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <label> <input type="checkbox" ng-model="ctrl.favChecked"> Favorite </label>
+                    <label> <input type="checkbox" ng-model="ctrl.trashChecked"> Trash </label>
+                </div>
+                <div class="col-md-4 col-md-offset-2">
+                    <!-- <button type="button" class="btn btn-success" ng-class="{done: btn-danger}" ng-model="ctrl.done"  ng-click="ctrl.formSubmit()">Submit</button> -->
+                    <button type="button" class="btn btn-success" ng-class="{'btn-link': ctrl.doc_submit}" ng-model="ctrl.doc_submit" ng-click="ctrl.formSubmit()">Submit</button>
+                    <button type="button" class="btn btn-danger" ng-click="ctrl.formCancel()">Cancel</button>
+                </div>
+            </div>
+            </div/*class="container"*/>
+        </form>
+            </div/*id="modal-body*/>
+        <!-- Footer -->
             <div class="modal-footer">
             </div>
         </div>
@@ -178,9 +192,6 @@
     <!-- ^^^^^^^^^^^^^^^^^^modalEditContent.html template^^^^^^^^^^^^^^^^^^^^^^ -->
 
     <script src="./ng-app.js"></script>
-    <!-- ui-select files -->
-    <script src="./lib/select/select.js"></script>
-    <link rel="stylesheet" href="./lib/select/select.css">
 
 </body>
 </html>
