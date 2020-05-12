@@ -1,3 +1,6 @@
+'use strict';
+(function() {
+    
 var express = require('express');
 var router  = express.Router();
 var api = require('./api.js');
@@ -10,4 +13,6 @@ router.put('/lib/:documentId',    api.documentUpdate);     // PUT :id (update)
 router.delete('/lib/:documentId', api.documentDelete);     // DELETE :id
 
 module.exports = router;
+
+})();
  

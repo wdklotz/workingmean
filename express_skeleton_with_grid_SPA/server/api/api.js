@@ -1,3 +1,6 @@
+'use strict';
+(function(){
+    
 const db = require('../dbConnection/connector');
 var {n_log, i_was_here} = require('../../app_helper.js');
 
@@ -103,6 +106,8 @@ module.exports.documentCreate = function(req,res) {sendJsonResponse(res,200,{"st
 module.exports.documentById   = documentById;
 module.exports.documentUpdate = documentUpdate;
 module.exports.documentDelete = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
+
+})();
 
 /*
 const apiOptions = {

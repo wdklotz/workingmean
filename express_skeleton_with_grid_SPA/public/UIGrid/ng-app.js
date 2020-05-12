@@ -1,8 +1,11 @@
+'use strict';
+(function() {
+    
 var myApp = angular.module('ng-app', [
-    'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 
-    'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 'ui.bootstrap',
-    'ngResource','ngSanitize', 'ui.select'
-    ]);
+'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 
+'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 'ui.bootstrap',
+'ngResource','ngSanitize', 'ui.select'
+]);
 
 myApp.controller('ng-app-ctrl', [
         '$scope', '$http', 'uiGridConstants', 'DocService',
@@ -295,6 +298,8 @@ myApp.controller('AuthCtrl', function ($scope, $http, $timeout, $interval) {
     { name: 'Nicolás',   email: 'nicolas@email.com',    age: 43, country: 'Colombia' }
   ];
 });
+
+})();
 
 /*
 * for reduce see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
