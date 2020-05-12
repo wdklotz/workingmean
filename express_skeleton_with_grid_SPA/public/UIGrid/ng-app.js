@@ -300,5 +300,8 @@ myApp.controller('AuthCtrl', function ($scope, $http, $timeout, $interval) {
 * for reduce see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
 * for ui-bootstrap see: https://angular-ui.github.io/bootstrap/
 * for uibModal see: https://github.com/angular-ui/bootstrap/tree/master/src/modal
-* for <script type="text/ng-template> a.k.a. inlined template see : https://docs.angularjs.org/api/ng/directive/script
+* for <script type="text/ng-template> a.k.a. inlined template see :
+*   https://docs.angularjs.org/api/ng/directive/script
+* for AngularJS-native version of Select2 see: https://github.com/angular-ui/ui-select 
+*   in relation: jQuery Select2: https://select2.org/
 */
