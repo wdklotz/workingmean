@@ -122,12 +122,14 @@
             <!-- Author select-->
             <div class="input-group form-group" ng-controller="AuthCtrl as actrl">
             <span class="input-group-addon label-col">Author:</span>
-            <ui-select ng-model="actrl.person.selectedValue" theme="select2" ng-disabled="actrl.disabled" style="min-width: 300px;" title="Choose a person">
-                <ui-select-match placeholder="Select Author in the list or search his name...">{{$select.selected.value.name}}</ui-select-match>
-                <ui-select-choices repeat="person.value as (key, person) in actrl.peopleObj | filter: { value: { name: $select.search }}">
-                    <div ng-bind-html="person.value.name | highlight: $select.search"></div>
-                </ui-select-choices>
-            </ui-select>
+                <input type="text" class="form-control input-col" ng-model="ctrl.doc.Author">
+                <!-- ui-select -->
+                <ui-select ng-model="actrl.person.selectedValue" theme="select2" ng-disabled="actrl.disabled" style="min-width: 300px;" title="Choose a person">
+                    <ui-select-match placeholder="Select Author in the list or search his name...">{{$select.selected.value.name}}</ui-select-match>
+                    <ui-select-choices repeat="person.value as (key, person) in actrl.peopleObj | filter: { value: { name: $select.search }}">
+                        <div ng-bind-html="person.value.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
             </div/*AuthCtrl*/>
 
             <div class="input-group form-group">

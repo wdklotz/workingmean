@@ -1,8 +1,11 @@
+'use strict';
+(function() {
+    
 var myApp = angular.module('ng-app', [
-    'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 
-    'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 'ui.bootstrap',
-    'ngResource','ngSanitize', 'ui.select'
-    ]);
+'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 
+'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 'ui.bootstrap',
+'ngResource','ngSanitize', 'ui.select'
+]);
 
 myApp.controller('ng-app-ctrl', [
         '$scope', '$http', 'uiGridConstants', 'DocService',
@@ -296,9 +299,14 @@ myApp.controller('AuthCtrl', function ($scope, $http, $timeout, $interval) {
   ];
 });
 
+})();
+
 /*
 * for reduce see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
 * for ui-bootstrap see: https://angular-ui.github.io/bootstrap/
 * for uibModal see: https://github.com/angular-ui/bootstrap/tree/master/src/modal
-* for <script type="text/ng-template> a.k.a. inlined template see : https://docs.angularjs.org/api/ng/directive/script
+* for <script type="text/ng-template> a.k.a. inlined template see :
+*   https://docs.angularjs.org/api/ng/directive/script
+* for AngularJS-native version of Select2 see: https://github.com/angular-ui/ui-select 
+*   in relation: jQuery Select2: https://select2.org/
 */
