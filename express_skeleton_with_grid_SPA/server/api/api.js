@@ -6,7 +6,7 @@ var {n_log, i_was_here} = require('../../app_helper.js');
 
 const sendJsonResponse = function (res, status, content) {
     i_was_here("sendJsonResponse");
-    app_log(content);
+    // app_log(content);
     res.json(content);
     res.status(status);
     res.end();
@@ -106,6 +106,49 @@ module.exports.documentCreate = function(req,res) {sendJsonResponse(res,200,{"st
 module.exports.documentById   = documentById;
 module.exports.documentUpdate = documentUpdate;
 module.exports.documentDelete = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
+
+const authors = function(req,res) {
+    i_was_here('authors');
+    const sql = `SELECT * from doc_author`;
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+          return console.error(err.message);
+        } else {     // all table-rows
+            app_log(rows);
+            sendJsonResponse(res,200,rows);
+        } 
+    });
+};
+
+const types = function(req,res) {
+    i_was_here('types');
+    const sql = `SELECT * from doc_type`;
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+          return console.error(err.message);
+        } else {     // all table-rows
+            app_log(rows);
+            sendJsonResponse(res,200,rows);
+        } 
+    });
+};
+
+const shelfs = function(req,res) {
+    i_was_here('shelfs');
+    const sql = `SELECT * from doc_shelf`;
+    db.all(sql, [], (err, rows) => {
+        if (err) {
+          return console.error(err.message);
+        } else {     // all table-rows
+            app_log(rows);
+            sendJsonResponse(res,200,rows);
+        } 
+    });
+};
+
+module.exports.authors  = authors;
+module.exports.types    = types;
+module.exports.shelfs   = shelfs;
 
 })();
 

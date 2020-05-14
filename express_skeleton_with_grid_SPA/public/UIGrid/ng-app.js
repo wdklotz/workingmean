@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 (function() {
     
 var myApp = angular.module('ng-app', [
@@ -197,21 +197,32 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocService',function($scope,DocServ
     };
 }]);
 
-// RESTFUL data providers
+// RESTFUL data provider services
 myApp.factory('DocService', ['$resource', function($resource) {
     return $resource('/api/lib/:id',
         {id:'@id'},
         {update: {method: 'PUT'}} // there is no HTTP PUT support available per default !!!
         );
 }]);
-myApp.factory('ItemService',['$resource', function($resource) {
-    let authorResource = $resource('/api/lib/authors');
-    let typeResource   = $resource('/api/lib/types');
-    let shelfResource  = $resource('/api/lib/shelfs');
-    let authors = {};
-    let types   = {};
-    let shelfs  = {};
-    return [{Authors:authors},{Types:types},{Shelfs:shelfs}];
+myApp.factory('Author',['$resource',function($resource){
+    return $resource('/api/authors/:id',{});
+}]);
+myApp.factory('Type',['$resource', function($resource) {
+    return $resource('/api/types/:id',{});
+}]);
+myApp.factory('Shelf',['$resource', function($resource) {
+    return $resource('/api/shelfs/:id',{});
+}]);
+
+// transform table service
+myApp.factory('Transformer',[function(){
+    return function(items, label) {
+        var out = [];
+        for (var i=0; i < items.length; i++) {
+           out[i] = {name: items[i][label], id:items[i].id};
+       }
+       return out;
+    };
 }]);
 
 // nofilter filter
@@ -224,7 +235,41 @@ myApp.filter('propsFilter', function() {
   };
 });
 
-myApp.controller('AuthCtrl', function ($scope, $http, $timeout, $interval) {
+myApp.controller('AuthCtrl',['Author','Transformer', function (Author,Transformer) {
+    var vm = this;
+
+    vm.disabled = false;
+    vm.searchEnabled = true;
+
+    /* // mock data */
+    // vm.peopleObj = {
+    // '1' :  { name: 'Adam',      id: 24},
+    // '2' :  { name: 'Amalie',    id: 25},
+    // '3' :  { name: 'Estefanía', id: 26},
+    // '4' :  { name: 'Adrian',    id: 27},
+    // '5' :  { name: 'Wladimir',  id: 28},
+    // '6' :  { name: 'Samantha',  id: 29},
+    // '7' :  { name: 'Nicole',    id: 30},
+    // '8' :  { name: 'Natasha',   id: 31},
+    // '9' :  { name: 'Michael',   id: 32},
+    // '10' : { name: 'Nicolás',   id: 33}
+    // };
+    vm.authorObj ={};
+    vm.person = {};
+
+    Author.query().$promise.then(function(value) {
+        // console.log(value); 
+        const authorObj = Transformer(value,'Author');
+        vm.authorObj = authorObj;
+        vm.author = vm.authorObj[1];
+        vm.person.selectedValue = vm.authorObj[1];
+        vm.person.selected = vm.person.selectedValue;
+        console.log('vm.person.selected: ',vm.person.selected);
+    });
+ 
+}]);
+
+myApp.controller('TypeCtrl',['Type', function (Type) {
     var vm = this;
 
     vm.disabled = false;
@@ -246,9 +291,9 @@ myApp.controller('AuthCtrl', function ($scope, $http, $timeout, $interval) {
     vm.person = {};
     vm.person.selectedValue = vm.peopleObj[1];
     vm.person.selected = vm.person.selectedValue;
-});
+}]);
 
-myApp.controller('TypeCtrl', function ($scope, $http, $timeout, $interval) {
+myApp.controller('ShelfCtrl',['Shelf', function (Shelf) {
     var vm = this;
 
     vm.disabled = false;
@@ -270,31 +315,7 @@ myApp.controller('TypeCtrl', function ($scope, $http, $timeout, $interval) {
     vm.person = {};
     vm.person.selectedValue = vm.peopleObj[1];
     vm.person.selected = vm.person.selectedValue;
-});
-
-myApp.controller('ShelfCtrl', function ($scope, $http, $timeout, $interval) {
-    var vm = this;
-
-    vm.disabled = false;
-    vm.searchEnabled = true;
-
-    /* // mock data */
-    vm.peopleObj = {
-    '1' :  { name: 'Adam',      id: 24},
-    '2' :  { name: 'Amalie',    id: 25},
-    '3' :  { name: 'Estefanía', id: 26},
-    '4' :  { name: 'Adrian',    id: 27},
-    '5' :  { name: 'Wladimir',  id: 28},
-    '6' :  { name: 'Samantha',  id: 29},
-    '7' :  { name: 'Nicole',    id: 30},
-    '8' :  { name: 'Natasha',   id: 31},
-    '9' :  { name: 'Michael',   id: 32},
-    '10' : { name: 'Nicolás',   id: 33}
-    };
-    vm.person = {};
-    vm.person.selectedValue = vm.peopleObj[1];
-    vm.person.selected = vm.person.selectedValue;
-});
+}]);
 
 })();
 
