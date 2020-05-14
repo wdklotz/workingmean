@@ -127,7 +127,7 @@
             <span class="input-group-addon label-col">Author:</span>
                 <input type="text" class="form-control input-col" ng-model="ctrl.doc.Author">
                 <!-- ui-select -->
-                <ui-select ng-model="actrl.person.selectedValue" theme="select2" ng-disabled="actrl.disabled" style="min-width: 300px;" title="Choose a person">
+                <ui-select ng-model="actrl.person.selectedValue" theme="select2" ng-disabled="actrl.disabled" style="min-width: 300px;" title="Choose an author">
                     <ui-select-match placeholder="Select Author in the list or search his name...">{{$select.selected.value.name}}</ui-select-match>
                     <ui-select-choices repeat="person.value as (key, person) in actrl.authorObj | filter: { value: { name: $select.search }}">
                         <div ng-bind-html="person.value.name | highlight: $select.search"></div>
@@ -140,9 +140,9 @@
             <span class="input-group-addon label-col">Type:</span>
                 <input type="text" class="form-control input-col" ng-model="ctrl.doc.Type">
                 <!-- ui-select -->
-                <ui-select ng-model="tctrl.person.selectedValue" theme="select2" ng-disabled="tctrl.disabled" style="min-width: 300px;" title="Choose a person">
-                    <ui-select-match placeholder="Select Author in the list or search his name...">{{$select.selected.value.name}}</ui-select-match>
-                    <ui-select-choices repeat="person.value as (key, person) in tctrl.peopleObj | filter: { value: { name: $select.search }}">
+                <ui-select ng-model="tctrl.person.selectedValue" theme="select2" ng-disabled="tctrl.disabled" style="min-width: 300px;" title="Choose a type">
+                    <ui-select-match placeholder="Select Type in the list or search his name...">{{$select.selected.value.name}}</ui-select-match>
+                    <ui-select-choices repeat="person.value as (key, person) in tctrl.typeObj | filter: { value: { name: $select.search }}">
                         <div ng-bind-html="person.value.name | highlight: $select.search"></div>
                     </ui-select-choices>
                 </ui-select>
@@ -153,9 +153,9 @@
             <span class="input-group-addon label-col">Shelf:</span>
                 <input type="text" class="form-control input-col" ng-model="ctrl.doc.Shelf">
                 <!-- ui-select -->
-                <ui-select ng-model="sctrl.person.selectedValue" theme="select2" ng-disabled="sctrl.disabled" style="min-width: 300px;" title="Choose a person">
-                    <ui-select-match placeholder="Select Author in the list or search his name...">{{$select.selected.value.name}}</ui-select-match>
-                    <ui-select-choices repeat="person.value as (key, person) in sctrl.peopleObj | filter: { value: { name: $select.search }}">
+                <ui-select ng-model="sctrl.person.selectedValue" theme="select2" ng-disabled="sctrl.disabled" style="min-width: 300px;" title="Choose a shelf">
+                    <ui-select-match placeholder="Select Shelf in the list or search his name...">{{$select.selected.value.name}}</ui-select-match>
+                    <ui-select-choices repeat="person.value as (key, person) in sctrl.shelfObj | filter: { value: { name: $select.search }}">
                         <div ng-bind-html="person.value.name | highlight: $select.search"></div>
                     </ui-select-choices>
                 </ui-select>

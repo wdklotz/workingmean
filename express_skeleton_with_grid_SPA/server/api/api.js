@@ -151,26 +151,3 @@ module.exports.types    = types;
 module.exports.shelfs   = shelfs;
 
 })();
-
-/*
-const apiOptions = {
-    server: "http://localhost:3000"
-};
-const requestOptions = {
-    url: apiOptions.server+"/api/lib",
-    method: "GET",
-    json: {},
-    qs: {
-        offset: "optional"
-    }
-};
-request(requestOptions,function(err,response,body) {
-    if (err) {
-        app_log(err);
-    } else if (response.statusCode === 200) {
-        app_log(body);
-    } else {
-        app_log(response.statusCode);
-    }
-});
-*/

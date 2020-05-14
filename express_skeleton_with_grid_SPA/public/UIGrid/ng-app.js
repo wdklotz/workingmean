@@ -244,60 +244,43 @@ myApp.controller('AuthCtrl',['Author','Transformer', function (Author,Transforme
     vm.person = {};
 
     Author.query().$promise.then(function(value) {
-        const authorObj = Transformer(value,'Author');
-        vm.authorObj = authorObj;
+        vm.authorObj = Transformer(value,'Author');
         vm.person.selectedValue = vm.authorObj[1];
         vm.person.selected = vm.person.selectedValue;
     });
  
 }]);
 
-myApp.controller('TypeCtrl',['Type', function (Type) {
+myApp.controller('TypeCtrl',['Type','Transformer', function (Type,Transformer) {
     var vm = this;
 
     vm.disabled = false;
     vm.searchEnabled = true;
-
-    /* // mock data */
-    vm.peopleObj = {
-    '1' :  { name: 'Adam',      id: 24},
-    '2' :  { name: 'Amalie',    id: 25},
-    '3' :  { name: 'Estefanía', id: 26},
-    '4' :  { name: 'Adrian',    id: 27},
-    '5' :  { name: 'Wladimir',  id: 28},
-    '6' :  { name: 'Samantha',  id: 29},
-    '7' :  { name: 'Nicole',    id: 30},
-    '8' :  { name: 'Natasha',   id: 31},
-    '9' :  { name: 'Michael',   id: 32},
-    '10' : { name: 'Nicolás',   id: 33}
-    };
+    vm.typeObj ={};
     vm.person = {};
-    vm.person.selectedValue = vm.peopleObj[1];
-    vm.person.selected = vm.person.selectedValue;
+
+    Type.query().$promise.then(function(value) {
+        vm.typeObj = Transformer(value,'Type');
+        vm.person.selectedValue = vm.typeObj[1];
+        vm.person.selected = vm.person.selectedValue;
+    });
+ 
 }]);
 
-myApp.controller('ShelfCtrl',['Shelf', function (Shelf) {
+myApp.controller('ShelfCtrl',['Shelf','Transformer', function (Shelf,Transformer) {
     var vm = this;
 
     vm.disabled = false;
     vm.searchEnabled = true;
-
-    /* // mock data */
-    vm.peopleObj = {
-    '1' :  { name: 'Adam',      id: 24},
-    '2' :  { name: 'Amalie',    id: 25},
-    '3' :  { name: 'Estefanía', id: 26},
-    '4' :  { name: 'Adrian',    id: 27},
-    '5' :  { name: 'Wladimir',  id: 28},
-    '6' :  { name: 'Samantha',  id: 29},
-    '7' :  { name: 'Nicole',    id: 30},
-    '8' :  { name: 'Natasha',   id: 31},
-    '9' :  { name: 'Michael',   id: 32},
-    '10' : { name: 'Nicolás',   id: 33}
-    };
+    vm.shelfObj ={};
     vm.person = {};
-    vm.person.selectedValue = vm.peopleObj[1];
-    vm.person.selected = vm.person.selectedValue;
+
+    Shelf.query().$promise.then(function(value) {
+        vm.shelfObj = Transformer(value,'Shelf');
+        vm.person.selectedValue = vm.shelfObj[1];
+        vm.person.selected = vm.person.selectedValue;
+    });
+ 
 }]);
 
 })();

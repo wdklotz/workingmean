@@ -15,7 +15,7 @@ router.delete('/lib/:documentId', api.documentDelete);     // DELETE :id
 
 router.get('/authors',    api.authors);
 router.get('/types',      api.types);
-router.get(' /shelfs',    api.shelfs);
+router.get('/shelfs',     api.shelfs);
 
 module.exports = router;
 
