@@ -214,7 +214,7 @@ myApp.factory('Shelf',['$resource', function($resource) {
     return $resource('/api/shelfs/:id',{});
 }]);
 
-// transform table service
+// a table transform service
 myApp.factory('Transformer',[function(){
     return function(items, label) {
         var out = [];
@@ -240,31 +240,14 @@ myApp.controller('AuthCtrl',['Author','Transformer', function (Author,Transforme
 
     vm.disabled = false;
     vm.searchEnabled = true;
-
-    /* // mock data */
-    // vm.peopleObj = {
-    // '1' :  { name: 'Adam',      id: 24},
-    // '2' :  { name: 'Amalie',    id: 25},
-    // '3' :  { name: 'Estefanía', id: 26},
-    // '4' :  { name: 'Adrian',    id: 27},
-    // '5' :  { name: 'Wladimir',  id: 28},
-    // '6' :  { name: 'Samantha',  id: 29},
-    // '7' :  { name: 'Nicole',    id: 30},
-    // '8' :  { name: 'Natasha',   id: 31},
-    // '9' :  { name: 'Michael',   id: 32},
-    // '10' : { name: 'Nicolás',   id: 33}
-    // };
     vm.authorObj ={};
     vm.person = {};
 
     Author.query().$promise.then(function(value) {
-        // console.log(value); 
         const authorObj = Transformer(value,'Author');
         vm.authorObj = authorObj;
-        vm.author = vm.authorObj[1];
         vm.person.selectedValue = vm.authorObj[1];
         vm.person.selected = vm.person.selectedValue;
-        console.log('vm.person.selected: ',vm.person.selected);
     });
  
 }]);
