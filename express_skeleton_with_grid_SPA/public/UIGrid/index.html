@@ -85,7 +85,6 @@
         &emsp; Selection:
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.viewClicked()"> View </button>
         
-        <!-- <button type="button" class="btn btn-primary" ng-click="showHideDiv = !showHideDiv"> Edit </button> -->
         <button type="button" class="btn btn-primary" ng-model="$btnCtrl.showHideDiv" ng-click="$btnCtrl.onEdit()"> Edit </button>
         
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.deleteClicked()"  > Delete </button>
@@ -99,7 +98,7 @@
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.testClicked('lg')"> Details </button>
 
     <!-- ===========document editor panel==================================== -->
-    <!-- show/hide toggled by Edit-btn with ng-click,ng-init and ng-if -->
+    <!-- show/hide toggled by Edit-btn with ng-click and ng-if -->
         <div ng-controller="doc-edit-ctrl as ctrl" ng-if="$btnCtrl.showHideDiv" class="animate-if" >
         <!-- Header -->
             <div class="modal-header">
@@ -148,7 +147,7 @@
                 </ui-select>
             </div>
 
-            <!-- Shelf -->
+            <!-- Shelf select-->
             <div class="input-group form-group" ng-controller="ShelfCtrl as sctrl">
             <span class="input-group-addon label-col">Shelf:</span>
                 <input type="text" class="form-control input-col" ng-model="ctrl.doc.Shelf">
@@ -213,6 +212,7 @@
     </script>
     <!-- ^^^^^^^^^^^^^^^^^^modalEditContent.html template^^^^^^^^^^^^^^^^^^^^^^ -->
 
+    <script src="./app_helper.js"></script>
     <script src="./ng-app.js"></script>
 
 </body>

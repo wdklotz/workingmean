@@ -141,7 +141,7 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes',function($scope,DocRes) {
     vm.doc = docs[idx];
     vm.doc_submit = false;    // submit btn-toggle
     if (docs.length != 0) {
-        console.log('EDIT: docId: ',vm.doc.id,' vm.doc: ',vm.doc);
+        // console.log('EDIT: docId: ',vm.doc.id,' vm.doc: ',vm.doc);
         vm.favChecked   = (vm.doc.Favorite == 'T')? true:false;
         vm.trashChecked = (vm.doc.Trash == 'T')? true:false;
         selection.unSelectRow(docs[idx]);   // unselect first
@@ -227,7 +227,7 @@ myApp.factory('Trafo',[function(){
     };
 }]);
 
-// nofilter filter
+// a nofilter filter
 myApp.filter('propsFilter', function() {
   return function(items, props) {
     var out = [];
@@ -247,6 +247,7 @@ myApp.controller('AuthCtrl',['AuthorRes','Trafo', function (AuthorRes,Trafo) {
 
     AuthorRes.query().$promise.then(function(value) {
         vm.authorObj = Trafo.toSelect2(value,'Author');
+        app_log(vm.authorObj);
         vm.person.selectedValue = vm.authorObj[1];
         vm.person.selected = vm.person.selectedValue;
     });

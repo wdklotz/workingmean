@@ -2,7 +2,7 @@
 (function(){
     
 const db = require('../dbConnection/connector');
-var {n_log, i_was_here} = require('../../app_helper.js');
+var {app_log, tbl_log, i_was_here} = require('../../public/UIGrid/app_helper');
 
 const sendJsonResponse = function (res, status, content) {
     i_was_here("sendJsonResponse");
@@ -114,7 +114,7 @@ const authors = function(req,res) {
         if (err) {
           return console.error(err.message);
         } else {     // all table-rows
-            app_log(rows);
+            tbl_log(rows);
             sendJsonResponse(res,200,rows);
         } 
     });
@@ -127,7 +127,7 @@ const types = function(req,res) {
         if (err) {
           return console.error(err.message);
         } else {     // all table-rows
-            app_log(rows);
+            tbl_log(rows);
             sendJsonResponse(res,200,rows);
         } 
     });
@@ -140,7 +140,7 @@ const shelfs = function(req,res) {
         if (err) {
           return console.error(err.message);
         } else {     // all table-rows
-            app_log(rows);
+            tbl_log(rows);
             sendJsonResponse(res,200,rows);
         } 
     });
