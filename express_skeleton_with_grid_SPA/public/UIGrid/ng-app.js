@@ -1,4 +1,4 @@
-// 'use strict';
+'use strict';
 (function() {
     
 var myApp = angular.module('ng-app', [
@@ -8,8 +8,8 @@ var myApp = angular.module('ng-app', [
 ]);
 
 myApp.controller('ng-app-ctrl', [
-        '$scope', '$http', 'uiGridConstants', 'DocService',
-        function($scope, $http, uiGridConstants, DocService) {  
+        '$scope', '$http', 'uiGridConstants', 'DocRes',
+        function($scope, $http, uiGridConstants, DocRes) {  
 
     var scope = $scope;
     scope.grid1Options = {
@@ -31,8 +31,6 @@ myApp.controller('ng-app-ctrl', [
             { name: 'Type',     enableSorting: true, width: '10%'  },
             { name: 'Shelf',    enableSorting: true, width: '10%'  },
             { name: 'Keywords', enableSorting: true, cellTooltip: true},
-            // { name: 'Favorite', enableSorting: true, width: 63, displayName: 'FAV', type: 'boolean'},
-            // { name: 'Trash',    enableSorting: true, width: 65, displayName: 'TR',  type: 'boolean'}
             { name: 'Favorite', enableSorting: true, width: 63, displayName: 'FAV'},
             { name: 'Trash',    enableSorting: true, width: 65, displayName: 'TR'}
         ]};
@@ -40,6 +38,7 @@ myApp.controller('ng-app-ctrl', [
     scope.grid1Options.onRegisterApi = function(gridApi){
         // set gridApi on scope but ignore rowSelectionChanged event
         scope.gridApi = gridApi;
+        
         // gridApi.selection.on.rowSelectionChanged($scope,function(row){
         // var msg = 'row changed ';
         // console.log(msg,row);
@@ -47,8 +46,8 @@ myApp.controller('ng-app-ctrl', [
         // });
     };
 
-    // call DB-API via DocService
-    scope.grid1Options.data = DocService.query();
+    // call DB-API via DocRes resource
+    scope.grid1Options.data = DocRes.query();
 /*
     // call DB-API via $http
     $http.get('/api/lib/38').then(function (response) {
@@ -133,7 +132,7 @@ myApp.controller('modal-edit-ctrl', ['$uibModalInstance','size','selection',func
     };
 }]);
 
-myApp.controller('doc-edit-ctrl', ['$scope','DocService',function($scope,DocService) {
+myApp.controller('doc-edit-ctrl', ['$scope','DocRes',function($scope,DocRes) {
     var vm = this;
     var scope = $scope;
     const idx = 0;
@@ -191,37 +190,40 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocService',function($scope,DocServ
     };
 
     vm.formCancel = function () {
-        vm.doc = DocService.get({id:vm.doc.id}); //reset view data from db
+        vm.doc = DocRes.get({id:vm.doc.id}); //reset view data from db
         vm.favChecked   = (vm.doc.Favorite == 'T')? true:false;
         vm.trashChecked = (vm.doc.Trash == 'T')? true:false;
     };
 }]);
 
-// RESTFUL data provider services
-myApp.factory('DocService', ['$resource', function($resource) {
+// ngResource services
+myApp.factory('DocRes', ['$resource', function($resource) {
     return $resource('/api/lib/:id',
         {id:'@id'},
         {update: {method: 'PUT'}} // there is no HTTP PUT support available per default !!!
         );
 }]);
-myApp.factory('Author',['$resource',function($resource){
+myApp.factory('AuthorRes',['$resource',function($resource){
     return $resource('/api/authors/:id',{});
 }]);
-myApp.factory('Type',['$resource', function($resource) {
+myApp.factory('TypeRes',['$resource', function($resource) {
     return $resource('/api/types/:id',{});
 }]);
-myApp.factory('Shelf',['$resource', function($resource) {
+myApp.factory('ShelfRes',['$resource', function($resource) {
     return $resource('/api/shelfs/:id',{});
 }]);
 
 // a table transform service
-myApp.factory('Transformer',[function(){
-    return function(items, label) {
+myApp.factory('Trafo',[function(){
+    const fwd = function(items, label) {
         var out = [];
         for (var i=0; i < items.length; i++) {
            out[i] = {name: items[i][label], id:items[i].id};
        }
        return out;
+    };
+    return {
+        toSelect2: fwd
     };
 }]);
 
@@ -235,7 +237,7 @@ myApp.filter('propsFilter', function() {
   };
 });
 
-myApp.controller('AuthCtrl',['Author','Transformer', function (Author,Transformer) {
+myApp.controller('AuthCtrl',['AuthorRes','Trafo', function (AuthorRes,Trafo) {
     var vm = this;
 
     vm.disabled = false;
@@ -243,15 +245,15 @@ myApp.controller('AuthCtrl',['Author','Transformer', function (Author,Transforme
     vm.authorObj ={};
     vm.person = {};
 
-    Author.query().$promise.then(function(value) {
-        vm.authorObj = Transformer(value,'Author');
+    AuthorRes.query().$promise.then(function(value) {
+        vm.authorObj = Trafo.toSelect2(value,'Author');
         vm.person.selectedValue = vm.authorObj[1];
         vm.person.selected = vm.person.selectedValue;
     });
  
 }]);
 
-myApp.controller('TypeCtrl',['Type','Transformer', function (Type,Transformer) {
+myApp.controller('TypeCtrl',['TypeRes','Trafo', function (TypeRes,Trafo) {
     var vm = this;
 
     vm.disabled = false;
@@ -259,15 +261,15 @@ myApp.controller('TypeCtrl',['Type','Transformer', function (Type,Transformer) {
     vm.typeObj ={};
     vm.person = {};
 
-    Type.query().$promise.then(function(value) {
-        vm.typeObj = Transformer(value,'Type');
+    TypeRes.query().$promise.then(function(value) {
+        vm.typeObj = Trafo.toSelect2(value,'Type');
         vm.person.selectedValue = vm.typeObj[1];
         vm.person.selected = vm.person.selectedValue;
     });
  
 }]);
 
-myApp.controller('ShelfCtrl',['Shelf','Transformer', function (Shelf,Transformer) {
+myApp.controller('ShelfCtrl',['ShelfRes','Trafo', function (ShelfRes,Trafo) {
     var vm = this;
 
     vm.disabled = false;
@@ -275,8 +277,8 @@ myApp.controller('ShelfCtrl',['Shelf','Transformer', function (Shelf,Transformer
     vm.shelfObj ={};
     vm.person = {};
 
-    Shelf.query().$promise.then(function(value) {
-        vm.shelfObj = Transformer(value,'Shelf');
+    ShelfRes.query().$promise.then(function(value) {
+        vm.shelfObj = Trafo.toSelect2(value,'Shelf');
         vm.person.selectedValue = vm.shelfObj[1];
         vm.person.selected = vm.person.selectedValue;
     });
