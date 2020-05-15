@@ -139,8 +139,8 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes',function($scope,DocRes) {
     let selection = scope.gridApi.selection;
     let docs = selection.getSelectedRows();
     vm.doc = docs[idx];
-    scope.doc_selected = vm.doc;
-    vm.doc_submit = false;    // submit btn-toggle
+    scope.doc_selected = vm.doc;  // bind selected doc to $scope to give AuthCtrl, TypeCtrl, ShelfCtrl access to it
+    vm.doc_submit = false;        // submit btn-toggle
     if (docs.length != 0) {
         console.log('EDIT: docId: ',vm.doc.id,' vm.doc: ',vm.doc);
         vm.favChecked   = (vm.doc.Favorite == 'T')? true:false;
