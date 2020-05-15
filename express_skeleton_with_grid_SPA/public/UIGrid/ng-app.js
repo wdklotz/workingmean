@@ -1,7 +1,7 @@
 'use strict';
 (function() {
     
-var myApp = angular.module('ng-app', [
+const myApp = angular.module('ng-app', [
 'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 
 'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 'ui.bootstrap',
 'ngResource','ngSanitize', 'ui.select'
@@ -11,7 +11,7 @@ myApp.controller('ng-app-ctrl', [
         '$scope', '$http', 'uiGridConstants', 'DocRes',
         function($scope, $http, uiGridConstants, DocRes) {  
 
-    var scope = $scope;
+    const scope = $scope;
     scope.grid1Options = {
         enableRowSelection: true,
         enableSelectAll: true,
@@ -40,7 +40,7 @@ myApp.controller('ng-app-ctrl', [
         scope.gridApi = gridApi;
         
         // gridApi.selection.on.rowSelectionChanged($scope,function(row){
-        // var msg = 'row changed ';
+        // const msg = 'row changed ';
         // console.log(msg,row);
         // console.log(gridApi.selection.getSelectedRows()); 
         // });
@@ -60,8 +60,8 @@ myApp.controller('ng-app-ctrl', [
 }]);
 
 myApp.controller('btns-ctrl', ['$scope','$uibModal','$document', function ($scope,$uibModal,$document) {
-    var scope = $scope;
-    var vm = this;
+    const scope = $scope;
+    const vm = this;
     vm.animationsEnabled = true;
     vm.showHideDiv = false;
     
@@ -79,7 +79,7 @@ myApp.controller('btns-ctrl', ['$scope','$uibModal','$document', function ($scop
         console.log("testClicked: " + vm.selectedRows.length + ' docs selected');
         
         // instantiate modal controller
-        var modalInstance = $uibModal.open( { 
+        const modalInstance = $uibModal.open( { 
             animation: vm.animationsEnabled,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -116,7 +116,7 @@ myApp.controller('btns-ctrl', ['$scope','$uibModal','$document', function ($scop
 }]);
 
 myApp.controller('modal-edit-ctrl', ['$uibModalInstance','size','selection',function ($uibModalInstance,size,selection) {
-    var vm = this;
+    const vm = this;
     // console.log(size, selection);
     vm.selection = selection;
     
@@ -133,11 +133,11 @@ myApp.controller('modal-edit-ctrl', ['$uibModalInstance','size','selection',func
 }]);
 
 myApp.controller('doc-edit-ctrl', ['$scope','DocRes',function($scope,DocRes) {
-    var vm = this;
-    var scope = $scope;
+    const vm = this;
+    const scope = $scope;
     const idx = 0;
-    var selection = scope.gridApi.selection;
-    var docs = selection.getSelectedRows();
+    let selection = scope.gridApi.selection;
+    let docs = selection.getSelectedRows();
     vm.doc = docs[idx];
     scope.doc_selected = vm.doc;
     vm.doc_submit = false;    // submit btn-toggle
@@ -217,8 +217,8 @@ myApp.factory('ShelfRes',['$resource', function($resource) {
 // a table transform service
 myApp.factory('Trafo',[function(){
     const fwd = function(items, label) {
-        var out = [];
-        for (var i=0; i < items.length; i++) {
+        let out = [];
+        for (let i=0; i < items.length; i++) {
            out[i] = {name: items[i][label], id:items[i].id};
        }
        return out;
@@ -231,7 +231,7 @@ myApp.factory('Trafo',[function(){
 // a nofilter filter
 myApp.filter('propsFilter', function() {
   return function(items, props) {
-    var out = [];
+    let out = [];
     // Let the output be the input untouched
     out = items;
     return out;
@@ -239,8 +239,8 @@ myApp.filter('propsFilter', function() {
 });
 
 myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo', function ($scope,AuthorRes,Trafo) {
-    var vm = this;
-    var scope = $scope;
+    const vm = this;
+    const scope = $scope;
 
     vm.disabled = false;
     vm.searchEnabled = true;
@@ -266,8 +266,8 @@ myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo', function ($scope,Auth
 }]);
 
 myApp.controller('TypeCtrl',['$scope','TypeRes','Trafo', function ($scope,TypeRes,Trafo) {
-    var vm = this;
-    var scope = $scope;
+    const vm = this;
+    const scope = $scope;
 
     vm.disabled = false;
     vm.searchEnabled = true;
@@ -292,8 +292,8 @@ myApp.controller('TypeCtrl',['$scope','TypeRes','Trafo', function ($scope,TypeRe
 }]);
 
 myApp.controller('ShelfCtrl',['$scope','ShelfRes','Trafo', function ($scope,ShelfRes,Trafo) {
-    var vm = this;
-    var scope = $scope;
+    const vm = this;
+    const scope = $scope;
 
     vm.disabled = false;
     vm.searchEnabled = true;

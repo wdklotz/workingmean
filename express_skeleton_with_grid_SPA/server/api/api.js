@@ -2,7 +2,7 @@
 (function(){
     
 const db = require('../dbConnection/connector');
-var {app_log, tbl_log, i_was_here} = require('../../svr_helper');
+let {app_log, tbl_log, i_was_here} = require('../../svr_helper');
 
 const sendJsonResponse = function (res, status, content) {
     i_was_here("sendJsonResponse");
