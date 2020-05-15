@@ -124,7 +124,8 @@
             <!-- Author select-->
             <div class="input-group form-group" ng-controller="AuthCtrl as actrl">
             <span class="input-group-addon label-col">Author:</span>
-                <input type="text" class="form-control input-col" ng-model="ctrl.doc.Author">
+                <input type="text" class="form-control input-col" ng-model="actrl.person.selectedValue.name">
+<!-- <p>Selected: <code>{{actrl.person.selectedValue}}</code></p> -->
                 <!-- ui-select -->
                 <ui-select ng-model="actrl.person.selectedValue" theme="select2" ng-disabled="actrl.disabled" style="min-width: 300px;" title="Choose an author">
                     <ui-select-match placeholder="Select Author in the list or search his name...">{{$select.selected.value.name}}</ui-select-match>
@@ -137,7 +138,7 @@
             <!-- Type select-->
             <div class="input-group form-group" ng-controller="TypeCtrl as tctrl">
             <span class="input-group-addon label-col">Type:</span>
-                <input type="text" class="form-control input-col" ng-model="ctrl.doc.Type">
+                <input type="text" class="form-control input-col" ng-model="tctrl.person.selectedValue.name">
                 <!-- ui-select -->
                 <ui-select ng-model="tctrl.person.selectedValue" theme="select2" ng-disabled="tctrl.disabled" style="min-width: 300px;" title="Choose a type">
                     <ui-select-match placeholder="Select Type in the list or search his name...">{{$select.selected.value.name}}</ui-select-match>
@@ -150,7 +151,7 @@
             <!-- Shelf select-->
             <div class="input-group form-group" ng-controller="ShelfCtrl as sctrl">
             <span class="input-group-addon label-col">Shelf:</span>
-                <input type="text" class="form-control input-col" ng-model="ctrl.doc.Shelf">
+                <input type="text" class="form-control input-col" ng-model="sctrl.person.selectedValue.name">
                 <!-- ui-select -->
                 <ui-select ng-model="sctrl.person.selectedValue" theme="select2" ng-disabled="sctrl.disabled" style="min-width: 300px;" title="Choose a shelf">
                     <ui-select-match placeholder="Select Shelf in the list or search his name...">{{$select.selected.value.name}}</ui-select-match>

@@ -262,6 +262,10 @@ myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo', function ($scope,Auth
         // console.log('AuthCtrl:vm.person.selectedValue: ',vm.person.selectedValue);
         vm.person.selected = vm.person.selectedValue;
     });
+    
+    vm.onSelectCallBack = function(item) {
+        console.log(item);
+        }
  
 }]);
 
@@ -327,4 +331,5 @@ myApp.controller('ShelfCtrl',['$scope','ShelfRes','Trafo', function ($scope,Shel
 *   https://docs.angularjs.org/api/ng/directive/script
 * for AngularJS-native version of Select2 see: https://github.com/angular-ui/ui-select 
 *   in relation: jQuery Select2: https://select2.org/
+* for CommonJs and ES modules: https://flaviocopes.com/commonjs/
 */
