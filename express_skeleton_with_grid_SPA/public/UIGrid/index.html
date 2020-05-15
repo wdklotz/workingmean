@@ -127,7 +127,7 @@
                 <input type="text" class="form-control input-col" ng-model="actrl.choice.selectedValue.name">
 <!-- <p>Selected: <code>{{actrl.choice.selectedValue}}</code></p> -->
                 <!-- ui-select -->
-                <ui-select ng-model="actrl.choice.selectedValue" theme="select2" ng-disabled="actrl.disabled" style="min-width: 300px;" title="Choose an author">
+                <ui-select ng-model="actrl.choice.selectedValue" theme="select2" ng-disabled="actrl.disabled" style="min-width: 300px;" title="Choose an author" on-select="actrl.onSelect(actrl.choice.selectedValue)">
                     <ui-select-match placeholder="Select Author in the list or search his name...">{{$select.selected.value.name}}</ui-select-match>
                     <ui-select-choices repeat="choice.value as (key, choice) in actrl.authorObj | filter: { value: { name: $select.search }}">
                         <div ng-bind-html="choice.value.name | highlight: $select.search"></div>

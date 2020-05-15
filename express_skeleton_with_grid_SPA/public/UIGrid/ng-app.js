@@ -253,15 +253,20 @@ myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo', function ($scope,Auth
             for(let [key,value] of Object.entries(vm.authorObj)) {
                 if (value.name === scope.doc_selected.Author) {    
                     vm.choice.selectedValue = vm.authorObj[key];
+                    console.log('vm.choice.selectedValue ',vm.choice.selectedValue);
                     break;
                     }
                 } 
         } else {
             vm.choice.selectedValue = undefined;
         }
-        // console.log('AuthCtrl:vm.choice.selectedValue: ',vm.choice.selectedValue);
-        vm.choice.selected = vm.choice.selectedValue;
+        // vm.choice.selected = vm.choice.selectedValue;
+        // console.log('vm.choice.selected; ',vm.choice.selected);
     });
+    
+    vm.onSelect = function($item) {
+        console.log('$item: ',$item);      
+    };
 }]);
 
 myApp.controller('TypeCtrl',['$scope','TypeRes','Trafo', function ($scope,TypeRes,Trafo) {
@@ -285,7 +290,7 @@ myApp.controller('TypeCtrl',['$scope','TypeRes','Trafo', function ($scope,TypeRe
         } else {
             vm.choice.selectedValue = undefined;
         }
-        vm.choice.selected = vm.choice.selectedValue;
+        // vm.choice.selected = vm.choice.selectedValue;
     });
 }]);
 
