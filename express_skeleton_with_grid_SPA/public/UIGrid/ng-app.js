@@ -139,9 +139,10 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes',function($scope,DocRes) {
     var selection = scope.gridApi.selection;
     var docs = selection.getSelectedRows();
     vm.doc = docs[idx];
+    scope.doc_selected = vm.doc;
     vm.doc_submit = false;    // submit btn-toggle
     if (docs.length != 0) {
-        // console.log('EDIT: docId: ',vm.doc.id,' vm.doc: ',vm.doc);
+        console.log('EDIT: docId: ',vm.doc.id,' vm.doc: ',vm.doc);
         vm.favChecked   = (vm.doc.Favorite == 'T')? true:false;
         vm.trashChecked = (vm.doc.Trash == 'T')? true:false;
         selection.unSelectRow(docs[idx]);   // unselect first
@@ -237,8 +238,9 @@ myApp.filter('propsFilter', function() {
   };
 });
 
-myApp.controller('AuthCtrl',['AuthorRes','Trafo', function (AuthorRes,Trafo) {
+myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo', function ($scope,AuthorRes,Trafo) {
     var vm = this;
+    var scope = $scope;
 
     vm.disabled = false;
     vm.searchEnabled = true;
@@ -247,15 +249,25 @@ myApp.controller('AuthCtrl',['AuthorRes','Trafo', function (AuthorRes,Trafo) {
 
     AuthorRes.query().$promise.then(function(value) {
         vm.authorObj = Trafo.toSelect2(value,'Author');
-        app_log(vm.authorObj);
-        vm.person.selectedValue = vm.authorObj[1];
+        if (scope.doc_selected) {
+            for(let [key,value] of Object.entries(vm.authorObj)) {
+                if (value.name === scope.doc_selected.Author) {    
+                    vm.person.selectedValue = vm.authorObj[key];
+                    break;
+                    }
+                } 
+        } else {
+            vm.person.selectedValue = undefined;
+        }
+        // console.log('AuthCtrl:vm.person.selectedValue: ',vm.person.selectedValue);
         vm.person.selected = vm.person.selectedValue;
     });
  
 }]);
 
-myApp.controller('TypeCtrl',['TypeRes','Trafo', function (TypeRes,Trafo) {
+myApp.controller('TypeCtrl',['$scope','TypeRes','Trafo', function ($scope,TypeRes,Trafo) {
     var vm = this;
+    var scope = $scope;
 
     vm.disabled = false;
     vm.searchEnabled = true;
@@ -264,14 +276,24 @@ myApp.controller('TypeCtrl',['TypeRes','Trafo', function (TypeRes,Trafo) {
 
     TypeRes.query().$promise.then(function(value) {
         vm.typeObj = Trafo.toSelect2(value,'Type');
-        vm.person.selectedValue = vm.typeObj[1];
+        if (scope.doc_selected) {            
+            for(let [key,value] of Object.entries(vm.typeObj)) {
+                if (value.name === scope.doc_selected.Type) {    
+                    vm.person.selectedValue = vm.typeObj[key];
+                    break;
+                    }
+            } 
+        } else {
+            vm.person.selectedValue = undefined;
+        }
         vm.person.selected = vm.person.selectedValue;
     });
  
 }]);
 
-myApp.controller('ShelfCtrl',['ShelfRes','Trafo', function (ShelfRes,Trafo) {
+myApp.controller('ShelfCtrl',['$scope','ShelfRes','Trafo', function ($scope,ShelfRes,Trafo) {
     var vm = this;
+    var scope = $scope;
 
     vm.disabled = false;
     vm.searchEnabled = true;
@@ -280,7 +302,16 @@ myApp.controller('ShelfCtrl',['ShelfRes','Trafo', function (ShelfRes,Trafo) {
 
     ShelfRes.query().$promise.then(function(value) {
         vm.shelfObj = Trafo.toSelect2(value,'Shelf');
-        vm.person.selectedValue = vm.shelfObj[1];
+        if (scope.doc_selected) {            
+            for(let [key,value] of Object.entries(vm.shelfObj)) {
+                if (value.name === scope.doc_selected.Shelf) {    
+                    vm.person.selectedValue = vm.shelfObj[key];
+                    break;
+                    }
+            }
+        } else {            
+            vm.person.selectedValue = undefined;
+        }
         vm.person.selected = vm.person.selectedValue;
     });
  
