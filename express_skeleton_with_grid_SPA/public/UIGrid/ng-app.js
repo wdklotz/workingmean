@@ -1,6 +1,6 @@
 'use strict';
 (function() {
-    
+
 const myApp = angular.module('ng-app', [
 'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 
 'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 'ui.bootstrap',
@@ -139,8 +139,8 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes',function($scope,DocRes) {
     let selection = scope.gridApi.selection;
     let docs = selection.getSelectedRows();
     vm.doc = docs[idx];
-    scope.doc_selected = vm.doc;  // bind selected doc to $scope to give AuthCtrl, TypeCtrl, ShelfCtrl access to it
-    vm.doc_submit = false;        // submit btn-toggle
+    scope.editFormContent = vm.doc;  // bind selected doc to $scope to give AuthCtrl, TypeCtrl and ShelfCtrl access to it
+    vm.doc_submit = false;           // submit btn-toggle
     if (docs.length != 0) {
         console.log('EDIT: docId: ',vm.doc.id,' vm.doc: ',vm.doc);
         vm.favChecked   = (vm.doc.Favorite == 'T')? true:false;
@@ -198,7 +198,7 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes',function($scope,DocRes) {
 }]);
 
 // ngResource services
-myApp.factory('DocRes', ['$resource', function($resource) {
+myApp.factory('DocRes',   ['$resource', function($resource) {
     return $resource('/api/lib/:id',
         {id:'@id'},
         {update: {method: 'PUT'}} // there is no HTTP PUT support available per default !!!
@@ -207,10 +207,10 @@ myApp.factory('DocRes', ['$resource', function($resource) {
 myApp.factory('AuthorRes',['$resource',function($resource){
     return $resource('/api/authors/:id',{});
 }]);
-myApp.factory('TypeRes',['$resource', function($resource) {
+myApp.factory('TypeRes',  ['$resource', function($resource) {
     return $resource('/api/types/:id',{});
 }]);
-myApp.factory('ShelfRes',['$resource', function($resource) {
+myApp.factory('ShelfRes', ['$resource', function($resource) {
     return $resource('/api/shelfs/:id',{});
 }]);
 
@@ -227,8 +227,30 @@ myApp.factory('Trafo',[function(){
         toSelect2: fwd
     };
 }]);
-
-// a nofilter filter
+// Utilities service
+myApp.factory('U',[function(){
+    function app_log() {
+        if(true) {
+            for(let i=0; i<arguments.length; i++) {
+                console.log(arguments[i]);
+            }
+        }
+    };
+    function tbl_log(o){
+        if(true) {
+            console.table(o);
+        }
+    };
+    function i_was_here(name) {
+        if(true) console.log("============================< "+name+" >");
+    };
+    return {
+        app_log: app_log,
+        tbl_log: tbl_log,
+        i_was_here: i_was_here
+    };
+}]);
+// a NO-filter filter
 myApp.filter('propsFilter', function() {
   return function(items, props) {
     let out = [];
@@ -238,7 +260,7 @@ myApp.filter('propsFilter', function() {
   };
 });
 
-myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo', function ($scope,AuthorRes,Trafo) {
+myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo','U', function ($scope,AuthorRes,Trafo,U) {
     const vm = this;
     const scope = $scope;
 
@@ -249,27 +271,28 @@ myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo', function ($scope,Auth
 
     AuthorRes.query().$promise.then(function(value) {
         vm.authorObj = Trafo.toSelect2(value,'Author');
-        if (scope.doc_selected) {
+        if (scope.editFormContent) {
             for(let [key,value] of Object.entries(vm.authorObj)) {
-                if (value.name === scope.doc_selected.Author) {    
+                if (value.name === scope.editFormContent.Author) {    
                     vm.choice.selectedValue = vm.authorObj[key];
-                    console.log('vm.choice.selectedValue ',vm.choice.selectedValue);
+                    // console.log('vm.choice.selectedValue ',vm.choice.selectedValue);
                     break;
                     }
                 } 
         } else {
             vm.choice.selectedValue = undefined;
         }
-        // vm.choice.selected = vm.choice.selectedValue;
-        // console.log('vm.choice.selected; ',vm.choice.selected);
     });
     
     vm.onSelect = function($item) {
-        console.log('$item: ',$item);      
+        // console.log('$item: ',$item);  
+        scope.editFormContent.author = $item.id;
+        scope.editFormContent.Author = $item.name;
+        U.tbl_log(scope.editFormContent);
     };
 }]);
 
-myApp.controller('TypeCtrl',['$scope','TypeRes','Trafo', function ($scope,TypeRes,Trafo) {
+myApp.controller('TypeCtrl',['$scope','TypeRes','Trafo','U', function ($scope,TypeRes,Trafo,U) {
     const vm = this;
     const scope = $scope;
 
@@ -280,9 +303,9 @@ myApp.controller('TypeCtrl',['$scope','TypeRes','Trafo', function ($scope,TypeRe
 
     TypeRes.query().$promise.then(function(value) {
         vm.typeObj = Trafo.toSelect2(value,'Type');
-        if (scope.doc_selected) {            
+        if (scope.editFormContent) {            
             for(let [key,value] of Object.entries(vm.typeObj)) {
-                if (value.name === scope.doc_selected.Type) {    
+                if (value.name === scope.editFormContent.Type) {    
                     vm.choice.selectedValue = vm.typeObj[key];
                     break;
                     }
@@ -290,11 +313,17 @@ myApp.controller('TypeCtrl',['$scope','TypeRes','Trafo', function ($scope,TypeRe
         } else {
             vm.choice.selectedValue = undefined;
         }
-        // vm.choice.selected = vm.choice.selectedValue;
     });
+    
+    vm.onSelect = function($item) {
+        // console.log('$item: ',$item);  
+        scope.editFormContent.type = $item.id;
+        scope.editFormContent.Type = $item.name;
+        U.tbl_log(scope.editFormContent);
+    };
 }]);
 
-myApp.controller('ShelfCtrl',['$scope','ShelfRes','Trafo', function ($scope,ShelfRes,Trafo) {
+myApp.controller('ShelfCtrl',['$scope','ShelfRes','Trafo','U', function ($scope,ShelfRes,Trafo,U) {
     const vm = this;
     const scope = $scope;
 
@@ -305,9 +334,9 @@ myApp.controller('ShelfCtrl',['$scope','ShelfRes','Trafo', function ($scope,Shel
 
     ShelfRes.query().$promise.then(function(value) {
         vm.shelfObj = Trafo.toSelect2(value,'Shelf');
-        if (scope.doc_selected) {            
+        if (scope.editFormContent) {            
             for(let [key,value] of Object.entries(vm.shelfObj)) {
-                if (value.name === scope.doc_selected.Shelf) {    
+                if (value.name === scope.editFormContent.Shelf) {    
                     vm.choice.selectedValue = vm.shelfObj[key];
                     break;
                     }
@@ -315,8 +344,14 @@ myApp.controller('ShelfCtrl',['$scope','ShelfRes','Trafo', function ($scope,Shel
         } else {            
             vm.choice.selectedValue = undefined;
         }
-        vm.choice.selected = vm.choice.selectedValue;
     });
+    
+    vm.onSelect = function($item) {
+        // console.log('$item: ',$item);  
+        scope.editFormContent.shelf = $item.id;
+        scope.editFormContent.Shelf = $item.name;
+        U.tbl_log(scope.editFormContent);
+    };
 }]);
 
 })();
