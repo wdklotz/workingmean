@@ -119,7 +119,6 @@ const authors = function(req,res) {
         } 
     });
 };
-
 const types = function(req,res) {
     i_was_here('types');
     const sql = `SELECT * from doc_type`;
@@ -132,7 +131,6 @@ const types = function(req,res) {
         } 
     });
 };
-
 const shelfs = function(req,res) {
     i_was_here('shelfs');
     const sql = `SELECT * from doc_shelf`;
