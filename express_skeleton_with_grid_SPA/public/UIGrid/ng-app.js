@@ -223,6 +223,19 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes','U',function($scope,DocRes,
         vm.doc_submit = true;  // btn toggle
     };
 
+    // THE HACK!!! closure !!! but it works !!!    
+    scope.setChoice = function (choiceObjects,choice) {
+        let objects = choiceObjects;
+        let ch = choice;
+        let f = function () {
+        for(let [key,val] of Object.entries(objects)) {
+            if(val.id === scope.docInEditForm.author) {
+                ch.selectedValue = objects[key];
+                break;
+            }
+        }};
+        return f;
+    }; 
 }]);
 myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo','U', function ($scope,AuthorRes,Trafo,U) {
     const vm = this;
@@ -244,20 +257,24 @@ myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo','U', function ($scope,
         vm.authorObj = Trafo.toSelect2(vm.authTable,'Author');  //<-- that's the object select2 wants to see
         // console.log('vm.authorObj:');
         // U.tbl_log(vm.authorObj);
-        setChoice();   // <-- select * from authorObj where id = docInEditForm.author
+        
+        /* <-- select * from authorObj where id = docInEditForm.author --> */
+        let AuthorChoice = scope.$parent.AuthorChoice = scope.$parent.setChoice(vm.authorObj,vm.choice); 
+        AuthorChoice();
     });
-    
-    function setChoice() {
-        for(let [key,val] of Object.entries(vm.authorObj)) {
-            if(val.id === docInEditForm.author) {
-                vm.choice.selectedValue = vm.authorObj[key];
-                // console.log('vm.choice.selectedValue: ',vm.choice.selectedValue);
-                break;
-            }
-        }
-    }; 
-    scope.$parent.AuthorChoice = setChoice;    // the hack!!! but it works
-    
+/*
+    // function setChoice() {
+        // for(let [key,val] of Object.entries(vm.authorObj)) {
+            // if(val.id === docInEditForm.author) {
+                // vm.choice.selectedValue = vm.authorObj[key];
+                console.log('vm.choice.selectedValue: ',vm.choice.selectedValue);
+                // break;
+            // }
+        // }
+    // }
+
+    // scope.$parent.AuthorChoice = setChoice;    // the hack!!! but it works
+*/    
     vm.onSelect = function($item) {
         console.log('onSelect#$item: ',$item);  
         scope.docInEditForm.author = $item.id;
@@ -280,9 +297,10 @@ myApp.controller('TypeCtrl',['$scope','TypeRes','Trafo','U', function ($scope,Ty
     TypeRes.query([],function(value) {
         vm.typeTable = value;
         vm.typeObj = Trafo.toSelect2(vm.typeTable,'Type');
-        setChoice();
+        let TypeChoice = scope.$parent.TypeChoice = scope.$parent.setChoice(vm.typeObj,vm.choice); 
+        TypeChoice();
     });
-    
+/*
     function setChoice() {
         for(let [key,val] of Object.entries(vm.typeObj)) {
             if(val.id === docInEditForm.type) {
@@ -292,7 +310,7 @@ myApp.controller('TypeCtrl',['$scope','TypeRes','Trafo','U', function ($scope,Ty
         }
     }; 
     scope.$parent.TypeChoice = setChoice;    // the hack!!! but it works
-    
+*/    
     vm.onSelect = function($item) {
         scope.docInEditForm.type = $item.id;
         scope.docInEditForm.Type = $item.name;
