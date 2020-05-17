@@ -133,29 +133,51 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes','U',function($scope,DocRes,
     const vm = this;
     const scope = $scope;
     
-    function init() {
-    // ui-grid api: selection from ui-grid
-    const selection = scope.gridApi.selection;
-    let docs;
-    if (selection.getSelectedCount() === 0) {
-        docs = [{'Author':"",'Type':"",'Shelf':""}];
-        vm.btns_hidden = true;
-    } else {
-        docs = selection.getSelectedRows();
-        vm.btns_hidden = false;
+    function render() {
+        console.log('render');
+        U.tbl_log(vm.doc);
+        scope.docInEditForm = vm.doc;
+        vm.doc_submit = false;           // submit class btn-toggle
+        vm.favChecked   = (vm.doc.Favorite == 'T')? true:false;
+        vm.trashChecked = (vm.doc.Trash == 'T')? true:false;
     }
-    // console.log('doc-edit-ctrl#docs: ',docs);
-    
-    // take 1st and put reference in $scope
-    scope.docInEditForm = vm.doc = docs.shift();
-    
-    selection.unSelectRow(vm.doc);   // unselect fifo
-    vm.doc_submit = false;           // submit class btn-toggle
-    vm.favChecked   = (vm.doc.Favorite == 'T')? true:false;
-    vm.trashChecked = (vm.doc.Trash == 'T')? true:false;
+    function init(){
+        let ndocs;
+        // let selection;
+            vm.selection = scope.gridApi.selection;
+            ndocs = vm.selection.getSelectedCount();
+            console.log('ndocs: ',ndocs)
+            if (ndocs === 0) {
+                vm.doc = {'Author':"",'Type':"",'Shelf':""};
+                vm.btns_hidden = true; 
+            } else {
+                vm.docs = vm.selection.getSelectedRows();
+                vm.doc = vm.docs[0];
+                vm.doc_0 = Object.assign({},vm.doc);
+                vm.btns_hidden = false;
+                vm.selection.unSelectRow(vm.doc);   // unselect fifo        
+            }
+        render();
     }
     
     init();
+    
+    vm.formReset = function() {
+        vm.selection.selectRow(vm.doc);
+        vm.doc.Author   = vm.doc_0.Author;
+        vm.doc.Type     = vm.doc_0.Type;
+        vm.doc.Shelf    = vm.doc_0.Shelf;
+        vm.doc.author   = vm.doc_0.author;
+        vm.doc.type     = vm.doc_0.type;
+        vm.doc.shelf    = vm.doc_0.shelf;
+        vm.doc.Keywords = vm.doc_0.Keywords;
+        vm.doc.Favorite = vm.doc_0.Favorite;
+        vm.doc.Trash    = vm.doc_0.Trash;
+        render();              // <-- render the grid
+        scope.AuthorChoice();  // <-- update the select2 controllers 
+        scope.TypeChoice();
+        scope.ShelfChoice();
+    };
 
 /*  // mock data
     const docs = [   
@@ -201,15 +223,6 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes','U',function($scope,DocRes,
         vm.doc_submit = true;  // btn toggle
     };
 
-    vm.formCancel = function () {
-        //reset view data from db          
-        vm.doc = DocRes.get({id:vm.doc.id});
-        scope.docInEditForm = vm.doc;
-        // AuthCtrl.refresh();
-        vm.favChecked   = (vm.doc.Favorite == 'T')? true:false;
-        vm.trashChecked = (vm.doc.Trash == 'T')? true:false;
-        init();
-    };
 }]);
 myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo','U', function ($scope,AuthorRes,Trafo,U) {
     const vm = this;
@@ -225,12 +238,16 @@ myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo','U', function ($scope,
     // U.tbl_log(docInEditForm);
 
     AuthorRes.query([],function(value) {
-        vm.authTable = value;
+        vm.authTable = value;  //<-- that's the table from db
         // U.flow_log('AuthorRes#query:vm.authTable:');
         // U.tbl_log(vm.authTable);
-        vm.authorObj = Trafo.toSelect2(vm.authTable,'Author');
+        vm.authorObj = Trafo.toSelect2(vm.authTable,'Author');  //<-- that's the object select2 wants to see
         // console.log('vm.authorObj:');
         // U.tbl_log(vm.authorObj);
+        setChoice();   // <-- select * from authorObj where id = docInEditForm.author
+    });
+    
+    function setChoice() {
         for(let [key,val] of Object.entries(vm.authorObj)) {
             if(val.id === docInEditForm.author) {
                 vm.choice.selectedValue = vm.authorObj[key];
@@ -238,7 +255,8 @@ myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo','U', function ($scope,
                 break;
             }
         }
-    });
+    }; 
+    scope.$parent.AuthorChoice = setChoice;    // the hack!!! but it works
     
     vm.onSelect = function($item) {
         console.log('onSelect#$item: ',$item);  
@@ -247,38 +265,6 @@ myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo','U', function ($scope,
         console.log('onSelect#scope.docInEditForm:');
         U.tbl_log(scope.docInEditForm);
     };
-    
-    
-    
-    
-    
-    // AuthorRes.query().$promise.then(function(value) {
-        // vm.authorObj = Trafo.toSelect2(value,'Author');
-        // if (scope.docInEditForm) {
-            // for(let [key,value] of Object.entries(vm.authorObj)) {
-                // if (value.name === scope.docInEditForm.Author) {    
-                    // vm.choice.selectedValue = vm.authorObj[key];
-                    // vm.refresh(value);
-                    // console.log('vm.choice.selectedValue ',vm.choice.selectedValue);
-                    // break;
-                    // }
-                // } 
-        // } else {
-            // vm.choice.selectedValue = undefined;
-        // }
-    // });
-    
-    // vm.refresh = (selectedValue) => {
-        // console.log('selectedValue: ',selectedValue);
-        // vm.choice.selectedValue = Trafo.toSelect2(selectedValue,'Author');
-    // };
-    
-    // vm.onSelect = function($item) {
-        // console.log('$item: ',$item);  
-        // scope.docInEditForm.author = $item.id;
-        // scope.docInEditForm.Author = $item.name;
-        // U.tbl_log(scope.docInEditForm);
-    // };
 }]);
 myApp.controller('TypeCtrl',['$scope','TypeRes','Trafo','U', function ($scope,TypeRes,Trafo,U) {
     const vm = this;
@@ -286,28 +272,30 @@ myApp.controller('TypeCtrl',['$scope','TypeRes','Trafo','U', function ($scope,Ty
 
     vm.disabled = false;
     vm.searchEnabled = true;
-    vm.typeObj ={};
+    vm.typeObj = {};
     vm.choice = {};
+    vm.typeTable;
+    const docInEditForm = scope.docInEditForm;
 
-    TypeRes.query().$promise.then(function(value) {
-        vm.typeObj = Trafo.toSelect2(value,'Type');
-        if (scope.docInEditForm) {            
-            for(let [key,value] of Object.entries(vm.typeObj)) {
-                if (value.name === scope.docInEditForm.Type) {    
-                    vm.choice.selectedValue = vm.typeObj[key];
-                    break;
-                    }
-            } 
-        } else {
-            vm.choice.selectedValue = undefined;
-        }
+    TypeRes.query([],function(value) {
+        vm.typeTable = value;
+        vm.typeObj = Trafo.toSelect2(vm.typeTable,'Type');
+        setChoice();
     });
     
+    function setChoice() {
+        for(let [key,val] of Object.entries(vm.typeObj)) {
+            if(val.id === docInEditForm.type) {
+                vm.choice.selectedValue = vm.typeObj[key];
+                break;
+            }
+        }
+    }; 
+    scope.$parent.TypeChoice = setChoice;    // the hack!!! but it works
+    
     vm.onSelect = function($item) {
-        // console.log('$item: ',$item);  
         scope.docInEditForm.type = $item.id;
         scope.docInEditForm.Type = $item.name;
-        U.tbl_log(scope.docInEditForm);
     };
 }]);
 myApp.controller('ShelfCtrl',['$scope','ShelfRes','Trafo','U', function ($scope,ShelfRes,Trafo,U) {
@@ -316,28 +304,30 @@ myApp.controller('ShelfCtrl',['$scope','ShelfRes','Trafo','U', function ($scope,
 
     vm.disabled = false;
     vm.searchEnabled = true;
-    vm.shelfObj ={};
+    vm.shelfObj = {};
     vm.choice = {};
+    vm.shelfTable;
+    const docInEditForm = scope.docInEditForm;
 
-    ShelfRes.query().$promise.then(function(value) {
-        vm.shelfObj = Trafo.toSelect2(value,'Shelf');
-        if (scope.docInEditForm) {            
-            for(let [key,value] of Object.entries(vm.shelfObj)) {
-                if (value.name === scope.docInEditForm.Shelf) {    
-                    vm.choice.selectedValue = vm.shelfObj[key];
-                    break;
-                    }
-            }
-        } else {            
-            vm.choice.selectedValue = undefined;
-        }
+    ShelfRes.query([],function(value) {
+        vm.shelfTable = value;
+        vm.shelfObj = Trafo.toSelect2(vm.shelfTable,'Shelf');
+        setChoice();
     });
     
+    function setChoice() {
+        for(let [key,val] of Object.entries(vm.shelfObj)) {
+            if(val.id === docInEditForm.shelf) {
+                vm.choice.selectedValue = vm.shelfObj[key];
+                break;
+            }
+        }
+    }; 
+    scope.$parent.ShelfChoice = setChoice;    // the hack!!! but it works
+    
     vm.onSelect = function($item) {
-        // console.log('$item: ',$item);  
         scope.docInEditForm.shelf = $item.id;
         scope.docInEditForm.Shelf = $item.name;
-        U.tbl_log(scope.docInEditForm);
     };
 }]);
 
