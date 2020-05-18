@@ -11,7 +11,6 @@ const sendJsonResponse = function (res, status, content) {
     res.status(status);
     res.end();
 };
-
 const documents = function(req,res) {      // all -> /api/lib
     i_was_here('documents');
     const sql =`SELECT d.*, a.Author, t.Type, s.Shelf FROM doc As d
@@ -23,7 +22,7 @@ const documents = function(req,res) {      // all -> /api/lib
         if (err) {
           return console.error(err.message);
         };
-        if(true) {   // (from...to) limits on table-rows
+        if(false) {   // (from...to) limits on table-rows
             let content = [];
             const from = 0;
             const anz  = 5;
@@ -36,7 +35,6 @@ const documents = function(req,res) {      // all -> /api/lib
         }
     })  
 };
-
 const documentById = function(req,res) {      // id:38 -> /api/lib/38
     i_was_here('documentById');
     const docId  = req.params.documentId;
@@ -53,7 +51,6 @@ const documentById = function(req,res) {      // id:38 -> /api/lib/38
         sendJsonResponse(res,200,row);
     });
 };
-
 const documentUpdate = function(req,res) {
     i_was_here('documentUpdate');
     const docId    = req.params.documentId;

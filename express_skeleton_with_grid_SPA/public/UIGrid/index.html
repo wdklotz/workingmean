@@ -13,6 +13,10 @@
     <script src="./lib/angular1.7.9/angular-sanitize.js"></script>
 <!-- Angular -->
 
+<!-- Angular-File-Saver -->
+    <script src="./lib/angular-file-saver/angular-file-saver.bundle.js"></script>
+<!-- Angular-File-Saver -->
+
 <!-- ui-select files -->
     <script src="./lib/select/select.js"></script>
     <link  href="./lib/select/select.css" rel="stylesheet">
@@ -132,7 +136,7 @@
                         <div ng-bind-html="choice.value.name | highlight: $select.search"></div>
                     </ui-select-choices>
                 </ui-select>
-            </div/*AuthCtrl*/>
+            </div>   <!--AuthCtrl-->
 
             <!-- Type select-->
             <div class="input-group form-group" ng-controller="TypeCtrl as tctrl">
@@ -177,9 +181,9 @@
                     <button type="button" class="btn btn-danger" ng-click="ctrl.formReset()" ng-hide="ctrl.btns_hidden">Reset</button>
                 </div>
             </div>
-            </div/*class="container"*/>
+            </div> <!--class="container"-->
         </form>
-            </div/*id="modal-body*/>
+            </div> <!--id="modal-body"-->
         <!-- Footer -->
             <div class="modal-footer">
             </div>

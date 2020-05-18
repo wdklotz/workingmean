@@ -4,7 +4,7 @@
 const myApp = angular.module('ng-app', [
 'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 
 'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 'ui.bootstrap',
-'ngResource','ngSanitize', 'ui.select'
+'ngResource','ngSanitize', 'ui.select', 'ngFileSaver'
 ]);
 
 myApp.controller('ng-app-ctrl', [
@@ -58,7 +58,7 @@ myApp.controller('ng-app-ctrl', [
     });
 */
 }]);
-myApp.controller('btns-ctrl', ['$scope','$uibModal','$document', function ($scope,$uibModal,$document) {
+myApp.controller('btns-ctrl', ['$scope','$uibModal','$document','U',function ($scope,$uibModal,$document,U) {
     const scope = $scope;
     const vm = this;
     vm.animationsEnabled = true;
@@ -67,9 +67,25 @@ myApp.controller('btns-ctrl', ['$scope','$uibModal','$document', function ($scop
     vm.uploadClicked = function () {
         console.log("uploadClicked");  
         };
+        
     vm.viewClicked = function () {
-        console.log("viewClicked");  
-        };
+        vm.selection = scope.gridApi.selection;
+        // console.log('viewClicked#vm.selection',vm.selection);
+        let ndocs = vm.selection.getSelectedCount();
+        if (ndocs === 0) return;
+        vm.docs = vm.selection.getSelectedRows();
+        vm.doc = vm.docs[0];
+        U.tbl_log('viewClicked#vm.doc',vm.doc);
+        vm.selection.unSelectRow(vm.doc);   // unselect fifo 
+        
+        let a = document.createElement("a");
+        let host = 'http://127.0.0.1:3000/';
+        let path = '/UIGrid/store/data/';
+        let file = vm.doc.Document;
+        a.href   = host+path+file;
+        a.target = "_blank";
+        a.click();
+   };
     vm.onEdit = function() {
         vm.showHideDiv = !vm.showHideDiv;
     };
@@ -348,7 +364,7 @@ myApp.factory('ShelfRes',   ['$resource', function($resource) {
     return $resource('/api/shelfs/:id',{});
 }]);
 myApp.factory('Trafo',      [function() {
-    const fwd = function(items, label) {
+    const fn = function(items, label) {
         let out = [];
         for (let i=0; i < items.length; i++) {
            out[i] = {name: items[i][label], id:items[i].id};
@@ -356,7 +372,7 @@ myApp.factory('Trafo',      [function() {
        return out;
     };
     return {
-        toSelect2: fwd
+        toSelect2: fn
     };
 }]);
 myApp.factory('U',          [function() {
@@ -396,7 +412,7 @@ myApp.filter('propsFilter', [function() {
 
 })();
 
-/*
+/* LINKS
 * for reduce see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
 * for ui-bootstrap see: https://angular-ui.github.io/bootstrap/
 * for uibModal see: https://github.com/angular-ui/bootstrap/tree/master/src/modal
