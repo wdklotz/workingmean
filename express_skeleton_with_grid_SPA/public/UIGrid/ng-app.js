@@ -158,7 +158,6 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes','U',function($scope,DocRes,
             }
         render();
     }
-    
     init();
     
     vm.formReset = function() {
@@ -220,8 +219,7 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes','U',function($scope,DocRes,
         vm.doc_submit = true;  // btn toggle
     };
 
-    // THE closure HACK!!! but it works !!!    
-/*
+/*  // THE closure HACK!!! but it works !!!    
 *   using a CLOSURE here is perhaps a too big hack that isn't worth it
 *   choiceObjects: an array of {name:,id:} objects to select from
 *   choice: the selected {name:,id:} object 
@@ -230,10 +228,10 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes','U',function($scope,DocRes,
 *   performs something equivalent like: SELECT * FROM choiceObjects AS c WHERE c.id = link
 */
     scope.setChoice = function (choiceObjects,choice,link) {
-        // U.flow_log('scope.setChoice');
+        // U.flow_log('doc-edit-ctrl#setChoice');
         let objects = choiceObjects;
         let ch = choice;
-        let f = function () {
+        let fn = function () {
         for(let [key,val] of Object.entries(objects)) {
             if(val.id === link) {
                 ch.selectedValue = objects[key];
@@ -242,7 +240,7 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes','U',function($scope,DocRes,
                 break;
             }
         }};
-        return f;
+        return fn;
     }; 
 }]);
 myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo','U', function ($scope,AuthorRes,Trafo,U) {
@@ -266,7 +264,7 @@ myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo','U', function ($scope,
         /* <-- SELECT * FROM authorObj AS c WHERE c.id = docInEditForm.author --> */
         let AuthorChoice = scope.$parent.AuthorChoice = scope.$parent.setChoice(vm.authorObj,vm.choice,docInEditForm.author); 
         AuthorChoice();
-        // console.log(vm.choice);
+        // U.tbl_log(vm.choice);
     });
 /*
     // function setChoice() {
