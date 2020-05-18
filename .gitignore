@@ -22,3 +22,4 @@ lib/
 node_modules/
 
 npm-debug.log
+express_skeleton_with_grid_SPA/server/dbConnection/db/storage.sqlite
