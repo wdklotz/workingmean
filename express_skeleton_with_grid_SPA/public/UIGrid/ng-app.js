@@ -134,19 +134,18 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes','U',function($scope,DocRes,
     const scope = $scope;
     
     function render() {
-        console.log('render');
-        U.tbl_log(vm.doc);
+        // U.tbl_log("doc-edit-ctrl#render#vm.doc",vm.doc);
         scope.docInEditForm = vm.doc;
         vm.doc_submit = false;           // submit class btn-toggle
         vm.favChecked   = (vm.doc.Favorite == 'T')? true:false;
         vm.trashChecked = (vm.doc.Trash == 'T')? true:false;
     }
     function init(){
+        // U.flow_log("doc-edit-ctrl#init");
         let ndocs;
-        // let selection;
             vm.selection = scope.gridApi.selection;
             ndocs = vm.selection.getSelectedCount();
-            console.log('ndocs: ',ndocs)
+            // console.log('ndocs: ',ndocs)
             if (ndocs === 0) {
                 vm.doc = {'Author':"",'Type':"",'Shelf':""};
                 vm.btns_hidden = true; 
@@ -214,23 +213,32 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes','U',function($scope,DocRes,
 
     vm.formSubmit = function() {
         // update db with form-data
-        U.flow_log('doc-edit-ctrl#formSubmit:');
         vm.doc.Favorite = (vm.favChecked)? 'T':'F';
         vm.doc.Trash    = (vm.trashChecked)? 'T':'F';
-        console.log('vm.doc:');
-        U.tbl_log(vm.doc);
+        // U.tbl_log('doc-edit-ctrl#formSubmit:',vm.doc);
         vm.doc.$update();
         vm.doc_submit = true;  // btn toggle
     };
 
-    // THE HACK!!! closure !!! but it works !!!    
-    scope.setChoice = function (choiceObjects,choice) {
+    // THE closure HACK!!! but it works !!!    
+/*
+*   using a CLOSURE here is perhaps a too big hack that isn't worth it
+*   choiceObjects: an array of {name:,id:} objects to select from
+*   choice: the selected {name:,id:} object 
+*   link: the link in doc-table that point to the corresponding entry in the linked table, i.e. one of doc-author,doc-shelf or doc-type
+*
+*   performs something equivalent like: SELECT * FROM choiceObjects AS c WHERE c.id = link
+*/
+    scope.setChoice = function (choiceObjects,choice,link) {
+        // U.flow_log('scope.setChoice');
         let objects = choiceObjects;
         let ch = choice;
         let f = function () {
         for(let [key,val] of Object.entries(objects)) {
-            if(val.id === scope.docInEditForm.author) {
+            if(val.id === link) {
                 ch.selectedValue = objects[key];
+                // console.log('val.id',val.id);
+                // console.log('objects[key]',objects[key]);
                 break;
             }
         }};
@@ -247,20 +255,18 @@ myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo','U', function ($scope,
     vm.choice = {};
     vm.authTable;
     const docInEditForm = scope.docInEditForm;
-    // console.log('AuthCtrl#docInEditForm: ');
-    // U.tbl_log(docInEditForm);
+    // U.tbl_log('AuthCtrl#query#docInEditForm',docInEditForm);
 
     AuthorRes.query([],function(value) {
         vm.authTable = value;  //<-- that's the table from db
-        // U.flow_log('AuthorRes#query:vm.authTable:');
-        // U.tbl_log(vm.authTable);
+        // U.tbl_log('AuthCtrl#query#vm.authorObj',vm.authTable);
         vm.authorObj = Trafo.toSelect2(vm.authTable,'Author');  //<-- that's the object select2 wants to see
-        // console.log('vm.authorObj:');
-        // U.tbl_log(vm.authorObj);
+        // U.tbl_log('AuthCtrl#query#vm.authorObj',vm.authorObj);
         
-        /* <-- select * from authorObj where id = docInEditForm.author --> */
-        let AuthorChoice = scope.$parent.AuthorChoice = scope.$parent.setChoice(vm.authorObj,vm.choice); 
+        /* <-- SELECT * FROM authorObj AS c WHERE c.id = docInEditForm.author --> */
+        let AuthorChoice = scope.$parent.AuthorChoice = scope.$parent.setChoice(vm.authorObj,vm.choice,docInEditForm.author); 
         AuthorChoice();
+        // console.log(vm.choice);
     });
 /*
     // function setChoice() {
@@ -276,11 +282,9 @@ myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo','U', function ($scope,
     // scope.$parent.AuthorChoice = setChoice;    // the hack!!! but it works
 */    
     vm.onSelect = function($item) {
-        console.log('onSelect#$item: ',$item);  
         scope.docInEditForm.author = $item.id;
         scope.docInEditForm.Author = $item.name;
-        console.log('onSelect#scope.docInEditForm:');
-        U.tbl_log(scope.docInEditForm);
+        // U.tbl_log('AuthCtrl#onSelect',scope.docInEditForm);
     };
 }]);
 myApp.controller('TypeCtrl',['$scope','TypeRes','Trafo','U', function ($scope,TypeRes,Trafo,U) {
@@ -297,20 +301,10 @@ myApp.controller('TypeCtrl',['$scope','TypeRes','Trafo','U', function ($scope,Ty
     TypeRes.query([],function(value) {
         vm.typeTable = value;
         vm.typeObj = Trafo.toSelect2(vm.typeTable,'Type');
-        let TypeChoice = scope.$parent.TypeChoice = scope.$parent.setChoice(vm.typeObj,vm.choice); 
+        let TypeChoice = scope.$parent.TypeChoice = scope.$parent.setChoice(vm.typeObj,vm.choice,docInEditForm.type); 
         TypeChoice();
     });
-/*
-    function setChoice() {
-        for(let [key,val] of Object.entries(vm.typeObj)) {
-            if(val.id === docInEditForm.type) {
-                vm.choice.selectedValue = vm.typeObj[key];
-                break;
-            }
-        }
-    }; 
-    scope.$parent.TypeChoice = setChoice;    // the hack!!! but it works
-*/    
+
     vm.onSelect = function($item) {
         scope.docInEditForm.type = $item.id;
         scope.docInEditForm.Type = $item.name;
@@ -330,19 +324,10 @@ myApp.controller('ShelfCtrl',['$scope','ShelfRes','Trafo','U', function ($scope,
     ShelfRes.query([],function(value) {
         vm.shelfTable = value;
         vm.shelfObj = Trafo.toSelect2(vm.shelfTable,'Shelf');
-        setChoice();
+        let ShelfChoice = scope.$parent.ShelfChoice = scope.$parent.setChoice(vm.shelfObj,vm.choice,docInEditForm.shelf); 
+        ShelfChoice();
     });
-    
-    function setChoice() {
-        for(let [key,val] of Object.entries(vm.shelfObj)) {
-            if(val.id === docInEditForm.shelf) {
-                vm.choice.selectedValue = vm.shelfObj[key];
-                break;
-            }
-        }
-    }; 
-    scope.$parent.ShelfChoice = setChoice;    // the hack!!! but it works
-    
+
     vm.onSelect = function($item) {
         scope.docInEditForm.shelf = $item.id;
         scope.docInEditForm.Shelf = $item.name;
@@ -385,8 +370,9 @@ myApp.factory('U',          [function() {
             }
         }
     };
-    function tbl_log(o){
+    function tbl_log(t,o){
         if(true) {
+            console.log(t);
             console.table(o);
         }
     };
