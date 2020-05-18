@@ -67,16 +67,15 @@ myApp.controller('btns-ctrl', ['$scope','$uibModal','$document','U',function ($s
     vm.uploadClicked = function () {
         console.log("uploadClicked");  
         };
-        
     vm.viewClicked = function () {
-        vm.selection = scope.gridApi.selection;
+        let selection = scope.gridApi.selection;
         // console.log('viewClicked#vm.selection',vm.selection);
-        let ndocs = vm.selection.getSelectedCount();
+        let ndocs = selection.getSelectedCount();
         if (ndocs === 0) return;
-        vm.docs = vm.selection.getSelectedRows();
+        vm.docs = selection.getSelectedRows();
         vm.doc = vm.docs[0];
         U.tbl_log('viewClicked#vm.doc',vm.doc);
-        vm.selection.unSelectRow(vm.doc);   // unselect fifo 
+        selection.unSelectRow(vm.doc);   // unselect fifo 
         
         let a = document.createElement("a");
         let host = 'http://127.0.0.1:3000/';
