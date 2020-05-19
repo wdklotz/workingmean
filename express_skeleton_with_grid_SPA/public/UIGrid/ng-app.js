@@ -84,6 +84,7 @@ myApp.controller('btns-ctrl', ['$scope','$uibModal','$document','U',function ($s
         a.href   = host+path+file;
         a.target = "_blank";
         a.click();
+        document.body.removeChild(a);
    };
     vm.onEdit = function() {
         vm.showHideDiv = !vm.showHideDiv;
@@ -420,4 +421,8 @@ myApp.filter('propsFilter', [function() {
 * for AngularJS-native version of Select2 see: https://github.com/angular-ui/ui-select 
 *   in relation: jQuery Select2: https://select2.org/
 * for CommonJs and ES modules: https://flaviocopes.com/commonjs/
+* for download pdf file with $http.get() see:
+*   https://stackoverflow.com/questions/14215049/how-to-download-file-using-angularjs-and-calling-mvc-api
+* and/or: 
+*   https://gist.github.com/MarkLavrynenko/5b763e36b128170cdb77    
 */
