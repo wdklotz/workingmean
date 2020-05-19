@@ -4,7 +4,7 @@
 const myApp = angular.module('ng-app', [
 'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 
 'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 'ui.bootstrap',
-'ngResource','ngSanitize', 'ui.select', 'ngFileSaver'
+'ngResource','ngSanitize', 'ui.select'
 ]);
 
 myApp.controller('ng-app-ctrl', [
@@ -119,14 +119,8 @@ myApp.controller('btns-ctrl', ['$scope','$uibModal','$document','U',function ($s
                 // console.log('Modal dismissed at: ' + new Date());
             });
         };
-    vm.deleteClicked = function () {
-        console.log("deleteClicked");  
-        };
-    vm.favoriteClicked = function () {
-        console.log("favoriteClicked");  
-        };
-    vm.trashClicked = function () {
-        console.log("trashClicked");  
+    vm.ATSClicked = function () {
+        console.log("ng-click=ATSClicked()");  
         };
 }]);
 myApp.controller('modal-edit-ctrl', ['$uibModalInstance','size','selection',function ($uibModalInstance,size,selection) {
