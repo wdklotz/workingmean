@@ -4,7 +4,7 @@
 const myApp = angular.module('ng-app', [
 'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 
 'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 'ui.bootstrap',
-'ngResource','ngSanitize', 'ui.select'
+'ngResource','ngSanitize', 'ui.select', 'ngFileSaver'
 ]);
 
 myApp.controller('ng-app-ctrl', [
@@ -58,7 +58,7 @@ myApp.controller('ng-app-ctrl', [
     });
 */
 }]);
-myApp.controller('btns-ctrl', ['$scope','$uibModal','$document', function ($scope,$uibModal,$document) {
+myApp.controller('btns-ctrl', ['$scope','$uibModal','$document','U',function ($scope,$uibModal,$document,U) {
     const scope = $scope;
     const vm = this;
     vm.animationsEnabled = true;
@@ -68,8 +68,24 @@ myApp.controller('btns-ctrl', ['$scope','$uibModal','$document', function ($scop
         console.log("uploadClicked");  
         };
     vm.viewClicked = function () {
-        console.log("viewClicked");  
-        };
+        let selection = scope.gridApi.selection;
+        // console.log('viewClicked#vm.selection',vm.selection);
+        let ndocs = selection.getSelectedCount();
+        if (ndocs === 0) return;
+        vm.docs = selection.getSelectedRows();
+        vm.doc = vm.docs[0];
+        U.tbl_log('viewClicked#vm.doc',vm.doc);
+        selection.unSelectRow(vm.doc);   // unselect fifo 
+        
+        let a = document.createElement("a");
+        let host = 'http://127.0.0.1:3000/';
+        let path = '/UIGrid/store/data/';
+        let file = vm.doc.Document;
+        a.href   = host+path+file;
+        a.target = "_blank";
+        a.click();
+        document.body.removeChild(a);
+   };
     vm.onEdit = function() {
         vm.showHideDiv = !vm.showHideDiv;
     };
@@ -158,7 +174,6 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes','U',function($scope,DocRes,
             }
         render();
     }
-    
     init();
     
     vm.formReset = function() {
@@ -220,8 +235,7 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes','U',function($scope,DocRes,
         vm.doc_submit = true;  // btn toggle
     };
 
-    // THE closure HACK!!! but it works !!!    
-/*
+/*  // THE closure HACK!!! but it works !!!    
 *   using a CLOSURE here is perhaps a too big hack that isn't worth it
 *   choiceObjects: an array of {name:,id:} objects to select from
 *   choice: the selected {name:,id:} object 
@@ -230,10 +244,10 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes','U',function($scope,DocRes,
 *   performs something equivalent like: SELECT * FROM choiceObjects AS c WHERE c.id = link
 */
     scope.setChoice = function (choiceObjects,choice,link) {
-        // U.flow_log('scope.setChoice');
+        // U.flow_log('doc-edit-ctrl#setChoice');
         let objects = choiceObjects;
         let ch = choice;
-        let f = function () {
+        let fn = function () {
         for(let [key,val] of Object.entries(objects)) {
             if(val.id === link) {
                 ch.selectedValue = objects[key];
@@ -242,7 +256,7 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes','U',function($scope,DocRes,
                 break;
             }
         }};
-        return f;
+        return fn;
     }; 
 }]);
 myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo','U', function ($scope,AuthorRes,Trafo,U) {
@@ -266,7 +280,7 @@ myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo','U', function ($scope,
         /* <-- SELECT * FROM authorObj AS c WHERE c.id = docInEditForm.author --> */
         let AuthorChoice = scope.$parent.AuthorChoice = scope.$parent.setChoice(vm.authorObj,vm.choice,docInEditForm.author); 
         AuthorChoice();
-        // console.log(vm.choice);
+        // U.tbl_log(vm.choice);
     });
 /*
     // function setChoice() {
@@ -350,7 +364,7 @@ myApp.factory('ShelfRes',   ['$resource', function($resource) {
     return $resource('/api/shelfs/:id',{});
 }]);
 myApp.factory('Trafo',      [function() {
-    const fwd = function(items, label) {
+    const fn = function(items, label) {
         let out = [];
         for (let i=0; i < items.length; i++) {
            out[i] = {name: items[i][label], id:items[i].id};
@@ -358,7 +372,7 @@ myApp.factory('Trafo',      [function() {
        return out;
     };
     return {
-        toSelect2: fwd
+        toSelect2: fn
     };
 }]);
 myApp.factory('U',          [function() {
@@ -398,7 +412,7 @@ myApp.filter('propsFilter', [function() {
 
 })();
 
-/*
+/* LINKS
 * for reduce see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
 * for ui-bootstrap see: https://angular-ui.github.io/bootstrap/
 * for uibModal see: https://github.com/angular-ui/bootstrap/tree/master/src/modal
@@ -407,4 +421,8 @@ myApp.filter('propsFilter', [function() {
 * for AngularJS-native version of Select2 see: https://github.com/angular-ui/ui-select 
 *   in relation: jQuery Select2: https://select2.org/
 * for CommonJs and ES modules: https://flaviocopes.com/commonjs/
+* for download pdf file with $http.get() see:
+*   https://stackoverflow.com/questions/14215049/how-to-download-file-using-angularjs-and-calling-mvc-api
+* and/or: 
+*   https://gist.github.com/MarkLavrynenko/5b763e36b128170cdb77    
 */
