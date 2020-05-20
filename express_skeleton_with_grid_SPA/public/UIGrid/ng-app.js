@@ -7,8 +7,8 @@ var myApp = angular.module('ng-app', ['ngRoute',
 'ngResource','ngSanitize','ui.select']);
 
 myApp.config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider) {
-    $routeProvider.when('/a', {
-        template: '<h1>this is the #/ng/atsae route</h1>',
+    $routeProvider.when('/first', {
+        template: '<h1>this is the #/first hashtag route</h1>',
         // templateUrl: 'list.html',
         // controller: 'Ctrl',
         // controllerAs: 'main'
@@ -19,8 +19,8 @@ myApp.config(['$routeProvider','$locationProvider',function($routeProvider,$loca
     
     $locationProvider.hashPrefix('');
 }]);
-/*
-// myApp.controller('Ctrl',function($scope,$location) {
+
+/* myApp.controller('Ctrl',function($scope,$location) {
         // console.log($location.url('/second'));
 // });
 // myApp.controller('Ctrl', function(){
