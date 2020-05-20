@@ -1,24 +1,36 @@
 <!doctype html>
 <html ng-app="ng-app">
 <head>
+<!-- <base href="/public/UIGrid"> -->
 <!-- Angular -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.js"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular-touch.js"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular-animate.js"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular-resource.js"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular-sanitize.js"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular-route.js"></script> -->
+
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.js"></script> -->
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-touch.js"></script> -->
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-animate.js"></script> -->
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-resource.js"></script> -->
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-sanitize.js"></script> -->
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-route.js"></script> -->
+
     <script src="./lib/angular1.7.9/angular.js"></script>
     <script src="./lib/angular1.7.9/angular-touch.js"></script>
     <script src="./lib/angular1.7.9/angular-animate.js"></script>
     <script src="./lib/angular1.7.9/angular-resource.js"></script>
     <script src="./lib/angular1.7.9/angular-sanitize.js"></script>
+    <script src="./lib/angular1.7.9/angular-route.js"></script>
 <!-- Angular -->
 
 <!-- Angular-File-Saver -->
-    <script src="./lib/angular-file-saver/angular-file-saver.bundle.js"></script>
+    <!-- <script src="./lib/angular-file-saver/angular-file-saver.bundle.js"></script> -->
 <!-- Angular-File-Saver -->
 
 <!-- ui-select files -->
-    <script src="./lib/select/select.js"></script>
+    <!-- <script src="./lib/select/select.js"></script> -->
     <link  href="./lib/select/select.css" rel="stylesheet">
 <!-- ui-select files -->
 
@@ -28,7 +40,7 @@
 
 <!-- Bootstrap -->
     <!-- <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script> -->
-    <script src="./lib/ui-bootstrap2.5.0/ui-bootstrap-tpls.js"></script>
+    <!-- <script src="./lib/ui-bootstrap2.5.0/ui-bootstrap-tpls.js"></script> -->
     <!-- <link href="./lib/ui-bootstrap2.5.0/ui-bootstrap-2.5.0-csp.css" rel="stylesheet"type="text/css"> -->
     <link href="./lib/bootstrap3.3.7/bootstrap.min.css" rel="stylesheet"type="text/css">
     <!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
@@ -36,7 +48,7 @@
 
 <!-- UI-Grid -->
     <!-- <script src="http://ui-grid.info/release/ui-grid.js"></script> -->
-    <script src="./lib/ui-grid4.8.0/ui-grid.js"></script>
+    <!-- <script src="./lib/ui-grid4.8.0/ui-grid.js"></script> -->
     <!-- <link href="http://ui-grid.info/release/ui-grid.css" type="text/css" rel="stylesheet"> -->
     <link  href="./lib/ui-grid4.8.0/ui-grid.css" rel="stylesheet" type="text/css"/>
 <!-- UI-Grid -->
@@ -78,8 +90,8 @@
         width: 600px;  /*wdk*/
     }
     </style>
-</head>
 
+</head>
 <body ng-controller="ng-app-ctrl" ng-cloak>
     <!-- Action buttons -->
     <div ng-controller="btns-ctrl as $btnCtrl" class="modal-demo">
@@ -93,10 +105,8 @@
         
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.deleteClicked()"  > Delete </button>
         
-        &emsp; Mark as:
-        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.favoriteClicked()"> Favorite </button>
-        
-        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.trashClicked()"   > Trash </button>
+        &emsp; New/Edit:
+        <a type="button" class="btn btn-primary" href="#/second"> Author/Type/Shelf </a>
         
          &emsp;&emsp;Test:
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.testClicked('lg')"> Details </button>
@@ -190,6 +200,9 @@
         </div>
     <!-- ^^^^^^^^^^^document editor panel^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
     </div>
+    
+    <!-- Author/Type/Shelf -->
+    <div ng-view></div>
 
     <!-- ==============================uiGrid================================== -->
     <div ui-grid="grid1Options" ui-grid-pagination ui-grid-resize-columns ui-grid-selection ui-grid-cellnav class="grid">
@@ -215,8 +228,9 @@
         </div>
     </script>
     <!-- ^^^^^^^^^^^^^^^^^^modalEditContent.html template^^^^^^^^^^^^^^^^^^^^^^ -->
-
+    <script src="./lib/select/select.js"></script>
+    <script src="./lib/ui-bootstrap2.5.0/ui-bootstrap-tpls.js"></script>
+    <script src="./lib/ui-grid4.8.0/ui-grid.js"></script>
     <script src="./ng-app.js"></script>
-
 </body>
 </html>
