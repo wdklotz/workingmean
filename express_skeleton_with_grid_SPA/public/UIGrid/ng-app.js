@@ -1,12 +1,39 @@
-'use strict';
 (function() {
+'use strict';
 
-const myApp = angular.module('ng-app', [
+var myApp = angular.module('ng-app', ['ngRoute',
 'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 
 'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 'ui.bootstrap',
-'ngResource','ngSanitize', 'ui.select'
-]);
+'ngResource','ngSanitize','ui.select']);
 
+myApp.config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider) {
+    $routeProvider.when('/a', {
+        template: '<h1>this is the #/ng/atsae route</h1>',
+        // templateUrl: 'list.html',
+        // controller: 'Ctrl',
+        // controllerAs: 'main'
+    }).when('/second', {
+        template: "<h3>click broser's <b>&larr;</b> arrow to go back</h3>",            
+        // controller: 'Ctrl',
+    }).otherwise({ redirectTo: '/'});
+    
+    $locationProvider.hashPrefix('');
+}]);
+/*
+// myApp.controller('Ctrl',function($scope,$location) {
+        // console.log($location.url('/second'));
+// });
+// myApp.controller('Ctrl', function(){
+    // let vm = this;
+    // console.log('myApp.controller("Ctrl", function(){');
+        // vm.contacts = [
+            // { name: 'Shuvro', number: '1234' },
+            // { name: 'Ashif', number: '4321' },
+            // { name: 'Anik', number: '2314' }
+        // ];
+        // vm.show = (vm.show === undefined)? true: !vm.show;
+    // });
+*/
 myApp.controller('ng-app-ctrl', [
         '$scope', '$http', 'uiGridConstants', 'DocRes',
         function($scope, $http, uiGridConstants, DocRes) {  
@@ -252,6 +279,10 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes','U',function($scope,DocRes,
         }};
         return fn;
     }; 
+/*  function getKeyByValue(object,value) {
+        return Object.keys(object).find(key => object[key] === value);
+    }
+*/
 }]);
 myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo','U', function ($scope,AuthorRes,Trafo,U) {
     const vm = this;
@@ -341,7 +372,7 @@ myApp.controller('ShelfCtrl',['$scope','ShelfRes','Trafo','U', function ($scope,
         scope.docInEditForm.Shelf = $item.name;
     };
 }]);
-
+    
 myApp.factory('DocRes',     ['$resource', function($resource) {
     return $resource('/api/lib/:id',
         {id:'@id'},
