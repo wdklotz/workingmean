@@ -368,7 +368,6 @@ myApp.controller('ShelfCtrl',['$scope','ShelfRes','Trafo','U', function ($scope,
         scope.docInEditForm.Shelf = $item.name;
     };
 }]);
-
 myApp.controller('uploaderCtrl', function($scope, $log, uiUploader) {
     $scope.btn_remove = function(file) {
         $log.info('deleting=' + file);
