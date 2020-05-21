@@ -9,32 +9,24 @@ var myApp = angular.module('ng-app', ['ngRoute',
 myApp.config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider) {
     $routeProvider.when('/first', {
         template: '<h1>this is the #/first hashtag route</h1>',
-        // templateUrl: 'list.html',
-        // controller: 'Ctrl',
-        // controllerAs: 'main'
     }).when('/ats', {
-        template: "<h1>{{notice}}</h1><h3>click broser's <b>&larr;</b> arrow to go back</h3>",            
-        controller: 'ATS'
+        // template: "<h1>{{notice}}</h1><h3>click browser's <b>&larr;</b> arrow to go back</h3>",            
+        templateUrl: 'ats.html',
+        controller: 'ats-ctrl'
     }).otherwise({ redirectTo: '/'});
     
     $locationProvider.hashPrefix('');
 }]);
 
-myApp.controller('ATS',function($scope) {
-    $scope.notice = "controller('ATS',...";
+myApp.controller('ats-ctrl',function($scope) {
+    $scope.notice = "controller('ats-ctrl',...";
     console.log($scope.notice);
+    $scope.contacts = [
+        { name: 'Shuvro', number: '1234' },
+        { name: 'Ashif', number: '4321' },
+        { name: 'Anik', number: '2314' }
+    ];
 });
-/*// myApp.controller('Ctrl', function(){
-    // let vm = this;
-    // console.log('myApp.controller("Ctrl", function(){');
-        // vm.contacts = [
-            // { name: 'Shuvro', number: '1234' },
-            // { name: 'Ashif', number: '4321' },
-            // { name: 'Anik', number: '2314' }
-        // ];
-        // vm.show = (vm.show === undefined)? true: !vm.show;
-    // });
-*/
 myApp.controller('ng-app-ctrl', [
         '$scope', '$http', 'uiGridConstants', 'DocRes',
         function($scope, $http, uiGridConstants, DocRes) {  
