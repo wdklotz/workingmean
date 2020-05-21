@@ -4,7 +4,7 @@
 var myApp = angular.module('ng-app', ['ngRoute',
 'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 
 'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 'ui.bootstrap',
-'ngResource','ngSanitize','ui.select']);
+'ngResource','ngSanitize','ui.select','ui.uploader']);
 
 myApp.config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider) {
     $routeProvider.when('/first', {
@@ -365,6 +365,39 @@ myApp.controller('ShelfCtrl',['$scope','ShelfRes','Trafo','U', function ($scope,
         scope.docInEditForm.Shelf = $item.name;
     };
 }]);
+
+myApp.controller('uploaderCtrl', function($scope, $log, uiUploader) {
+    $scope.btn_remove = function(file) {
+        $log.info('deleting=' + file);
+        uiUploader.removeFile(file);
+    };
+    $scope.btn_clean = function() {
+        uiUploader.removeAll();
+    };
+    $scope.btn_upload = function() {
+        $log.info('uploading...');
+        uiUploader.startUpload({
+            url: 'https://posttestserver.com/post.php',
+            concurrency: 2,
+            onProgress: function(file) {
+                $log.info(file.name + '=' + file.humanSize);
+                $scope.$apply();
+            },
+            onCompleted: function(file, response) {
+                $log.info(file + 'response' + response);
+            }
+        });
+    };
+
+    $scope.files = [];
+    var element = document.getElementById('file1');
+    element.addEventListener('change', function(e) {
+        var files = e.target.files;
+        uiUploader.addFiles(files);
+        $scope.files = uiUploader.getFiles();
+        $scope.$apply();
+    });
+});
     
 myApp.factory('DocRes',     ['$resource', function($resource) {
     return $resource('/api/lib/:id',
