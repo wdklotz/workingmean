@@ -13,6 +13,9 @@ myApp.config(['$routeProvider','$locationProvider',function($routeProvider,$loca
         // template: "<h1>{{notice}}</h1><h3>click browser's <b>&larr;</b> arrow to go back</h3>",            
         templateUrl: 'ats.html',
         controller: 'ats-ctrl'
+    }).when('/fileUpload', {
+        templateUrl : 'fileUpload.html',
+        controller : 'uploaderCtrl'
     }).otherwise({ redirectTo: '/'});
     
     $locationProvider.hashPrefix('');
@@ -371,7 +374,7 @@ myApp.controller('uploaderCtrl', function($scope, $log, uiUploader) {
         $log.info('deleting=' + file);
         uiUploader.removeFile(file);
     };
-    $scope.btn_clean = function() {
+    $scope.btn_clean  = function() {
         uiUploader.removeAll();
     };
     $scope.btn_upload = function() {
@@ -475,5 +478,6 @@ myApp.filter('propsFilter', [function() {
 * for download pdf file with $http.get() see:
 *   https://stackoverflow.com/questions/14215049/how-to-download-file-using-angularjs-and-calling-mvc-api
 * and/or: 
-*   https://gist.github.com/MarkLavrynenko/5b763e36b128170cdb77    
+*   https://gist.github.com/MarkLavrynenko/5b763e36b128170cdb77   
+* for ui-uploader see:  https://github.com/angular-ui/ui-uploader
 */
