@@ -12,18 +12,19 @@ myApp.config(['$routeProvider','$locationProvider',function($routeProvider,$loca
         // templateUrl: 'list.html',
         // controller: 'Ctrl',
         // controllerAs: 'main'
-    }).when('/second', {
-        template: "<h3>click broser's <b>&larr;</b> arrow to go back</h3>",            
-        // controller: 'Ctrl',
+    }).when('/ats', {
+        template: "<h1>{{notice}}</h1><h3>click broser's <b>&larr;</b> arrow to go back</h3>",            
+        controller: 'ATS'
     }).otherwise({ redirectTo: '/'});
     
     $locationProvider.hashPrefix('');
 }]);
 
-/* myApp.controller('Ctrl',function($scope,$location) {
-        // console.log($location.url('/second'));
-// });
-// myApp.controller('Ctrl', function(){
+myApp.controller('ATS',function($scope) {
+    $scope.notice = "controller('ATS',...";
+    console.log($scope.notice);
+});
+/*// myApp.controller('Ctrl', function(){
     // let vm = this;
     // console.log('myApp.controller("Ctrl", function(){');
         // vm.contacts = [
