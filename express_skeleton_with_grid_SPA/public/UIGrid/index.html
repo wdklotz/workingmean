@@ -96,7 +96,7 @@
     <!-- Action buttons -->
     <div ng-controller="btns-ctrl as $btnCtrl" class="modal-demo">
         &ensp; Documents: 
-        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.uploadClicked()"> Upload </button>
+        <a type="button" class="btn btn-primary" href="#/fileUpload"> Upload </a>
         
         &emsp; Selection:
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.viewClicked()"> View </button>
@@ -198,7 +198,6 @@
             <div class="modal-footer">
             </div>
         </div>
-    <!-- ^^^^^^^^^^^document editor panel^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
     </div>
     
     <!-- Author/Type/Shelf -->
@@ -207,7 +206,47 @@
     <!-- ==============================uiGrid================================== -->
     <div ui-grid="grid1Options" ui-grid-pagination ui-grid-resize-columns ui-grid-selection ui-grid-cellnav class="grid">
     </div>
-    <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^uiGrid^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
+
+    <!-- ============================file uploader============================= -->
+    <script id="fileUpload.html"  type="text/ng-template">
+        <style>
+        #back-arrow-notice {
+            padding-left: 75em;
+        }
+        </style>
+        <div id="uploader" ng-controller="uploaderCtrl">
+            <div class="page-header">
+                <h1>Uploader</h1>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>What?</h3>
+                    <p>Upload multiple files at the same time.</p>
+
+                    <div class="well">
+                        <div>
+                            <div style="float:right;">
+                                <button ng-click="btn_upload()">Upload</button>
+                                <button ng-click="btn_clean()">Remove all</button>
+                            </div>
+                            <input type="file" id="file1" multiple/>
+                        </div>
+                        <div ng-repeat="file in files" style="margin-top: 20px;border-bottom-color: antiquewhite;border-bottom-style: double;">
+                            <div><span>{{file.name}}</span><div style="float:right;"><span>{{file.humanSize}}</span><a ng-click="btn_remove(file)" title="Remove from list to be uploaded"><i class="icon-remove"></i></a></div>
+                            </div>
+                            <progress style="width:400px;" value="{{file.loaded ? file.loaded : 0}}" max="{{file.size}}"></progress>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <h3>How?</h3>
+                    <p>See <a href="https://github.com/angular-ui/ui-uploader/blob/master/demo/index.html">source of this demo</a>.</p>
+                </div>
+            </div>
+        </div>
+        <p id="back-arrow-notice">click browser's <b>&larr;</b> arrow to go back</p>
+    </script>
 
     <!-- ==================modalEditContent.html template====================== -->
     <script id="modalEditContent.html" type="text/ng-template">
@@ -227,10 +266,11 @@
             <!-- <button class="btn btn-warning" type="button" ng-click="$modCtrl.cancel()">Cancel</button> -->
         </div>
     </script>
-    <!-- ^^^^^^^^^^^^^^^^^^modalEditContent.html template^^^^^^^^^^^^^^^^^^^^^^ -->
+
     <script src="./lib/select/select.js"></script>
     <script src="./lib/ui-bootstrap2.5.0/ui-bootstrap-tpls.js"></script>
     <script src="./lib/ui-grid4.8.0/ui-grid.js"></script>
+    <script src="./lib/ui-uploader/uploader.js"></script>
     <script src="./ng-app.js"></script>
 </body>
 </html>

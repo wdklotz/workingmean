@@ -4,7 +4,7 @@
 var myApp = angular.module('ng-app', ['ngRoute',
 'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 
 'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 'ui.bootstrap',
-'ngResource','ngSanitize','ui.select']);
+'ngResource','ngSanitize','ui.select','ui.uploader']);
 
 myApp.config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider) {
     $routeProvider.when('/first', {
@@ -13,6 +13,9 @@ myApp.config(['$routeProvider','$locationProvider',function($routeProvider,$loca
         // template: "<h1>{{notice}}</h1><h3>click browser's <b>&larr;</b> arrow to go back</h3>",            
         templateUrl: 'ats.html',
         controller: 'ats-ctrl'
+    }).when('/fileUpload', {
+        templateUrl : 'fileUpload.html',
+        controller : 'uploaderCtrl'
     }).otherwise({ redirectTo: '/'});
     
     $locationProvider.hashPrefix('');
@@ -365,6 +368,39 @@ myApp.controller('ShelfCtrl',['$scope','ShelfRes','Trafo','U', function ($scope,
         scope.docInEditForm.Shelf = $item.name;
     };
 }]);
+
+myApp.controller('uploaderCtrl', function($scope, $log, uiUploader) {
+    $scope.btn_remove = function(file) {
+        $log.info('deleting=' + file);
+        uiUploader.removeFile(file);
+    };
+    $scope.btn_clean  = function() {
+        uiUploader.removeAll();
+    };
+    $scope.btn_upload = function() {
+        $log.info('uploading...');
+        uiUploader.startUpload({
+            url: 'https://posttestserver.com/post.php',
+            concurrency: 2,
+            onProgress: function(file) {
+                $log.info(file.name + '=' + file.humanSize);
+                $scope.$apply();
+            },
+            onCompleted: function(file, response) {
+                $log.info(file + 'response' + response);
+            }
+        });
+    };
+
+    $scope.files = [];
+    var element = document.getElementById('file1');
+    element.addEventListener('change', function(e) {
+        var files = e.target.files;
+        uiUploader.addFiles(files);
+        $scope.files = uiUploader.getFiles();
+        $scope.$apply();
+    });
+});
     
 myApp.factory('DocRes',     ['$resource', function($resource) {
     return $resource('/api/lib/:id',
@@ -442,5 +478,6 @@ myApp.filter('propsFilter', [function() {
 * for download pdf file with $http.get() see:
 *   https://stackoverflow.com/questions/14215049/how-to-download-file-using-angularjs-and-calling-mvc-api
 * and/or: 
-*   https://gist.github.com/MarkLavrynenko/5b763e36b128170cdb77    
+*   https://gist.github.com/MarkLavrynenko/5b763e36b128170cdb77   
+* for ui-uploader see:  https://github.com/angular-ui/ui-uploader
 */
