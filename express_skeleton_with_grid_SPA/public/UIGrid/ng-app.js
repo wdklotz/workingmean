@@ -474,4 +474,6 @@ myApp.filter('propsFilter', [function() {
 * and/or: 
 *   https://gist.github.com/MarkLavrynenko/5b763e36b128170cdb77   
 * for ui-uploader see:  https://github.com/angular-ui/ui-uploader
+* for server-side filesystem actions see: https://nodejs.org/api/fs.html and https://dev.to/mrm8488/from-callbacks-to-fspromises-to-handle-the-file-system-in-nodejs-56p2
+* for server-side MD5 creation see: https://www.npmjs.com/package/md5-file
 */
