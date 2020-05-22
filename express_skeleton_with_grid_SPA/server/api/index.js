@@ -1,9 +1,9 @@
-'use strict';
 (function() {
+'use strict';
     
 var express = require('express');
 var router  = express.Router();
-var api = require('./api.js');
+var api     = require('./api.js');
 
 /* api url=/api/lib/.... */
 

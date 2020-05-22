@@ -1,5 +1,5 @@
-'use strict';
 (function(){
+ 'use strict';
     
 const db = require('../dbConnection/connector');
 let {app_log, tbl_log, i_was_here} = require('../../svr_helper');
@@ -11,7 +11,7 @@ const sendJsonResponse = function (res, status, content) {
     res.status(status);
     res.end();
 };
-const documents = function(req,res) {      // all -> /api/lib
+const documents        = function(req,res) {      // all -> /api/lib
     i_was_here('documents');
     const sql =`SELECT d.*, a.Author, t.Type, s.Shelf FROM doc As d
                 INNER JOIN doc_author AS a ON a.id = d.author 
@@ -35,7 +35,7 @@ const documents = function(req,res) {      // all -> /api/lib
         }
     })  
 };
-const documentById = function(req,res) {      // id:38 -> /api/lib/38
+const documentById     = function(req,res) {      // id:38 -> /api/lib/38
     i_was_here('documentById');
     const docId  = req.params.documentId;
     const sql = `SELECT d.*, a.Author, t.Type, s.Shelf FROM doc As d
@@ -51,7 +51,7 @@ const documentById = function(req,res) {      // id:38 -> /api/lib/38
         sendJsonResponse(res,200,row);
     });
 };
-const documentUpdate = function(req,res) {
+const documentUpdate   = function(req,res) {
     i_was_here('documentUpdate');
     const docId    = req.params.documentId;
     const body = req.body;
@@ -116,7 +116,7 @@ const authors = function(req,res) {
         } 
     });
 };
-const types = function(req,res) {
+const types   = function(req,res) {
     i_was_here('types');
     const sql = `SELECT * from doc_type`;
     db.all(sql, [], (err, rows) => {
@@ -128,7 +128,7 @@ const types = function(req,res) {
         } 
     });
 };
-const shelfs = function(req,res) {
+const shelfs  = function(req,res) {
     i_was_here('shelfs');
     const sql = `SELECT * from doc_shelf`;
     db.all(sql, [], (err, rows) => {

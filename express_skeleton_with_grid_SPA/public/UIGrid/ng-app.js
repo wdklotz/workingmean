@@ -1,10 +1,7 @@
 (function() {
 'use strict';
 
-var myApp = angular.module('ng-app', ['ngRoute',
-'ngTouch', 'ui.grid', 'ui.grid.pagination','ui.grid.resizeColumns', 
-'ui.grid.selection', 'ui.grid.cellNav', 'ngAnimate', 'ui.bootstrap',
-'ngResource','ngSanitize','ui.select','ui.uploader']);
+var myApp = angular.module('ng-app',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.grid.resizeColumns','ui.grid.selection','ui.grid.cellNav','ngAnimate','ui.bootstrap','ngResource','ngSanitize','ui.select','ui.uploader']);
 
 myApp.config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider) {
     $routeProvider.when('/first', {
@@ -21,7 +18,7 @@ myApp.config(['$routeProvider','$locationProvider',function($routeProvider,$loca
     $locationProvider.hashPrefix('');
 }]);
 
-myApp.controller('ats-ctrl',function($scope) {
+myApp.controller('ats-ctrl',        ['$scope',function($scope) {
     $scope.notice = "controller('ats-ctrl',...";
     console.log($scope.notice);
     $scope.contacts = [
@@ -29,10 +26,8 @@ myApp.controller('ats-ctrl',function($scope) {
         { name: 'Ashif', number: '4321' },
         { name: 'Anik', number: '2314' }
     ];
-});
-myApp.controller('ng-app-ctrl', [
-        '$scope', '$http', 'uiGridConstants', 'DocRes',
-        function($scope, $http, uiGridConstants, DocRes) {  
+}]);
+myApp.controller('ng-app-ctrl',     ['$scope', '$http', 'uiGridConstants', 'DocRes',function($scope, $http, uiGridConstants, DocRes) {  
 
     const scope = $scope;
     scope.grid1Options = {
@@ -81,7 +76,7 @@ myApp.controller('ng-app-ctrl', [
     });
 */
 }]);
-myApp.controller('btns-ctrl', ['$scope','$uibModal','$document','U',function ($scope,$uibModal,$document,U) {
+myApp.controller('btns-ctrl',       ['$scope','$uibModal','$document','U',function ($scope,$uibModal,$document,U) {
     const scope = $scope;
     const vm = this;
     vm.animationsEnabled = true;
@@ -162,7 +157,7 @@ myApp.controller('modal-edit-ctrl', ['$uibModalInstance','size','selection',func
         $uibModalInstance.dismiss('cancel');
     };
 }]);
-myApp.controller('doc-edit-ctrl', ['$scope','DocRes','U',function($scope,DocRes,U) {
+myApp.controller('doc-edit-ctrl',   ['$scope','DocRes','U',function($scope,DocRes,U) {
     const vm = this;
     const scope = $scope;
     
@@ -280,7 +275,7 @@ myApp.controller('doc-edit-ctrl', ['$scope','DocRes','U',function($scope,DocRes,
     }
 */
 }]);
-myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo','U', function ($scope,AuthorRes,Trafo,U) {
+myApp.controller('AuthCtrl',        ['$scope','AuthorRes','Trafo','U', function ($scope,AuthorRes,Trafo,U) {
     const vm = this;
     const scope = $scope;
 
@@ -322,7 +317,7 @@ myApp.controller('AuthCtrl',['$scope','AuthorRes','Trafo','U', function ($scope,
         // U.tbl_log('AuthCtrl#onSelect',scope.docInEditForm);
     };
 }]);
-myApp.controller('TypeCtrl',['$scope','TypeRes','Trafo','U', function ($scope,TypeRes,Trafo,U) {
+myApp.controller('TypeCtrl',        ['$scope','TypeRes','Trafo','U', function ($scope,TypeRes,Trafo,U) {
     const vm = this;
     const scope = $scope;
 
@@ -345,7 +340,7 @@ myApp.controller('TypeCtrl',['$scope','TypeRes','Trafo','U', function ($scope,Ty
         scope.docInEditForm.Type = $item.name;
     };
 }]);
-myApp.controller('ShelfCtrl',['$scope','ShelfRes','Trafo','U', function ($scope,ShelfRes,Trafo,U) {
+myApp.controller('ShelfCtrl',       ['$scope','ShelfRes','Trafo','U', function ($scope,ShelfRes,Trafo,U) {
     const vm = this;
     const scope = $scope;
 
@@ -368,7 +363,7 @@ myApp.controller('ShelfCtrl',['$scope','ShelfRes','Trafo','U', function ($scope,
         scope.docInEditForm.Shelf = $item.name;
     };
 }]);
-myApp.controller('uploaderCtrl', function($scope, $log, uiUploader) {
+myApp.controller('uploaderCtrl',    ['$scope','$log','uiUploader',function($scope, $log, uiUploader) {
     $scope.btn_remove = function(file) {
         $log.info('deleting=' + file);
         uiUploader.removeFile(file);
@@ -399,7 +394,7 @@ myApp.controller('uploaderCtrl', function($scope, $log, uiUploader) {
         $scope.files = uiUploader.getFiles();
         $scope.$apply();
     });
-});
+}]);
     
 myApp.factory('DocRes',     ['$resource', function($resource) {
     return $resource('/api/lib/:id',
@@ -479,4 +474,6 @@ myApp.filter('propsFilter', [function() {
 * and/or: 
 *   https://gist.github.com/MarkLavrynenko/5b763e36b128170cdb77   
 * for ui-uploader see:  https://github.com/angular-ui/ui-uploader
+* for server-side filesystem actions see: https://nodejs.org/api/fs.html and https://dev.to/mrm8488/from-callbacks-to-fspromises-to-handle-the-file-system-in-nodejs-56p2
+* for server-side MD5 creation see: https://www.npmjs.com/package/md5-file
 */
