@@ -492,4 +492,6 @@ myApp.directive("ngUploadChange",function(){
 * for ui-uploader see:  https://github.com/angular-ui/ui-uploader
 * for server-side filesystem actions see: https://nodejs.org/api/fs.html and https://dev.to/mrm8488/from-callbacks-to-fspromises-to-handle-the-file-system-in-nodejs-56p2
 * for server-side MD5 creation see: https://www.npmjs.com/package/md5-file
+* for multiple file input with ngUploadChange directive see:
+*   https://stackoverflow.com/questions/20146713/ng-change-on-input-type-file/41557378
 */
