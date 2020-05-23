@@ -364,17 +364,21 @@ myApp.controller('ShelfCtrl',       ['$scope','ShelfRes','Trafo','U', function (
     };
 }]);
 myApp.controller('uploadCtrl',      ['$scope','$log','uiUploader',function($scope, $log, uiUploader) {
-    // $scope.btn_remove = function(file) {
-        // $log.info('deleting=' + file);
-        // uiUploader.removeFile(file);
-    // };
     $scope.nb_files_selected = 0;
+    $scope.fileChanged = function($event) {
+        var files = $event.target.files;
+        console.log(files.length,' var files', files);
+        uiUploader.addFiles(files);
+        $scope.files = uiUploader.getFiles();
+        $scope.nb_files_selected = $scope.files.length;
+        console.log($scope.files.length,' uiUploader.getFiles()',$scope.files);
+    }
     $scope.btn_clean  = function() {
         uiUploader.removeAll();
         $scope.files = uiUploader.getFiles();
         $scope.nb_files_selected = 0;
     };
-    $scope.btn_upload = function() {
+/*    $scope.btn_upload = function() {   TBD
         $log.info('uploading...');
         uiUploader.startUpload({
             url: 'https://posttestserver.com/post.php',
@@ -388,14 +392,7 @@ myApp.controller('uploadCtrl',      ['$scope','$log','uiUploader',function($scop
             }
         });
     };
-    $scope.fileChanged = function($event) {
-        var files = $event.target.files;
-        console.log(files.length,' var files', files);
-        uiUploader.addFiles(files);
-        $scope.files = uiUploader.getFiles();
-        $scope.nb_files_selected = $scope.files.length;
-        console.log($scope.files.length,' uiUploader.getFiles()',$scope.files);
-    }
+    */
 }]);
 
 myApp.factory('DocRes',     ['$resource', function($resource) {

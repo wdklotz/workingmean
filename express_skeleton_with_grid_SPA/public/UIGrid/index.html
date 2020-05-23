@@ -217,14 +217,11 @@
         }
         </style>
         <div id="uploader" ng-controller="uploadCtrl">
-            <!-- <div class="page-header"> -->
-                <!-- <h2>Uploader</h2> -->
-            <!-- </div> -->
             <div class="row">
                 <div class="col-md-6">
                     <!-- <h3>What?</h3> -->
                     <h3 style="padding-left: 1em;" >Upload multiple files at the same time. 
-                        <small>(click browser's <b>&larr;</b> arrow to go back)</small></h3>
+                        <small>(click browser's <b>&larr;</b> arrow to close)</small></h3>
                     <div class="well">
                         <div>
                             <div style="float:right;">
@@ -235,17 +232,17 @@
                             <label for="files" class="btn btn-primary">Select files</label><span style="padding-left:1em;">{{nb_files_selected}} files</span>
                         </div>
                         <div id="file_prog_list" ng-repeat="file in files">
-                            <div><span>{{file.name}}</span><div style="float:right;"><span>{{file.humanSize}}</span><a ng-click="btn_remove(file)" title="Remove from list to be uploaded"><i class="icon-remove"></i></a></div>
+                            <div>
+                                <span>{{file.name}}</span>
+                                <div style="float:right;">
+                                    <span>{{file.humanSize}}</span>
+                                    <a ng-click="btn_remove(file)" title="Remove from list to be uploaded"><i class="icon-remove"></i></a>
+                                </div>
                             </div>
                             <progress style="width:400px;" value="{{file.loaded ? file.loaded : 0}}" max="{{file.size}}"></progress>
                         </div>
                    </div>
                 </div>
-
-                <!-- <div class="col-md-6"> -->
-                    <!-- <h3>How?</h3> -->
-                    <!-- <p>See <a href="https://github.com/angular-ui/ui-uploader/blob/master/demo/index.html">source of this demo</a>.</p> -->
-                <!-- </div> -->
             </div>
         </div>
     </script>
