@@ -364,12 +364,15 @@ myApp.controller('ShelfCtrl',       ['$scope','ShelfRes','Trafo','U', function (
     };
 }]);
 myApp.controller('uploaderCtrl',    ['$scope','$log','uiUploader',function($scope, $log, uiUploader) {
-    $scope.btn_remove = function(file) {
-        $log.info('deleting=' + file);
-        uiUploader.removeFile(file);
-    };
+    // $scope.btn_remove = function(file) {
+        // $log.info('deleting=' + file);
+        // uiUploader.removeFile(file);
+    // };
+    $scope.nbfiles = 0;
     $scope.btn_clean  = function() {
         uiUploader.removeAll();
+        $scope.files = uiUploader.getFiles();
+        $scope.nbfiles = 0;
     };
     $scope.btn_upload = function() {
         $log.info('uploading...');
@@ -385,17 +388,16 @@ myApp.controller('uploaderCtrl',    ['$scope','$log','uiUploader',function($scop
             }
         });
     };
-
-    $scope.files = [];
-    var element = document.getElementById('file1');
-    element.addEventListener('change', function(e) {
-        var files = e.target.files;
+    $scope.fileChanged = function($event) {
+        var files = $event.target.files;
+        console.log(files.length,' var files', files);
         uiUploader.addFiles(files);
         $scope.files = uiUploader.getFiles();
-        $scope.$apply();
-    });
+        $scope.nbfiles = $scope.files.length;
+        console.log($scope.files.length,' uiUploader.getFiles()',$scope.files);
+    }
 }]);
-    
+
 myApp.factory('DocRes',     ['$resource', function($resource) {
     return $resource('/api/lib/:id',
         {id:'@id'},
@@ -458,6 +460,23 @@ myApp.filter('propsFilter', [function() {
   };
 }]);
 
+myApp.directive("ngUploadChange",function(){
+    return{
+        scope:{
+            ngUploadChange:"&"
+            },
+        link: function($scope, $element, $attrs) {
+            $element.on("change",function(event) {
+                $scope.$apply(function(){
+                    $scope.ngUploadChange({$event: event})
+                })
+            })
+            $scope.$on("$destroy",function() {
+                $element.off();
+            });
+        }
+    }
+});    
 })();
 
 /* LINKS
