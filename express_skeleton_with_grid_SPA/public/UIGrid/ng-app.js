@@ -463,13 +463,15 @@ myApp.directive("ngUploadChange",function(){
             ngUploadChange:"&"
             },
         link: function($scope, $element, $attrs) {
+            // NOTE: $element.on() adds an ebvent listener, here 'change'
             $element.on("change",function(event) {
                 $scope.$apply(function(){
+                    // NOTE: ngUploadChange() is bound to uploadCtrl filechanged($event) in HTML-template
                     $scope.ngUploadChange({$event: event})
                 })
             })
             $scope.$on("$destroy",function() {
-                $element.off();
+                $element.off();   // jQuery: remove event handlers
             });
         }
     }
