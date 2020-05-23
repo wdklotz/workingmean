@@ -27,13 +27,17 @@ module.exports.sync = md5FileSync
 function md5File (path,file) {
   return new Promise((resolve, reject) => {
     const output = crypto.createHash('md5')
-    const input = fs.createReadStream(path+file)
+    const input  = fs.createReadStream(path+file)
 
     input.on('error', (err) => {
       reject(err)
     })
     output.once('readable', () => {
-      resolve({hex:output.read().toString('hex'),path:path,file:file})
+      let hex_obj = {
+          hexkey: output.read().toString('hex'), 
+          path: path, 
+          file: file};
+      resolve(hex_obj)
     })
     input.pipe(output)
   })

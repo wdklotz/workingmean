@@ -12,7 +12,7 @@ myApp.config(['$routeProvider','$locationProvider',function($routeProvider,$loca
         controller: 'ats-ctrl'
     }).when('/fileUpload', {
         templateUrl : 'fileUpload.html',
-        controller : 'uploaderCtrl'
+        controller : 'uploadCtrl'
     }).otherwise({ redirectTo: '/'});
     
     $locationProvider.hashPrefix('');
@@ -363,15 +363,22 @@ myApp.controller('ShelfCtrl',       ['$scope','ShelfRes','Trafo','U', function (
         scope.docInEditForm.Shelf = $item.name;
     };
 }]);
-myApp.controller('uploaderCtrl',    ['$scope','$log','uiUploader',function($scope, $log, uiUploader) {
-    $scope.btn_remove = function(file) {
-        $log.info('deleting=' + file);
-        uiUploader.removeFile(file);
-    };
+myApp.controller('uploadCtrl',      ['$scope','$log','uiUploader',function($scope, $log, uiUploader) {
+    $scope.nb_files_selected = 0;
+    $scope.fileChanged = function($event) {
+        var files = $event.target.files;
+        console.log(files.length,' var files', files);
+        uiUploader.addFiles(files);
+        $scope.files = uiUploader.getFiles();
+        $scope.nb_files_selected = $scope.files.length;
+        console.log($scope.files.length,' uiUploader.getFiles()',$scope.files);
+    }
     $scope.btn_clean  = function() {
         uiUploader.removeAll();
+        $scope.files = uiUploader.getFiles();
+        $scope.nb_files_selected = 0;
     };
-    $scope.btn_upload = function() {
+/*    $scope.btn_upload = function() {   TBD
         $log.info('uploading...');
         uiUploader.startUpload({
             url: 'https://posttestserver.com/post.php',
@@ -385,17 +392,9 @@ myApp.controller('uploaderCtrl',    ['$scope','$log','uiUploader',function($scop
             }
         });
     };
-
-    $scope.files = [];
-    var element = document.getElementById('file1');
-    element.addEventListener('change', function(e) {
-        var files = e.target.files;
-        uiUploader.addFiles(files);
-        $scope.files = uiUploader.getFiles();
-        $scope.$apply();
-    });
+    */
 }]);
-    
+
 myApp.factory('DocRes',     ['$resource', function($resource) {
     return $resource('/api/lib/:id',
         {id:'@id'},
@@ -458,6 +457,23 @@ myApp.filter('propsFilter', [function() {
   };
 }]);
 
+myApp.directive("ngUploadChange",function(){
+    return{
+        scope:{
+            ngUploadChange:"&"
+            },
+        link: function($scope, $element, $attrs) {
+            $element.on("change",function(event) {
+                $scope.$apply(function(){
+                    $scope.ngUploadChange({$event: event})
+                })
+            })
+            $scope.$on("$destroy",function() {
+                $element.off();
+            });
+        }
+    }
+});    
 })();
 
 /* LINKS
@@ -476,4 +492,6 @@ myApp.filter('propsFilter', [function() {
 * for ui-uploader see:  https://github.com/angular-ui/ui-uploader
 * for server-side filesystem actions see: https://nodejs.org/api/fs.html and https://dev.to/mrm8488/from-callbacks-to-fspromises-to-handle-the-file-system-in-nodejs-56p2
 * for server-side MD5 creation see: https://www.npmjs.com/package/md5-file
+* for multiple file input with ngUploadChange directive see:
+*   https://stackoverflow.com/questions/20146713/ng-change-on-input-type-file/41557378
 */
