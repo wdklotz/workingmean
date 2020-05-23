@@ -210,35 +210,36 @@
     <!-- ============================file uploader============================= -->
     <script id="fileUpload.html"  type="text/ng-template">
         <style>
-        #back-arrow-notice {
-            padding-left: 75em;
+        #file_prog_list {
+            margin-top: 10px;
+            /*border-bottom-color: antiquewhite;
+            border-bottom-style: double;*/
         }
         </style>
-        <div id="uploader" ng-controller="uploaderCtrl">
+        <div id="uploader" ng-controller="uploadCtrl">
             <!-- <div class="page-header"> -->
                 <!-- <h2>Uploader</h2> -->
             <!-- </div> -->
             <div class="row">
                 <div class="col-md-6">
                     <!-- <h3>What?</h3> -->
-                    <h3 style="padding-left: 6em;" >Upload multiple files at the same time.</h3>
-
+                    <h3 style="padding-left: 1em;" >Upload multiple files at the same time. 
+                        <small>(click browser's <b>&larr;</b> arrow to go back)</small></h3>
                     <div class="well">
                         <div>
                             <div style="float:right;">
                                 <button ng-click="btn_upload()" class="btn btn-primary">Upload</button>
                                 <button ng-click="btn_clean()" class="btn btn-primary">Remove all</button>
                             </div>
-                            <!-- <input type="file" id="file1" multiple/> -->
                             <input type="file" id="files" class="hidden" multiple ng-upload-change="fileChanged($event)"/>
-                            <label for="files" class="btn btn-primary">Select files</label><span style="padding-left:1em;">{{nbfiles}} files</span>
+                            <label for="files" class="btn btn-primary">Select files</label><span style="padding-left:1em;">{{nb_files_selected}} files</span>
                         </div>
-                        <div ng-repeat="file in files" style="margin-top: 20px;border-bottom-color: antiquewhite;border-bottom-style: double;">
+                        <div id="file_prog_list" ng-repeat="file in files">
                             <div><span>{{file.name}}</span><div style="float:right;"><span>{{file.humanSize}}</span><a ng-click="btn_remove(file)" title="Remove from list to be uploaded"><i class="icon-remove"></i></a></div>
                             </div>
                             <progress style="width:400px;" value="{{file.loaded ? file.loaded : 0}}" max="{{file.size}}"></progress>
                         </div>
-                    </div>
+                   </div>
                 </div>
 
                 <!-- <div class="col-md-6"> -->
@@ -247,7 +248,6 @@
                 <!-- </div> -->
             </div>
         </div>
-        <p id="back-arrow-notice">click browser's <b>&larr;</b> arrow to go back</p>
     </script>
 
     <!-- ==================modalEditContent.html template====================== -->

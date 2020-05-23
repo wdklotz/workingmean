@@ -12,7 +12,7 @@ myApp.config(['$routeProvider','$locationProvider',function($routeProvider,$loca
         controller: 'ats-ctrl'
     }).when('/fileUpload', {
         templateUrl : 'fileUpload.html',
-        controller : 'uploaderCtrl'
+        controller : 'uploadCtrl'
     }).otherwise({ redirectTo: '/'});
     
     $locationProvider.hashPrefix('');
@@ -363,16 +363,16 @@ myApp.controller('ShelfCtrl',       ['$scope','ShelfRes','Trafo','U', function (
         scope.docInEditForm.Shelf = $item.name;
     };
 }]);
-myApp.controller('uploaderCtrl',    ['$scope','$log','uiUploader',function($scope, $log, uiUploader) {
+myApp.controller('uploadCtrl',      ['$scope','$log','uiUploader',function($scope, $log, uiUploader) {
     // $scope.btn_remove = function(file) {
         // $log.info('deleting=' + file);
         // uiUploader.removeFile(file);
     // };
-    $scope.nbfiles = 0;
+    $scope.nb_files_selected = 0;
     $scope.btn_clean  = function() {
         uiUploader.removeAll();
         $scope.files = uiUploader.getFiles();
-        $scope.nbfiles = 0;
+        $scope.nb_files_selected = 0;
     };
     $scope.btn_upload = function() {
         $log.info('uploading...');
@@ -393,7 +393,7 @@ myApp.controller('uploaderCtrl',    ['$scope','$log','uiUploader',function($scop
         console.log(files.length,' var files', files);
         uiUploader.addFiles(files);
         $scope.files = uiUploader.getFiles();
-        $scope.nbfiles = $scope.files.length;
+        $scope.nb_files_selected = $scope.files.length;
         console.log($scope.files.length,' uiUploader.getFiles()',$scope.files);
     }
 }]);
