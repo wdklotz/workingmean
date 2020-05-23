@@ -5,6 +5,8 @@ const db            = require('../dbConnection/connector');
 
 // const {app_log, tbl_log, i_was_here} = require('../../svr_helper');
 
+(files,path)=> {
+
 const writeFile = promisify(fs.writeFile);
 
 async function main() {
@@ -24,6 +26,7 @@ const mock_file_names = [
 ];
 let path = mock_path;
 let file_names = mock_file_names;
+
 
 for (let i in file_names) {
     md5(path,file_names[i]).then(hex_resolved,(err)=> console.error(err));
@@ -48,4 +51,5 @@ function hex_resolved(hex_obj) {
 const is_in_store = (hex_obj) => console.log(hex_obj);
 const is_not_in_store = function(hex_obj) {
     console.log("====> NOTHING like ",hex_obj);
+}
 }

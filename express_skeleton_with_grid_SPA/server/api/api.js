@@ -35,6 +35,10 @@ const documents        = function(req,res) {      // all -> /api/lib
         }
     })  
 };
+const documentPost     = function(req,res) {
+    i_was_here('documentPost');
+    console.log(req.data);
+};
 const documentById     = function(req,res) {      // id:38 -> /api/lib/38
     i_was_here('documentById');
     const docId  = req.params.documentId;
@@ -99,7 +103,7 @@ const documentUpdate   = function(req,res) {
 };
 
 module.exports.documents      = documents;
-module.exports.documentCreate = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
+module.exports.documentCreate = documentPost;
 module.exports.documentById   = documentById;
 module.exports.documentUpdate = documentUpdate;
 module.exports.documentDelete = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};

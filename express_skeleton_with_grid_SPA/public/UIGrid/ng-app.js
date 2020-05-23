@@ -367,21 +367,21 @@ myApp.controller('uploadCtrl',      ['$scope','$log','uiUploader',function($scop
     $scope.nb_files_selected = 0;
     $scope.fileChanged = function($event) {
         var files = $event.target.files;
-        console.log(files.length,' var files', files);
+        // console.log(files.length,' var files', files);
         uiUploader.addFiles(files);
         $scope.files = uiUploader.getFiles();
         $scope.nb_files_selected = $scope.files.length;
-        console.log($scope.files.length,' uiUploader.getFiles()',$scope.files);
+        // console.log($scope.files.length,' uiUploader.getFiles()',$scope.files);
     }
     $scope.btn_clean  = function() {
         uiUploader.removeAll();
         $scope.files = uiUploader.getFiles();
         $scope.nb_files_selected = 0;
     };
-/*    $scope.btn_upload = function() {   TBD
+    $scope.btn_upload = function() {   // TBD
         $log.info('uploading...');
         uiUploader.startUpload({
-            url: 'https://posttestserver.com/post.php',
+            url: 'http://127.0.0.1:3000/api/lib',
             concurrency: 2,
             onProgress: function(file) {
                 $log.info(file.name + '=' + file.humanSize);
@@ -392,7 +392,6 @@ myApp.controller('uploadCtrl',      ['$scope','$log','uiUploader',function($scop
             }
         });
     };
-    */
 }]);
 
 myApp.factory('DocRes',     ['$resource', function($resource) {
@@ -471,7 +470,8 @@ myApp.directive("ngUploadChange",function(){
                 })
             })
             $scope.$on("$destroy",function() {
-                $element.off();   // jQuery: remove event handlers
+                // NOTE: jQuery: remove event handlers
+                $element.off();
             });
         }
     }
