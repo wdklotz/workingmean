@@ -90,7 +90,6 @@
         width: 600px;  /*wdk*/
     }
     </style>
-
 </head>
 <body ng-controller="ng-app-ctrl" ng-cloak>
     <!-- Action buttons -->
@@ -203,6 +202,20 @@
     <!-- Author/Type/Shelf -->
     <div ng-view></div>
 
+<div style="padding:2em;padding-left:10em;" ng-controller="form1Ctrl">
+<form id="theForm">
+  <p>
+    <label for="theText">text data:</label>
+    <input id="theText" name="myText" value="Some text data" type="text">
+  </p>
+  <p>
+    <label for="theFile">file data:</label>
+    <input id="theFile" name="myFile" type="file">
+  </p>
+  <button>Send Me!</button>
+</form>
+</div>
+
     <!-- ==============================uiGrid================================== -->
     <div ui-grid="grid1Options" ui-grid-pagination ui-grid-resize-columns ui-grid-selection ui-grid-cellnav class="grid">
     </div>
@@ -228,8 +241,8 @@
                                 <button ng-click="btn_upload()" class="btn btn-primary">Upload</button>
                                 <button ng-click="btn_clean()" class="btn btn-primary">Remove all</button>
                             </div>
-                            <input type="file" id="files" class="hidden" multiple ng-upload-change="fileChanged($event)"/>
-                            <label for="files" class="btn btn-primary">Select files</label><span style="padding-left:1em;">{{nb_files_selected}} files</span>
+         <!-- input -->     <input type="file" id="file1" class="hidden" multiple ng-upload-change="fileChanged($event)"/>
+                            <label for="file1" class="btn btn-primary">Select files</label><span style="padding-left:1em;">{{nb_files_selected}} files</span>
                         </div>
                         <div id="file_prog_list" ng-repeat="file in files">
                             <div>
@@ -269,7 +282,8 @@
     <script src="./lib/select/select.js"></script>
     <script src="./lib/ui-bootstrap2.5.0/ui-bootstrap-tpls.js"></script>
     <script src="./lib/ui-grid4.8.0/ui-grid.js"></script>
-    <script src="./lib/ui-uploader/uploader.js"></script>
+    <!-- <script src="./lib/ui-uploader/uploader.js"></script> -->
+    <script src="./form1.js"></script>
     <script src="./ng-app.js"></script>
 </body>
 </html>

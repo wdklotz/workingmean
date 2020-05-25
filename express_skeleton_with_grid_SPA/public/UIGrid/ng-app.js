@@ -1,7 +1,7 @@
 (function() {
 'use strict';
 
-var myApp = angular.module('ng-app',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.grid.resizeColumns','ui.grid.selection','ui.grid.cellNav','ngAnimate','ui.bootstrap','ngResource','ngSanitize','ui.select','ui.uploader']);
+var myApp = angular.module('ng-app',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.grid.resizeColumns','ui.grid.selection','ui.grid.cellNav','ngAnimate','ui.bootstrap','ngResource','ngSanitize','ui.select']);
 
 myApp.config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider) {
     $routeProvider.when('/first', {
@@ -366,22 +366,23 @@ myApp.controller('ShelfCtrl',       ['$scope','ShelfRes','Trafo','U', function (
 myApp.controller('uploadCtrl',      ['$scope','$log','uiUploader',function($scope, $log, uiUploader) {
     $scope.nb_files_selected = 0;
     $scope.fileChanged = function($event) {
-        var files = $event.target.files;
-        // console.log(files.length,' var files', files);
-        uiUploader.addFiles(files);
-        $scope.files = uiUploader.getFiles();
-        $scope.nb_files_selected = $scope.files.length;
-        // console.log($scope.files.length,' uiUploader.getFiles()',$scope.files);
+        const filelist = $event.target.files;
+        $scope.nb_files_selected = filelist.length;
+        uiUploader.addFileList(filelist);
+        uiUploader.logFileList();
     }
+    
     $scope.btn_clean  = function() {
         uiUploader.removeAll();
-        $scope.files = uiUploader.getFiles();
-        $scope.nb_files_selected = 0;
+        const filelist = uiUploader.getFileList();
+        $scope.nb_files_selected = Object.entries(filelist).length;
     };
+    
     $scope.btn_upload = function() {   // TBD
         $log.info('uploading...');
         uiUploader.startUpload({
-            url: 'http://127.0.0.1:3000/api/lib',
+            // url: 'http://127.0.0.1:3000/api/lib/post',
+            url: 'http://127.0.0.1:8080/post-test',
             concurrency: 2,
             onProgress: function(file) {
                 $log.info(file.name + '=' + file.humanSize);
@@ -392,7 +393,11 @@ myApp.controller('uploadCtrl',      ['$scope','$log','uiUploader',function($scop
             }
         });
     };
+    
 }]);
+myApp.controller('form1Ctrl',['$scope',function($scope){
+    const scope = $scope;
+}]);  // form1Ctlr
 
 myApp.factory('DocRes',     ['$resource', function($resource) {
     return $resource('/api/lib/:id',
@@ -475,10 +480,181 @@ myApp.directive("ngUploadChange",function(){
             });
         }
     }
-});    
+});  
+
+myApp.service('uiUploader', ['$log',function($log)
+ {
+    const self = this;
+    self.files = [];
+    self.filelist = {};
+    self.options = {};
+    self.activeUploads = 0;
+    self.uploadedFiles = 0;
+    $log.info('uiUploader loaded');
+
+    self.addFileList  = function (filelist) { 
+        let list = self.filelist = filelist; 
+        for (var i=0; i<list.length; i++) {
+            list.item(i).active = false;
+        }
+    };
+    self.getFileList  = function() { return self.filelist; };    
+    self.logFileList  = function() {
+        let list = self.filelist;
+        for (var i=0; i<list.length; i++) {
+            $log.info(list.item(i));
+            }
+    };
+    self.removeAll    = function() {
+        self.filelist = {};
+    };
+    self.removeFile   = function(file) {
+        delete self.fileList.file;  //????? TBD
+        // self.files.splice(self.files.indexOf(file), 1);
+    };
+    self.getHumanSize = function(bytes) {
+        var sizes = ['n/a', 'bytes', 'KiB', 'MiB', 'GiB', 'TB', 'PB', 'EiB', 'ZiB', 'YiB'];
+        var i = (bytes === 0) ? 0 : +Math.floor(Math.log(bytes) / Math.log(1024));
+        return (bytes / Math.pow(1024, i)).toFixed(i ? 1 : 0) + ' ' + sizes[isNaN(bytes) ? 0 : i + 1];
+    }
+    self.startUpload  = function(options) {
+        self.options = options;
+
+        //headers are not shared by requests
+        var headers = options.headers || {};
+        var xhrOptions = options.options || {};
+        // let list = self.filelist;
+
+        // for (var i=0; i<list.length; i++) {
+            // if (self.activeUploads == self.options.concurrency) {
+                // break; }
+            // if (list.item(i).active) continue;
+            
+            // let file = list.item(i);
+            
+            // self.ajaxUpload(file, options.url, options.data, options.paramName, headers, xhrOptions);
+        // }
+        self.ajaxUpload1(options.url);
+    }
+/*
+    NOTE: das Prinzip....
+        var pdf = doc.output(); 
+        var data = new FormData();
+        data.append("data" , pdf);
+        var xhr = new XMLHttpRequest();
+        xhr.open( 'post', 'inc/test.php', true ); 
+        xhr.send(data);
+*/
+    self.ajaxUpload1 = function(url) {
+        console.log('ajaxUpload1#1url',url);
+        var txt = "Hello xxxxxxxxxxxxxxxxxx";
+        var data = new FormData();
+        data.append('data',txt);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST',url,false);
+        xhr.send(data);
+    };
+    
+    self.ajaxUpload = function(file, url, data, key, headers, xhrOptions) {
+        // const path = 'C:/Users/wdklotz/workingmean/express_skeleton_with_grid_SPA/public/UIGrid/store/data/';
+       var xhr, formData, prop;
+        data = data || {};
+        key = key || 'file';
+
+        self.activeUploads += 1;
+        file.active = true;
+        xhr = new window.XMLHttpRequest();
+
+        // To account for sites that may require CORS
+        if (xhrOptions.withCredentials === true) {
+            xhr.withCredentials = true;
+        }
+
+        formData = new window.FormData();
+        xhr.open('POST', url);
+        if (headers) {
+            for (var headerKey in headers) {
+                if (headers.hasOwnProperty(headerKey)) {
+                    xhr.setRequestHeader(headerKey, headers[headerKey]);
+                }
+            }
+        }
+
+        // Triggered when upload starts:
+        xhr.upload.onloadstart = function() {
+        };
+
+        // Triggered many times during upload:
+        xhr.upload.onprogress = function(event) {
+            if (!event.lengthComputable) {
+                return;
+            }
+            // Update file size because it might be bigger than reported by
+            // the fileSize:
+            //$log.info("progres..");
+            //console.info(event.loaded);
+            file.loaded = event.loaded;
+            file.humanSize = getHumanSize(event.loaded);
+            if (angular.isFunction(self.options.onProgress)) {
+                self.options.onProgress(file);
+            }
+        };
+
+        // Triggered when the upload is successful (the server may not have responded yet).
+        xhr.upload.onload = function() {
+            if (angular.isFunction(self.options.onUploadSuccess)) {
+                self.options.onUploadSuccess(file);
+            }
+        };
+
+        // Triggered when upload fails:
+        xhr.upload.onerror = function(e) {
+            if (angular.isFunction(self.options.onError)) {
+                self.options.onError(e);
+            }
+        };
+
+        // Triggered when the upload has completed AND the server has responded. Equivalent to listening for the readystatechange event when xhr.readyState === XMLHttpRequest.DONE.
+        xhr.onload = function () {
+            self.activeUploads -= 1;
+            self.uploadedFiles += 1;
+
+            self.startUpload(self.options);  // next file
+
+            if (angular.isFunction(self.options.onCompleted)) {
+                self.options.onCompleted(file, xhr.responseText, xhr.status);
+            }
+            if (self.activeUploads === 0) {
+                self.uploadedFiles = 0;
+                if (angular.isFunction(self.options.onCompletedAll)) {
+                    self.options.onCompletedAll(self.files);
+                }
+            }
+        };
+        // Append additional data if provided:
+        if (data) {
+            for (prop in data) {
+                if (data.hasOwnProperty(prop)) {
+                    formData.append(prop, data[prop]);
+                }
+            }
+        }
+
+        // Append file data:
+        formData.append(key, file, file.name);
+        
+        // for(var element of formData) console.log('formData.entries()',element);
+
+        // Initiate upload:
+        xhr.send(formData);
+
+        return xhr;
+    }
+ }]);
+  
 })();
 
-/* LINKS
+/* NOTES
 * for reduce see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
 * for ui-bootstrap see: https://angular-ui.github.io/bootstrap/
 * for uibModal see: https://github.com/angular-ui/bootstrap/tree/master/src/modal
