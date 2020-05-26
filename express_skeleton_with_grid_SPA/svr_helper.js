@@ -12,7 +12,7 @@ function tbl_log(o){
     }
 };
 function i_was_here(name) {
-    if(true) console.log("============================< "+name+" >");
+    if(true) console.log("============================ <i_was_here: "+name+" >");
 };
 
 module.exports.app_log    = app_log;

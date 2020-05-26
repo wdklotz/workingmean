@@ -87,7 +87,7 @@ window.addEventListener( 'load', function () {
     // Once we are done, "close" the body's request
     data += "--" + boundary + "--";
 
-    // Define what happens on successful data submission
+/*    // Define what happens on successful data submission
     XHR.addEventListener( 'load', function( event ) {
       alert( 'Yeah! Data sent and response loaded.' );
     } );
@@ -95,7 +95,7 @@ window.addEventListener( 'load', function () {
     // Define what happens in case of error
     XHR.addEventListener( 'error', function( event ) {
       alert( 'Oops! Something went wrong.' );
-    } );
+    } );*/
 
     // Set up our request
     XHR.open( 'POST', 'http://localhost:3000/api/lib/post' );

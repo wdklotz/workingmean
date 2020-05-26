@@ -381,8 +381,7 @@ myApp.controller('uploadCtrl',      ['$scope','$log','uiUploader',function($scop
     $scope.btn_upload = function() {   // TBD
         $log.info('uploading...');
         uiUploader.startUpload({
-            // url: 'http://127.0.0.1:3000/api/lib/post',
-            url: 'http://127.0.0.1:8080/post-test',
+            url: 'http://127.0.0.1:3000/api/lib/post',
             concurrency: 2,
             onProgress: function(file) {
                 $log.info(file.name + '=' + file.humanSize);
@@ -547,7 +546,8 @@ myApp.service('uiUploader', ['$log',function($log)
 */
     self.ajaxUpload1 = function(url) {
         console.log('ajaxUpload1#1url',url);
-        var txt = "Hello xxxxxxxxxxxxxxxxxx";
+        var txt = "Hello xxxxxxxxxxxxxxxxxx"+
+        " calling from ajaxUpload1()";
         var data = new FormData();
         data.append('data',txt);
         var xhr = new XMLHttpRequest();
