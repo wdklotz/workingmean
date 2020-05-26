@@ -1,4 +1,4 @@
-angular.module('ngApp').controller('docEditController',   ['$scope','DocRes','U',function($scope,DocRes,U) {
+angular.module('ngApp').controller('docEditController',   ['$scope','docResource','U',function($scope,docResource,U) {
     const vm = this;
     const scope = $scope;
     
