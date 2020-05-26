@@ -1,4 +1,6 @@
-angular.module('ngApp').controller('atsController',        ['$scope',function($scope) {
+angular.module('ngApp')
+
+.controller('atsController', ['$scope',function($scope) {
     $scope.notice = "controller('atsController',...";
     console.log($scope.notice);
     $scope.contacts = [

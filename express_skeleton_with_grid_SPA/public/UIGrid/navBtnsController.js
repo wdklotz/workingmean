@@ -1,4 +1,6 @@
-angular.module('ngApp').controller('navBtnsController',       ['$scope','$uibModal','$document','U',function ($scope,$uibModal,$document,U) {
+angular.module('ngApp')
+
+.controller('navBtnsController', ['$scope','$uibModal','$document','U',function ($scope,$uibModal,$document,U) {
     const scope = $scope;
     const vm = this;
     vm.animationsEnabled = true;

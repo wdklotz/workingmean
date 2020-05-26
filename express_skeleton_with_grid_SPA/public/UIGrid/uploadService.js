@@ -1,4 +1,6 @@
-angular.module('ngApp').service('uploadService', ['$log',function($log) {
+angular.module('ngApp')
+
+.service('uploadService', ['$log',function($log) {
     const self = this;
     self.filelist = {};
     self.options = {};
