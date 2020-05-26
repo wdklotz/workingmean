@@ -239,4 +239,5 @@ angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.g
 * for server-side MD5 creation see: https://www.npmjs.com/package/md5-file
 * for multiple file input with ngUploadChange directive see:
 *   https://stackoverflow.com/questions/20146713/ng-change-on-input-type-file/41557378
+* for Anatomy of an HTTP Transaction see: https://nodejs.org/fr/docs/guides/anatomy-of-an-http-transaction/
 */

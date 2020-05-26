@@ -38,14 +38,15 @@ const documents        = function(req,res) {      // all -> /api/lib
 };
 const documentPost     = function(req,res) {
 /* reading from a streamed POST see: 
-   http://www.primaryobjects.com/2012/11/11/reading-post-data-in-node-js-express-easy-manager-method/
+*  http://www.primaryobjects.com/2012/11/11/reading-post-data-in-node-js-express-easy-manager-method/
+*  excellent anatomy of an HTTP Transaction see: https://nodejs.org/fr/docs/guides/anatomy-of-an-http-transaction/
 */
     var body = "";
     req.on('data', function (chunk) {
         body += chunk;
     });
     req.on('end', function () {
-        console.log('POSTed: ' + body);
+        // console.log('POSTed: ' + body);
         res.writeHead(200);    
         res.end();
     });
@@ -125,7 +126,7 @@ const documentUpdate   = function(req,res) {
 };
 
 module.exports.documents      = documents;
-module.exports.documentPost   = documentPost1;
+module.exports.documentPost   = documentPost;
 module.exports.documentById   = documentById;
 module.exports.documentUpdate = documentUpdate;
 module.exports.documentDelete = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
