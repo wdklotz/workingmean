@@ -546,8 +546,8 @@ myApp.service('uiUploader', ['$log',function($log)
 */
     self.ajaxUpload1 = function(url) {
         console.log('ajaxUpload1#1url',url);
-        var txt = "Hello xxxxxxxxxxxxxxxxxx"+
-        " calling from ajaxUpload1()";
+        var txt = "Hello ajax calling from ajaxUpload1()";
+        for(let i=0;i<5;i++) txt += txt;
         var data = new FormData();
         data.append('data',txt);
         var xhr = new XMLHttpRequest();
