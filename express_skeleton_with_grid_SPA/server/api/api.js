@@ -35,6 +35,18 @@ const documents        = function(req,res) {      // all -> /api/lib
         }
     })  
 };
+const documentPost     = function(req,res) {
+    var body = "";
+    req.on('data', function (chunk) {
+        body += chunk;
+    });
+    req.on('end', function () {
+        console.log('POSTed: ' + body);
+        res.writeHead(200);    
+        res.end();
+    });
+    i_was_here('documentPost');
+};
 const documentById     = function(req,res) {      // id:38 -> /api/lib/38
     i_was_here('documentById');
     const docId  = req.params.documentId;
@@ -99,7 +111,7 @@ const documentUpdate   = function(req,res) {
 };
 
 module.exports.documents      = documents;
-module.exports.documentCreate = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
+module.exports.documentPost   = documentPost;
 module.exports.documentById   = documentById;
 module.exports.documentUpdate = documentUpdate;
 module.exports.documentDelete = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};

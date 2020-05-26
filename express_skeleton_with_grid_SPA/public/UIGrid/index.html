@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="ng-app">
+<html ng-app="ngApp">
 <head>
 <!-- <base href="/public/UIGrid"> -->
 <!-- Angular -->
@@ -54,8 +54,16 @@
 <!-- UI-Grid -->
 
 <!-- this App -->
+    <script src="./ngApp.js"></script>
+    <script src="./uploadService.js"></script>
+    <script src="./uploadController.js"></script>
+    <script src="./docEditController.js"></script>
+    <script src="./modalController.js"></script>
+    <script src="./atsController.js"></script>
+    <script src="./navBtnsController.js"></script>
+    <script src="./config.js"></script>
     <link href="./ng-styles.css" type="text/css" rel="stylesheet">
-<!-- UI-Grid -->
+<!-- this App -->
 
     <!-- local css for editor panel and Select2 -->
      <style>  
@@ -79,7 +87,7 @@
     }
     #s_box {
         width: 1200px;
-        overflow-wrap: break-word;
+        overflow-wrap: break-word; 
     }
     </style>
     <!-- select2 -->
@@ -90,11 +98,10 @@
         width: 600px;  /*wdk*/
     }
     </style>
-
 </head>
-<body ng-controller="ng-app-ctrl" ng-cloak>
+<body ng-controller="ngAppController" ng-cloak>
     <!-- Action buttons -->
-    <div ng-controller="btns-ctrl as $btnCtrl" class="modal-demo">
+    <div ng-controller="navBtnsController as $btnCtrl" class="modal-demo">
         &ensp; Documents: 
         <a type="button" class="btn btn-primary" href="#/fileUpload"> Upload </a>
         
@@ -113,7 +120,7 @@
 
     <!-- ===========document editor panel==================================== -->
     <!-- show/hide toggled by Edit-btn with ng-click and ng-if -->
-        <div ng-controller="doc-edit-ctrl as ctrl" ng-if="$btnCtrl.showHideDiv" class="animate-if" >
+        <div ng-controller="docEditController as ctrl" ng-if="$btnCtrl.showHideDiv" class="animate-if" >
         <!-- Header -->
             <div class="modal-header">
                 <h3 class="modal-title" id="modal-title">Document Editor <small>(click Edit again to hide)</small></h3>
@@ -136,7 +143,7 @@
             </div>
 
             <!-- Author select-->
-            <div class="input-group form-group" ng-controller="AuthCtrl as actrl">
+            <div class="input-group form-group" ng-controller="authController as actrl">
             <span class="input-group-addon label-col">Author:</span>
                 <!-- <input type="text" class="form-control input-col" ng-model="actrl.choice.selectedValue.name"> -->
                 <!-- ui-select -->
@@ -146,10 +153,10 @@
                         <div ng-bind-html="choice.value.name | highlight: $select.search"></div>
                     </ui-select-choices>
                 </ui-select>
-            </div>   <!--AuthCtrl-->
+            </div>   <!--authController-->
 
             <!-- Type select-->
-            <div class="input-group form-group" ng-controller="TypeCtrl as tctrl">
+            <div class="input-group form-group" ng-controller="typeController as tctrl">
             <span class="input-group-addon label-col">Type:</span>
                 <!-- <input type="text" class="form-control input-col" ng-model="tctrl.choice.selectedValue.name"> -->
                 <!-- ui-select -->
@@ -162,7 +169,7 @@
             </div>
 
             <!-- Shelf select-->
-            <div class="input-group form-group" ng-controller="ShelfCtrl as sctrl">
+            <div class="input-group form-group" ng-controller="shelfController as sctrl">
             <span class="input-group-addon label-col">Shelf:</span>
                 <!-- <input type="text" class="form-control input-col" ng-model="sctrl.choice.selectedValue.name"> -->
                 <!-- ui-select -->
@@ -203,6 +210,20 @@
     <!-- Author/Type/Shelf -->
     <div ng-view></div>
 
+<!-- <div style="padding:2em;padding-left:10em;" ng-controller="form1Ctrl">
+<form id="theForm">
+  <p>
+    <label for="theText">text data:</label>
+    <input id="theText" name="myText" value="Some text data" type="text">
+  </p>
+  <p>
+    <label for="theFile">file data:</label>
+    <input id="theFile" name="myFile" type="file">
+  </p>
+  <button>Send Me!</button>
+</form>
+</div>
+ -->
     <!-- ==============================uiGrid================================== -->
     <div ui-grid="grid1Options" ui-grid-pagination ui-grid-resize-columns ui-grid-selection ui-grid-cellnav class="grid">
     </div>
@@ -216,7 +237,7 @@
             border-bottom-style: double;*/
         }
         </style>
-        <div id="uploader" ng-controller="uploadCtrl">
+        <FORM id="uploader" ng-controller="uploadController">
             <div class="row">
                 <div class="col-md-6">
                     <!-- <h3>What?</h3> -->
@@ -228,10 +249,10 @@
                                 <button ng-click="btn_upload()" class="btn btn-primary">Upload</button>
                                 <button ng-click="btn_clean()" class="btn btn-primary">Remove all</button>
                             </div>
-                            <input type="file" id="files" class="hidden" multiple ng-upload-change="fileChanged($event)"/>
+         <!-- input -->     <input id="files" type="file" class="hidden" multiple ng-upload-change="fileChanged($event)"/>
                             <label for="files" class="btn btn-primary">Select files</label><span style="padding-left:1em;">{{nb_files_selected}} files</span>
                         </div>
-                        <div id="file_prog_list" ng-repeat="file in files">
+                        <div id="file_prog_list" ng-repeat="file in filelist">
                             <div>
                                 <span>{{file.name}}</span>
                                 <div style="float:right;">
@@ -244,7 +265,7 @@
                    </div>
                 </div>
             </div>
-        </div>
+        </fORM>
     </script>
 
     <!-- ==================modalEditContent.html template====================== -->
@@ -269,7 +290,6 @@
     <script src="./lib/select/select.js"></script>
     <script src="./lib/ui-bootstrap2.5.0/ui-bootstrap-tpls.js"></script>
     <script src="./lib/ui-grid4.8.0/ui-grid.js"></script>
-    <script src="./lib/ui-uploader/uploader.js"></script>
-    <script src="./ng-app.js"></script>
+    <!-- <script src="./form1.js"></script> -->
 </body>
 </html>
