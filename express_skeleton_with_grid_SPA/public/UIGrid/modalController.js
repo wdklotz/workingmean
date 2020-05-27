@@ -1,4 +1,6 @@
-angular.module('ngApp').controller('modalController', ['$uibModalInstance','size','selection',function ($uibModalInstance,size,selection) {
+angular.module('ngApp')
+
+.controller('modalController', ['$uibModalInstance','size','selection',function ($uibModalInstance,size,selection) {
     const vm = this;
     // console.log(size, selection);
     vm.selection = selection;

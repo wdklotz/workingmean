@@ -20,8 +20,8 @@ app.use(cors());
 app.use(logger('dev'));
 // for parsing multipart/form-data
 // app.use(upload.array()); 
-app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); // be careful! needed for HTTP-POST
+app.use(bodyParser.json());                         // be careful! needed for HTTP-PUT
 // app.use(bodyParser.raw());
 // app.use(bodyParser.text());
 // app.use(cookieParser());
@@ -53,4 +53,4 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-app.listen(3000);
+// app.listen(3000); not needed for nodemon but works with `node app.js`

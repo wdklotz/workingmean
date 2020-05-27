@@ -1,7 +1,8 @@
 (function(){
  'use strict';
     
-const db = require('../dbConnection/connector');
+const db          = require('../dbConnection/connector');
+const easypost    = require('easypost');
 let {app_log, tbl_log, i_was_here} = require('../../svr_helper');
 
 const sendJsonResponse = function (res, status, content) {
@@ -36,16 +37,30 @@ const documents        = function(req,res) {      // all -> /api/lib
     })  
 };
 const documentPost     = function(req,res) {
+/* reading from a streamed POST see: 
+*  http://www.primaryobjects.com/2012/11/11/reading-post-data-in-node-js-express-easy-manager-method/
+*  excellent anatomy of an HTTP Transaction see: https://nodejs.org/fr/docs/guides/anatomy-of-an-http-transaction/
+*/
     var body = "";
     req.on('data', function (chunk) {
         body += chunk;
     });
     req.on('end', function () {
-        console.log('POSTed: ' + body);
+        // console.log('POSTed: ' + body);
         res.writeHead(200);    
         res.end();
     });
     i_was_here('documentPost');
+};
+const documentPost1 = function(req,res) {
+/*
+* using easypost see: https://www.npmjs.com/package/easypost
+*/
+    easypost.get(req,res, function(data){
+        console.log(data);
+        res.end();
+        });
+    i_was_here('documentPost1');
 };
 const documentById     = function(req,res) {      // id:38 -> /api/lib/38
     i_was_here('documentById');
@@ -66,7 +81,7 @@ const documentById     = function(req,res) {      // id:38 -> /api/lib/38
 const documentUpdate   = function(req,res) {
     i_was_here('documentUpdate');
     const docId    = req.params.documentId;
-    const body = req.body;
+    const body     = req.body;
     app_log('body: '+JSON.stringify(body));
     
     const sql1 = `SELECT a.id FROM doc_author AS a

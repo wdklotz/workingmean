@@ -1,4 +1,6 @@
-angular.module('ngApp').controller('uploadController',      ['$scope','$log','uploadService',function($scope, $log, uploadService) {
+angular.module('ngApp')
+
+.controller('uploadController', ['$scope','$log','uploadService',function($scope, $log, uploadService) {
     $scope.nb_files_selected = 0;
     $scope.fileChanged = function($event) {
         const filelist = $event.target.files;

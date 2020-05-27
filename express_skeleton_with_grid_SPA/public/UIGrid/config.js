@@ -1,4 +1,6 @@
-angular.module('ngApp').config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider) {
+angular.module('ngApp')
+
+.config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider) {
     $routeProvider.when('/first', {
         template: '<h1>this is the #/first hashtag route</h1>',
     }).when('/ats', {

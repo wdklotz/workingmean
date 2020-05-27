@@ -1,4 +1,6 @@
-angular.module('ngApp').controller('docEditController',   ['$scope','DocRes','U',function($scope,DocRes,U) {
+angular.module('ngApp')
+
+.controller('docEditController', ['$scope','docResource','U',function($scope,docResource,U) {
     const vm = this;
     const scope = $scope;
     
@@ -83,8 +85,8 @@ angular.module('ngApp').controller('docEditController',   ['$scope','DocRes','U'
         // update db with form-data
         vm.doc.Favorite = (vm.favChecked)? 'T':'F';
         vm.doc.Trash    = (vm.trashChecked)? 'T':'F';
-        // U.tbl_log('docEditController#formSubmit:',vm.doc);
-        vm.doc.$update();
+        U.tbl_log('docEditController#formSubmit:',vm.doc);
+        vm.doc.$update();      //method mapped to HTTP-PUT in docResource
         vm.doc_submit = true;  // btn toggle
     };
 
