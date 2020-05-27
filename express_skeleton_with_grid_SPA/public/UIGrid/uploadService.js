@@ -2,34 +2,17 @@ angular.module('ngApp')
 
 .service('uploadService', ['$log',function($log) {
     const self = this;
-    self.filelist = {};
+    self.files = [];
     self.options = {};
     self.activeUploads = 0;
     self.uploadedFiles = 0;
-    $log.info('uploadService loaded');
+    // $log.info('uploadService loaded');
 
-    self.addFileList  = function (filelist) { 
-        let list = self.filelist = filelist; 
-        for (var i=0; i<list.length; i++) {
-            list.item(i).active = false;
-        }
+    self.addFileList  = function (files) { 
+        self.files = files; 
+        // console.log(self.files);
     };
-    self.getFileList  = function() { return self.filelist; };    
-    self.logFileList  = function() {
-        let list = self.filelist;
-        for (var i=0; i<list.length; i++) {
-            $log.info(list.item(i));
-            }
-    };
-    self.removeAll    = function() {
-        self.filelist = {};
-    };
-
- /*    self.removeFile   = function(file) {
-        delete self.fileList.file;  //????? TBD
-        // self.files.splice(self.files.indexOf(file), 1);
-    };
-*/
+    
     self.getHumanSize = function(bytes) {
         var sizes = ['n/a', 'bytes', 'KiB', 'MiB', 'GiB', 'TB', 'PB', 'EiB', 'ZiB', 'YiB'];
         var i = (bytes === 0) ? 0 : +Math.floor(Math.log(bytes) / Math.log(1024));
@@ -41,12 +24,12 @@ angular.module('ngApp')
         // headers are not shared by requests
         var headers    = options.headers || {};
         var xhrOptions = options.options || {};
-        let list       = self.filelist;
+        let list       = self.files;
 
         for (var i=0; i<list.length; i++) {
             if (self.activeUploads == self.options.concurrency) break;
-            if (list.item(i).active) continue;
-            let file = list.item(i);
+            if (list[i].active) continue;
+            let file = list[i];
             self.ajaxUpload(file, options.url, options.data, options.paramName, headers, xhrOptions);
         }
         // self.ajaxUpload1(options.url);

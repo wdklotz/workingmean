@@ -13,7 +13,7 @@ pids
 .DS_Store
 .pem
 
-# Compiled directories
+# Compiled directories:
 build/
 dist/
 lib/
