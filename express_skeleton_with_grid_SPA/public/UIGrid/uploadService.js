@@ -18,6 +18,7 @@ angular.module('ngApp')
         var i = (bytes === 0) ? 0 : +Math.floor(Math.log(bytes) / Math.log(1024));
         return (bytes / Math.pow(1024, i)).toFixed(i ? 1 : 0) + ' ' + sizes[isNaN(bytes) ? 0 : i + 1];
     }
+
     self.startUpload  = function(options) {
         self.options  = options;
 
@@ -34,6 +35,7 @@ angular.module('ngApp')
         }
         // self.ajaxUpload1(options.url);
     }
+
 /*    NOTE: das Prinzip....
         var pdf = doc.output(); 
         var data = new FormData();
@@ -53,6 +55,7 @@ angular.module('ngApp')
         xhr.send(data);
     };
 */
+
     self.ajaxUpload = function(file, url, data, key, headers, xhrOptions) {
         // const path = 'C:/Users/wdklotz/workingmean/express_skeleton_with_grid_SPA/public/UIGrid/store/data/';
         var xhr, formData, prop;
