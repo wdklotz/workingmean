@@ -241,8 +241,8 @@
                     <div class="well">
                         <div>
                             <div style="float:right;">
-                                <button ng-click="btn_upload()" class="btn btn-primary" ng-class="{'btn-link':doc_upload}">Upload</button>
-                                <button ng-click="btn_clean()" class="btn btn-primary">Remove/Clean</button>
+                                <button ng-click="btn_upload()" class="btn btn-primary" ng-class="{'btn-link':nb_files_toggle}">Upload</button>
+                                <button ng-click="btn_clean()" class="btn btn-primary" ng-class="{'btn-link':nb_files_toggle}">Remove/Clean</button>
                             </div>
 <!-- input -->              <input id="files" type="file" class="hidden" multiple ng-upload-change="fileChanged($event)"/>
                             <label for="files" class="btn btn-primary">Select files</label><span style="padding-left:1em;">{{nb_files_selected}} files</span>

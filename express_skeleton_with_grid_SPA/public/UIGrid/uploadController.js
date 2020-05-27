@@ -4,7 +4,7 @@ angular.module('ngApp')
     const vm = $scope;
     vm.nb_files_selected = 0;
     vm.files = [];
-    vm.doc_upload = false;
+    vm.nb_files_toggle = !vm.nb_files_selected;
 
     vm.fileChanged = function($event) {
         const filelist = $event.target.files;
@@ -16,17 +16,19 @@ angular.module('ngApp')
             vm.files[i].humanSize = uploadService.getHumanSize(vm.files[i].size);
             uploadService.addFileList(vm.files);
             }
+        vm.nb_files_toggle = !vm.nb_files_selected;
     }
     
     vm.btn_clean  = function() {
         vm.files = []
         vm.nb_files_selected = 0;
-        vm.doc_upload = !vm.doc_upload;
+        vm.nb_files_toggle = !vm.nb_files_selected;
     };
     
     vm.btn_remove = function(file) {
         vm.files.splice(vm.files.indexOf(file), 1);
         vm.nb_files_selected = Object.entries(vm.files).length;
+        vm.nb_files_toggle = !vm.nb_files_selected;
     }
     
     vm.btn_upload = function() {   // TBD
@@ -42,6 +44,5 @@ angular.module('ngApp')
                 // $log.info(file + 'response' + response);
             }
         });
-        vm.doc_upload = !vm.doc_upload;
     };
 }]);
