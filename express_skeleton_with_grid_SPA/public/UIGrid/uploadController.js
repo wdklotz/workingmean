@@ -4,6 +4,7 @@ angular.module('ngApp')
     const vm = $scope;
     vm.nb_files_selected = 0;
     vm.files = [];
+    vm.doc_upload = false;
 
     vm.fileChanged = function($event) {
         const filelist = $event.target.files;
@@ -20,6 +21,7 @@ angular.module('ngApp')
     vm.btn_clean  = function() {
         vm.files = []
         vm.nb_files_selected = 0;
+        vm.doc_upload = !vm.doc_upload;
     };
     
     vm.btn_remove = function(file) {
@@ -40,5 +42,6 @@ angular.module('ngApp')
                 // $log.info(file + 'response' + response);
             }
         });
+        vm.doc_upload = !vm.doc_upload;
     };
 }]);
