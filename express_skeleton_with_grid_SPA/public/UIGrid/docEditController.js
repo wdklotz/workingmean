@@ -85,8 +85,8 @@ angular.module('ngApp')
         // update db with form-data
         vm.doc.Favorite = (vm.favChecked)? 'T':'F';
         vm.doc.Trash    = (vm.trashChecked)? 'T':'F';
-        // U.tbl_log('docEditController#formSubmit:',vm.doc);
-        vm.doc.$update();
+        U.tbl_log('docEditController#formSubmit:',vm.doc);
+        vm.doc.$update();      //method mapped to HTTP-PUT in docResource
         vm.doc_submit = true;  // btn toggle
     };
 

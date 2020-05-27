@@ -81,7 +81,7 @@ const documentById     = function(req,res) {      // id:38 -> /api/lib/38
 const documentUpdate   = function(req,res) {
     i_was_here('documentUpdate');
     const docId    = req.params.documentId;
-    const body = req.body;
+    const body     = req.body;
     app_log('body: '+JSON.stringify(body));
     
     const sql1 = `SELECT a.id FROM doc_author AS a
