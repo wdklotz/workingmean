@@ -142,7 +142,7 @@ angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.g
 .factory('docResource',        ['$resource', function($resource) {
     return $resource('/api/lib/:id',
         {id:'@id'},
-        {update: {method: 'PUT'}} // there is no HTTP PUT support available per default !!!
+        {docResourcePut: {method: 'PUT'}} // there is no HTTP PUT support available per default !!!
         );
 }])
 .factory('authResource',       ['$resource', function($resource) {

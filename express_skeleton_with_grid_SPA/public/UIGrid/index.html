@@ -38,7 +38,7 @@
     <!-- <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script> -->
     <!-- <script src="./lib/ui-bootstrap2.5.0/ui-bootstrap-tpls.js"></script> -->
     <!-- <link href="./lib/ui-bootstrap2.5.0/ui-bootstrap-2.5.0-csp.css" rel="stylesheet"type="text/css"> -->
-    <link href="./lib/bootstrap3.3.7/bootstrap.min.css" rel="stylesheet"type="text/css">
+    <link href="./lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"type="text/css">
     <!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
 <!-- Bootstrap -->
 
@@ -242,17 +242,18 @@
                         <div>
                             <div style="float:right;">
                                 <button ng-click="btn_upload()" class="btn btn-primary">Upload</button>
-                                <button ng-click="btn_clean()" class="btn btn-primary">Remove all</button>
+                                <button ng-click="btn_clean()" class="btn btn-primary">Remove/Clean</button>
                             </div>
-         <!-- input -->     <input id="files" type="file" class="hidden" multiple ng-upload-change="fileChanged($event)"/>
+<!-- input -->              <input id="files" type="file" class="hidden" multiple ng-upload-change="fileChanged($event)"/>
                             <label for="files" class="btn btn-primary">Select files</label><span style="padding-left:1em;">{{nb_files_selected}} files</span>
                         </div>
-                        <div id="file_prog_list" ng-repeat="file in filelist">
+<!-- file_prog_list --> <div id="file_prog_list" ng-repeat="file in files">
                             <div>
                                 <span>{{file.name}}</span>
                                 <div style="float:right;">
                                     <span>{{file.humanSize}}</span>
-                                    <a ng-click="btn_remove(file)" title="Remove from list to be uploaded"><i class="icon-remove"></i></a>
+                                    <!-- <a ng-click="btn_remove(file)" title="Remove from list to be uploaded"></a> -->
+                                    <button ng-click="btn_remove(file)" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
                                 </div>
                             </div>
                             <progress style="width:400px;" value="{{file.loaded ? file.loaded : 0}}" max="{{file.size}}"></progress>
@@ -282,8 +283,11 @@
         </div>
     </script>
 
-    <script src="./lib/select/select.js"></script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="./lib/jQuery/jQuery.min.js"></script>
+    <script src="./lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script src="./lib/ui-bootstrap2.5.0/ui-bootstrap-tpls.js"></script>
+    <script src="./lib/select/select.js"></script>
     <script src="./lib/ui-grid4.8.0/ui-grid.js"></script>
 </body>
 </html>
