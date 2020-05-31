@@ -57,6 +57,7 @@
     <script src="./modalController.js"></script>
     <script src="./atsController.js"></script>
     <script src="./navBtnsController.js"></script>
+    <!-- <script src="./dupliCheckService.js"></script> -->
     <script src="./config.js"></script>
     <!-- <script src="./XHRformSubmit.js"></script> -->
     <link href="./ng-styles.css" type="text/css" rel="stylesheet">
@@ -207,20 +208,19 @@
     <!-- Author/Type/Shelf -->
     <div ng-view></div>
 
-<!-- <div style="padding:2em;padding-left:10em;" ng-controller="form1Ctrl">
-<form id="theForm">
-  <p>
-    <label for="theText">text data:</label>
-    <input id="theText" name="myText" value="Some text data" type="text">
-  </p>
-  <p>
-    <label for="theFile">file data:</label>
-    <input id="theFile" name="myFile" type="file">
-  </p>
-  <button>Send Me!</button>
-</form>
-</div>
- -->
+<!-- <div style="padding:2em;padding-left:10em;"> -->
+<!-- <form action="/uploadmultiple" method="post" enctype="multipart/form-data" id="theForm"> -->
+  <!-- <p> -->
+    <!-- <label for="theText">text data:</label> -->
+    <!-- <input id="theText" name="myText" value="Some text data" type="text"> -->
+  <!-- </p> -->
+  <!-- <p> -->
+    <!-- <label for="theFile">file data:</label> -->
+    <!-- <input id="theFile" name="newFiles" type="file" multiple> -->
+  <!-- </p> -->
+<!-- <input type="submit" value="Send!"> -->
+<!-- </form> -->
+<!-- </div> -->
 
     <!-- ==============================uiGrid================================== -->
     <div ui-grid="grid1Options" ui-grid-pagination ui-grid-resize-columns ui-grid-selection ui-grid-cellnav class="grid"></div>
@@ -232,7 +232,9 @@
             margin-top: 10px;
         }
         </style>
-        <FORM id="uploader" ng-controller="uploadController">
+
+        <!-- <FORM  action="/upload" method="post" enctype="multipart/form-data" ng-controller="uploadController"> -->
+        <FORM  action="/upload" method="post" ng-controller="uploadController">
             <div class="row">
                 <div class="col-md-6">
                     <!-- <h3>What?</h3> -->
@@ -240,11 +242,15 @@
                         <small>(click browser's <b>&larr;</b> arrow to close)</small></h3>
                     <div class="well">
                         <div>
-                            <div style="float:right;">
-                                <button ng-click="btn_upload()" class="btn btn-primary" ng-class="{'btn-link':nb_files_toggle}">Upload</button>
+                            <div style="float:right;">   
+
+                                <!-- <button ng-click="btn_upload()" class="btn btn-primary" ng-class="{'btn-link':nb_files_toggle}">Upload</button> -->
+<button type="submit" class="btn btn-primary" ng-class="{'btn-link':nb_files_toggle}">Upload</button>
+
                                 <button ng-click="btn_clean()" class="btn btn-primary" ng-class="{'btn-link':nb_files_toggle}">Remove/Clean</button>
                             </div>
-<!-- input -->              <input id="files" type="file" class="hidden" multiple ng-upload-change="fileChanged($event)"/>
+<!-- <input id="files" name="newFiles" type="file" class="hidden" multiple ng-upload-change="fileChanged($event)"/> -->
+                           <input id="files" name="files" type="file" ng-upload-change="fileChanged($event)" class="hidden"/>
                             <label for="files" class="btn btn-primary">Select files</label><span style="padding-left:1em;">{{nb_files_selected}} files</span>
                         </div>
 <!-- file_prog_list --> <div id="file_prog_list" ng-repeat="file in files">
@@ -252,11 +258,11 @@
                                 <span>{{file.name}}</span>
                                 <div style="float:right;">
                                     <span>{{file.humanSize}}</span>
-                                    <!-- <a ng-click="btn_remove(file)" title="Remove from list to be uploaded"></a> -->
+                                    <!-- <a ng-click="btn_remove(file)" title="Remove from list to be uploaded">remove</a> -->
                                     <button ng-click="btn_remove(file)" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
                                 </div>
                             </div>
-                            <progress style="width:400px;" value="{{file.loaded ? file.loaded : 0}}" max="{{file.size}}"></progress>
+                            <!-- <progress style="width:400px;" value="{{file.loaded ? file.loaded : 0}}" max="{{file.size}}"></progress> -->
                         </div>
                    </div>
                 </div>

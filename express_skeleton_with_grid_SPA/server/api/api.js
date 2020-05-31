@@ -4,6 +4,7 @@
 const db          = require('../dbConnection/connector');
 const easypost    = require('easypost');
 let {app_log, tbl_log, i_was_here} = require('../../svr_helper');
+let check = require('../../duplicataHandler');
 
 const sendJsonResponse = function (res, status, content) {
     // i_was_here("sendJsonResponse");
@@ -46,7 +47,8 @@ const documentPost     = function(req,res) {
         body += chunk;
     });
     req.on('end', function () {
-        // console.log('POSTed: ' + body);
+        console.log('POSTed: ' + body);
+        console.log(req.files);
         res.writeHead(200);    
         res.end();
     });

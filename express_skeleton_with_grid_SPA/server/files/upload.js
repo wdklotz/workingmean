@@ -5,7 +5,7 @@ const db            = require('../dbConnection/connector');
 
 // const {app_log, tbl_log, i_was_here} = require('../../svr_helper');
 
-(files,path)=> {
+const main = ()=> {
 
 const writeFile = promisify(fs.writeFile);
 
@@ -53,3 +53,5 @@ const is_not_in_store = function(hex_obj) {
     console.log("====> NOTHING like ",hex_obj);
 }
 }
+
+main();
