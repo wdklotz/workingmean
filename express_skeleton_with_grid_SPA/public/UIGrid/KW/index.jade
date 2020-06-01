@@ -1,0 +1,249 @@
+doctype html
+html(ng-app='ngApp')
+  head
+    // <base href="/public/UIGrid">
+    // Angular
+    // <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.js"></script>
+    // <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular-touch.js"></script>
+    // <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular-animate.js"></script>
+    // <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular-resource.js"></script>
+    // <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular-sanitize.js"></script>
+    // <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular-route.js"></script>
+    // <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.js"></script>
+    // <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-touch.js"></script>
+    // <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-animate.js"></script>
+    // <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-resource.js"></script>
+    // <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-sanitize.js"></script>
+    // <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-route.js"></script>
+    script(src='./lib/angular1.7.9/angular.js')
+    script(src='./lib/angular1.7.9/angular-touch.js')
+    script(src='./lib/angular1.7.9/angular-animate.js')
+    script(src='./lib/angular1.7.9/angular-resource.js')
+    script(src='./lib/angular1.7.9/angular-sanitize.js')
+    script(src='./lib/angular1.7.9/angular-route.js')
+    // Angular
+    // ui-select files
+    // <script src="./lib/select/select.js"></script>
+    link(href='./lib/select/select.css', rel='stylesheet')
+    // ui-select files
+    // Select2
+    link(href='https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css', rel='stylesheet')
+    // Select2
+    // Bootstrap
+    // <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+    // <script src="./lib/ui-bootstrap2.5.0/ui-bootstrap-tpls.js"></script>
+    // <link href="./lib/ui-bootstrap2.5.0/ui-bootstrap-2.5.0-csp.css" rel="stylesheet"type="text/css">
+    link(href='./lib/bootstrap-3.3.7-dist/css/bootstrap.min.css', rel='stylesheet', type='text/css')
+    // <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    // Bootstrap
+    // UI-Grid
+    // <script src="http://ui-grid.info/release/ui-grid.js"></script>
+    // <script src="./lib/ui-grid4.8.0/ui-grid.js"></script>
+    // <link href="http://ui-grid.info/release/ui-grid.css" type="text/css" rel="stylesheet">
+    link(href='./lib/ui-grid4.8.0/ui-grid.css', rel='stylesheet', type='text/css')
+    // UI-Grid
+    // this App
+    script(src='./ngApp.js')
+    script(src='./uploadService.js')
+    script(src='./uploadController.js')
+    script(src='./docEditController.js')
+    script(src='./modalController.js')
+    script(src='./atsController.js')
+    script(src='./navBtnsController.js')
+    // <script src="./dupliCheckService.js"></script>
+    script(src='./config.js')
+    // <script src="./XHRformSubmit.js"></script>
+    link(href='./ng-styles.css', type='text/css', rel='stylesheet')
+    // this App
+    // local css for editor panel and Select2
+    style.
+      .input-group > .label-col {
+      width: 130px;
+      color: #fff;
+      background-color: #337ab7;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      }
+      .input-group > .input-col {
+      width: 600px;
+      background-color: #faf6c5;
+      }
+      .form-group {
+      /*padding: 3px;*/
+      margin-bottom: 5px;
+      }
+      .container {
+      background-color: transparent;
+      }
+      #s_box {
+      width: 1200px;
+      overflow-wrap: break-word;
+      }
+    // select2
+    style.
+      .select2 > .select2-choice.ui-select-match {
+      /* Because of the inclusion of Bootstrap */
+      height: 29px;
+      width: 600px;  /*wdk*/
+      }
+  body(ng-controller='ngAppController', ng-cloak='')
+    // Action buttons
+    .modal-demo(ng-controller='navBtnsController as $btnCtrl')
+      | Documents: 
+      a.btn.btn-primary(type='button', href='#/fileUpload')  Upload 
+      |           Selection:
+      button.btn.btn-primary(type='button', ng-click='$btnCtrl.viewClicked()')  View 
+      button.btn.btn-primary(type='button', ng-model='$btnCtrl.showHideDiv', ng-click='$btnCtrl.onEdit()')  Edit 
+      button.btn.btn-primary(type='button', ng-click='$btnCtrl.deleteClicked()')  Delete 
+      |           New/Edit:
+      a.btn.btn-primary(type='button', href='#/ats')  ATS 
+      |            Test:
+      button.btn.btn-primary(type='button', ng-click="$btnCtrl.testClicked('lg')")  Details 
+      // ===========document editor panel====================================
+      // show/hide toggled by Edit-btn with ng-click and ng-if
+      .animate-if(ng-controller='docEditController as ctrl', ng-if='$btnCtrl.showHideDiv')
+        // Header
+        .modal-header
+          h3#modal-title.modal-title
+            | Document Editor 
+            small (click Edit again to hide)
+        // Body
+        #modal-body.modal-body
+          form
+            .container
+              // ID
+              .input-group.form-group
+                span.input-group-addon.label-col Id:
+                input.form-control.input-col(type='text', readonly='', ng-model='ctrl.doc.id')
+              // Document
+              .input-group.form-group
+                span.input-group-addon.label-col Document:
+                input.form-control.input-col(type='text', readonly='', ng-model='ctrl.doc.Document')
+              // Author select
+              .input-group.form-group(ng-controller='authController as actrl')
+                span.input-group-addon.label-col Author:
+                // <input type="text" class="form-control input-col" ng-model="actrl.choice.selectedValue.name">
+                // ui-select
+                ui-select(ng-model='actrl.choice.selectedValue', theme='select2', ng-disabled='actrl.disabled', style='min-width: 300px;', title='Choose an author', on-select='actrl.onSelect(actrl.choice.selectedValue)')
+                  ui-select-match(placeholder='Select Author in the list or search his name...') {{$select.selected.value.name}}
+                  ui-select-choices(repeat='choice.value as (key, choice) in actrl.authorObj | filter: { value: { name: $select.search }}')
+                    div(ng-bind-html='choice.value.name | highlight: $select.search')
+              // authController
+              // Type select
+              .input-group.form-group(ng-controller='typeController as tctrl')
+                span.input-group-addon.label-col Type:
+                // <input type="text" class="form-control input-col" ng-model="tctrl.choice.selectedValue.name">
+                // ui-select
+                ui-select(ng-model='tctrl.choice.selectedValue', theme='select2', ng-disabled='tctrl.disabled', style='min-width: 300px;', title='Choose a type', on-select='tctrl.onSelect(tctrl.choice.selectedValue)')
+                  ui-select-match(placeholder='Select Type in the list or search his name...') {{$select.selected.value.name}}
+                  ui-select-choices(repeat='choice.value as (key, choice) in tctrl.typeObj | filter: { value: { name: $select.search }}')
+                    div(ng-bind-html='choice.value.name | highlight: $select.search')
+              // Shelf select
+              .input-group.form-group(ng-controller='shelfController as sctrl')
+                span.input-group-addon.label-col Shelf:
+                // <input type="text" class="form-control input-col" ng-model="sctrl.choice.selectedValue.name">
+                // ui-select
+                ui-select(ng-model='sctrl.choice.selectedValue', theme='select2', ng-disabled='sctrl.disabled', style='min-width: 300px;', title='Choose a shelf', on-select='sctrl.onSelect(sctrl.choice.selectedValue)')
+                  ui-select-match(placeholder='Select Shelf in the list or search his name...') {{$select.selected.value.name}}
+                  ui-select-choices(repeat='choice.value as (key, choice) in sctrl.shelfObj | filter: { value: { name: $select.search }}')
+                    div(ng-bind-html='choice.value.name | highlight: $select.search')
+              // Keywords
+              .input-group.form-group
+                span.input-group-addon.label-col Keywords:
+                input.form-control.input-col(type='text', ng-model='ctrl.doc.Keywords')
+              // Favorite & Trash
+              .row
+                .col-md-4
+                  label
+                    input(type='checkbox', ng-model='ctrl.favChecked')
+                    |  Favorite
+                  label
+                    input(type='checkbox', ng-model='ctrl.trashChecked')
+                    |  Trash
+                .col-md-4.col-md-offset-2
+                  button.btn.btn-success(type='button', ng-class="{'btn-link':ctrl.doc_submit}", ng-click='ctrl.formSubmit()', ng-hide='ctrl.btns_hidden') Submit
+                  button.btn.btn-danger(type='button', ng-click='ctrl.formReset()', ng-hide='ctrl.btns_hidden') Reset
+            // class="container"
+            // id="modal-body"
+            // Footer
+            .modal-footer
+    // Author/Type/Shelf
+    div(ng-view='')
+    // <div style="padding:2em;padding-left:10em;">
+    // <form action="/uploadmultiple" method="post" enctype="multipart/form-data" id="theForm">
+    // <p>
+    // <label for="theText">text data:</label>
+    // <input id="theText" name="myText" value="Some text data" type="text">
+    // </p>
+    // <p>
+    // <label for="theFile">file data:</label>
+    // <input id="theFile" name="newFiles" type="file" multiple>
+    // </p>
+    // <input type="submit" value="Send!">
+    // </form>
+    // </div>
+    // ==============================uiGrid==================================
+    .grid(ui-grid='grid1Options', ui-grid-pagination='', ui-grid-resize-columns='', ui-grid-selection='', ui-grid-cellnav='')
+    // ============================file uploader=============================
+    script(id='fileUpload.html', type='text/ng-template').
+      <style>
+      #file_prog_list {
+      margin-top: 10px;
+      }
+      </style>
+      <!-- <FORM  action="/upload" method="post" enctype="multipart/form-data" ng-controller="uploadController"> -->
+      <FORM  action="/upload" method="post" ng-controller="uploadController">
+      <div class="row">
+      <div class="col-md-6">
+      <!-- <h3>What?</h3> -->
+      <h3 style="padding-left: 1em;" >Upload multiple files at the same time.
+      <small>(click browser's <b>&larr;</b> arrow to close)</small></h3>
+      <div class="well">
+      <div>
+      <div style="float:right;">
+      <!-- <button ng-click="btn_upload()" class="btn btn-primary" ng-class="{'btn-link':nb_files_toggle}">Upload</button> -->
+      <button type="submit" class="btn btn-primary" ng-class="{'btn-link':nb_files_toggle}">Upload</button>
+      <button ng-click="btn_clean()" class="btn btn-primary" ng-class="{'btn-link':nb_files_toggle}">Remove/Clean</button>
+      </div>
+      <!-- <input id="files" name="newFiles" type="file" class="hidden" multiple ng-upload-change="fileChanged($event)"/> -->
+      <input id="files" name="files" type="file" ng-upload-change="fileChanged($event)" class="hidden"/>
+      <label for="files" class="btn btn-primary">Select files</label><span style="padding-left:1em;">{{nb_files_selected}} files</span>
+      </div>
+      <!-- file_prog_list --> <div id="file_prog_list" ng-repeat="file in files">
+      <div>
+      <span>{{file.name}}</span>
+      <div style="float:right;">
+      <span>{{file.humanSize}}</span>
+      <!-- <a ng-click="btn_remove(file)" title="Remove from list to be uploaded">remove</a> -->
+      <button ng-click="btn_remove(file)" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
+      </div>
+      </div>
+      <!-- <progress style="width:400px;" value="{{file.loaded ? file.loaded : 0}}" max="{{file.size}}"></progress> -->
+      </div>
+      </div>
+      </div>
+      </div>
+      </fORM>
+    // ==================modalEditContent.html template======================
+    script(id='modalEditContent.html', type='text/ng-template').
+      <div class="modal-header">
+      <h4>Raw group selection content</h4>
+      </div>
+      <div class="modal-body" id="modal-body">
+      <ul>
+      <li ng-repeat="item in $modCtrl.selection">
+      <a href="#" ng-click="$event.preventDefault();  $modCtrl.selected.item = item">{{ item }}</a>
+      </li>
+      </ul>
+      Selected item: <div id="s_box"><h5><b>{{ $modCtrl.selected.item }}</b></h5></div>
+      </div>
+      <div class="modal-footer">
+      <button class="btn btn-primary" type="button" ng-click="$modCtrl.ok()">OK</button>
+      <!-- <button class="btn btn-warning" type="button" ng-click="$modCtrl.cancel()">Cancel</button> -->
+      </div>
+    // jQuery (necessary for Bootstrap's JavaScript plugins)
+    script(src='./lib/jQuery/jQuery.min.js')
+    script(src='./lib/bootstrap-3.3.7-dist/js/bootstrap.min.js')
+    script(src='./lib/ui-bootstrap2.5.0/ui-bootstrap-tpls.js')
+    script(src='./lib/select/select.js')
+    script(src='./lib/ui-grid4.8.0/ui-grid.js')

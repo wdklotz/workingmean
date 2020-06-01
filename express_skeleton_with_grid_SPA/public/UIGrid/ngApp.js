@@ -240,4 +240,8 @@ angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.g
 * for multiple file input with ngUploadChange directive see:
 *   https://stackoverflow.com/questions/20146713/ng-change-on-input-type-file/41557378
 * for Anatomy of an HTTP Transaction see: https://nodejs.org/fr/docs/guides/anatomy-of-an-http-transaction/
+* for multer how to see: https://code.tutsplus.com/tutorials/file-upload-with-multer-in-node--cms-32088
+*   and: http://expressjs.com/en/resources/middleware/multer.html
+*   and: https://stackabuse.com/handling-file-uploads-in-node-js-with-expres-and-multer/
+*   also: https://blog.kevinchisholm.com/javascript/node-js/file-uploads-multer/
 */
