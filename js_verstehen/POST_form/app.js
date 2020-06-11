@@ -1,9 +1,9 @@
-var createError  = require('http-errors');
-var express      = require('express');
-var path         = require('path');
-var cookieParser = require('cookie-parser');
-var logger       = require('morgan');
-var bodyParser   = require('body-parser');
+var createError   = require('http-errors');
+var express       = require('express');
+var path          = require('path');
+var cookieParser  = require('cookie-parser');
+var logger        = require('morgan');
+var bodyParser    = require('body-parser');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -67,7 +67,7 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 /*  LINKS:
-*   for multer how to see: https://code.tutsplus.com/tutorials/file-upload-with-multer-in-node--cms-32088
+*   for multer see: https://code.tutsplus.com/tutorials/file-upload-with-multer-in-node--cms-32088
 *     and: http://expressjs.com/en/resources/middleware/multer.html
 *     and: https://stackabuse.com/handling-file-uploads-in-node-js-with-expres-and-multer/
 *     also: https://blog.kevinchisholm.com/javascript/node-js/file-uploads-multer/

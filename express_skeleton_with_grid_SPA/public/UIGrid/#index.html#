@@ -31,7 +31,7 @@
 <!-- ui-select files -->
 
 <!-- Select2 -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css" rel="stylesheet">    
 <!-- Select2 -->
 
 <!-- Bootstrap -->
@@ -64,7 +64,7 @@
 <!-- this App -->
 
     <!-- local css for editor panel and Select2 -->
-     <style>
+     <style>  
     .input-group > .label-col {
         width: 130px;
         color: #fff;
@@ -85,7 +85,7 @@
     }
     #s_box {
         width: 1200px;
-        overflow-wrap: break-word;
+        overflow-wrap: break-word; 
     }
     </style>
     <!-- select2 -->
@@ -100,19 +100,19 @@
 <body ng-controller="ngAppController" ng-cloak>
     <!-- Action buttons -->
     <div ng-controller="navBtnsController as $btnCtrl" class="modal-demo">
-        &ensp; Documents:
+        &ensp; Documents: 
         <a type="button" class="btn btn-primary" href="#/fileUpload"> Upload </a>
-
+        
         &emsp; Selection:
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.viewClicked()"> View </button>
-
+        
         <button type="button" class="btn btn-primary" ng-model="$btnCtrl.showHideDiv" ng-click="$btnCtrl.onEdit()"> Edit </button>
-
+        
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.deleteClicked()"  > Delete </button>
-
+        
         &emsp; New/Edit:
         <a type="button" class="btn btn-primary" href="#/ats"> ATS </a>
-
+        
          &emsp;&emsp;Test:
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.testClicked('lg')"> Details </button>
 
@@ -204,7 +204,7 @@
             </div>
         </div>
     </div>
-
+    
     <!-- Author/Type/Shelf -->
     <div ng-view></div>
 
@@ -232,35 +232,40 @@
             margin-top: 10px;
         }
         </style>
-        <FORM  method="post" target="_blank" enctype="multipart/form-data" action='http://localhost:3000/api/lib/post/multer'>
-        <div class="row"  ng-controller="uploadController">
-            <div class="col-md-6">
-                <h3 style="padding-left: 1em;" >Upload multiple files at the same time.<small>(click browser&apos;s <b>&larr;</b> arrow to close)</small></h3>
-                <div class="well">
-                        <input id="files" name="file_input" type="file" class="hidden" multiple ng-upload-change="fileChanged($event)"/>
-                        <label for="files" class="btn btn-primary">Select files</label>
-                        <span style="padding-left:1em;">{{nb_files_selected}} files</span>
-                        <div style="float:right;">
-                       <!-- <button ng-click="btn_upload()" class="btn btn-primary" ng-class="{'btn-link':nb_files_toggle}">Upload</button> -->
-                       <!-- <button type="submit" class="btn btn-primary" ng-class="{'btn-link':nb_files_toggle}">Upload</button> -->
-                            <input  type="submit" class="btn btn-primary" ng-class="{'btn-link':nb_files_toggle}" value="Let's Go">
-                            <button type="button" class="btn btn-primary" ng-class="{'btn-link':nb_files_toggle}" ng-click="btn_clean()">Remove/Clean</button>
+
+        <FORM  method="post" target="_blank" enctype="multipart/form-data" ng-controller="uploadController">
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- <h3>What?</h3> -->
+                    <h3 style="padding-left: 1em;" >Upload multiple files at the same time. 
+                        <small>(click browser's <b>&larr;</b> arrow to close)</small></h3>
+                    <div class="well">
+                        <div>
+                            <div style="float:right;">   
+
+                                <!-- <button ng-click="btn_upload()" class="btn btn-primary" ng-class="{'btn-link':nb_files_toggle}">Upload</button> -->
+<button type="submit" class="btn btn-primary" ng-class="{'btn-link':nb_files_toggle}">Upload</button>
+
+                                <button ng-click="btn_clean()" class="btn btn-primary" ng-class="{'btn-link':nb_files_toggle}">Remove/Clean</button>
+                            </div>
+<!-- <input id="files" name="newFiles" type="file" class="hidden" multiple ng-upload-change="fileChanged($event)"/> -->
+                           <input id="files" name="files" type="file" ng-upload-change="fileChanged($event)" class="hidden"/>
+                            <label for="files" class="btn btn-primary">Select files</label><span style="padding-left:1em;">{{nb_files_selected}} files</span>
                         </div>
-                        <!-- ============================file_prog_list============================= -->
-                        <div id="file_prog_list" ng-repeat="file in files">
+<!-- file_prog_list --> <div id="file_prog_list" ng-repeat="file in files">
                             <div>
                                 <span>{{file.name}}</span>
                                 <div style="float:right;">
                                     <span>{{file.humanSize}}</span>
                                     <!-- <a ng-click="btn_remove(file)" title="Remove from list to be uploaded">remove</a> -->
-                                    <button type="button" ng-click="btn_remove(file)" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
+                                    <button ng-click="btn_remove(file)" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
                                 </div>
                             </div>
                             <!-- <progress style="width:400px;" value="{{file.loaded ? file.loaded : 0}}" max="{{file.size}}"></progress> -->
                         </div>
+                   </div>
                 </div>
             </div>
-        </div>
         </FORM>
     </script>
 

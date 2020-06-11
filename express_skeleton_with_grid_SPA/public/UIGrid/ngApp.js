@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.grid.resizeColumns','ui.grid.selection','ui.grid.cellNav','ngAnimate','ui.bootstrap','ngResource','ngSanitize','ui.select'])
-.controller('ngAppController', ['$scope', '$http', 'uiGridConstants', 'docResource',function($scope, $http, uiGridConstants, docResource) {  
+.controller('ngAppController', ['$scope', '$http', 'uiGridConstants', 'docResource',function($scope, $http, uiGridConstants, docResource) {
 
     const scope = $scope;
     scope.grid1Options = {
@@ -31,11 +31,11 @@ angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.g
     scope.grid1Options.onRegisterApi = function(gridApi){
         // set gridApi on scope but ignore rowSelectionChanged event
         scope.gridApi = gridApi;
-        
+
         // gridApi.selection.on.rowSelectionChanged($scope,function(row){
         // const msg = 'row changed ';
         // console.log(msg,row);
-        // console.log(gridApi.selection.getSelectedRows()); 
+        // console.log(gridApi.selection.getSelectedRows());
         // });
     };
 
@@ -50,7 +50,7 @@ angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.g
         console.error('Error while fetching document');
     });
 */
-}])
+}]) // ngAppController
 .controller('authController',  ['$scope','authResource','Trafo','U', function ($scope,authResource,Trafo,U) {
     const vm = this;
     const scope = $scope;
@@ -68,9 +68,9 @@ angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.g
         // U.tbl_log('authController#query#vm.authorObj',vm.authTable);
         vm.authorObj = Trafo.toSelect2(vm.authTable,'Author');  //<-- that's the object select2 wants to see
         // U.tbl_log('authController#query#vm.authorObj',vm.authorObj);
-        
+
         /* <-- SELECT * FROM authorObj AS c WHERE c.id = docInEditForm.author --> */
-        let AuthorChoice = scope.$parent.AuthorChoice = scope.$parent.setChoice(vm.authorObj,vm.choice,docInEditForm.author); 
+        let AuthorChoice = scope.$parent.AuthorChoice = scope.$parent.setChoice(vm.authorObj,vm.choice,docInEditForm.author);
         AuthorChoice();
         // U.tbl_log(vm.choice);
     });
@@ -86,13 +86,13 @@ angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.g
     // }
 
     // scope.$parent.AuthorChoice = setChoice;    // the hack!!! but it works
-*/    
+*/
     vm.onSelect = function($item) {
         scope.docInEditForm.author = $item.id;
         scope.docInEditForm.Author = $item.name;
         // U.tbl_log('authController#onSelect',scope.docInEditForm);
     };
-}])
+}]) // authController
 .controller('typeController',  ['$scope','typeResource','Trafo','U', function ($scope,typeResource,Trafo,U) {
     const vm = this;
     const scope = $scope;
@@ -107,7 +107,7 @@ angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.g
     typeResource.query([],function(value) {
         vm.typeTable = value;
         vm.typeObj = Trafo.toSelect2(vm.typeTable,'Type');
-        let TypeChoice = scope.$parent.TypeChoice = scope.$parent.setChoice(vm.typeObj,vm.choice,docInEditForm.type); 
+        let TypeChoice = scope.$parent.TypeChoice = scope.$parent.setChoice(vm.typeObj,vm.choice,docInEditForm.type);
         TypeChoice();
     });
 
@@ -115,7 +115,7 @@ angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.g
         scope.docInEditForm.type = $item.id;
         scope.docInEditForm.Type = $item.name;
     };
-}])
+}]) // typeController
 .controller('shelfController', ['$scope','shelfResource','Trafo','U', function ($scope,shelfResource,Trafo,U) {
     const vm = this;
     const scope = $scope;
@@ -130,7 +130,7 @@ angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.g
     shelfResource.query([],function(value) {
         vm.shelfTable = value;
         vm.shelfObj = Trafo.toSelect2(vm.shelfTable,'Shelf');
-        let ShelfChoice = scope.$parent.ShelfChoice = scope.$parent.setChoice(vm.shelfObj,vm.choice,docInEditForm.shelf); 
+        let ShelfChoice = scope.$parent.ShelfChoice = scope.$parent.setChoice(vm.shelfObj,vm.choice,docInEditForm.shelf);
         ShelfChoice();
     });
 
@@ -138,22 +138,22 @@ angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.g
         scope.docInEditForm.shelf = $item.id;
         scope.docInEditForm.Shelf = $item.name;
     };
-}])
+}]) // shelfController
 .factory('docResource',        ['$resource', function($resource) {
     return $resource('/api/lib/:id',
         {id:'@id'},
         {docResourcePut: {method: 'PUT'}} // there is no HTTP PUT support available per default !!!
         );
-}])
+}]) // docResource
 .factory('authResource',       ['$resource', function($resource) {
     return $resource('/api/authors/:id',{});
-}])
+}]) // authResource
 .factory('typeResource',       ['$resource', function($resource) {
     return $resource('/api/types/:id',{});
-}])
+}]) // typeResource
 .factory('shelfResource',      ['$resource', function($resource) {
     return $resource('/api/shelfs/:id',{});
-}])
+}]) // shelfResource
 .factory('Trafo',              [function() {
     const fn = function(items, label) {
         let out = [];
@@ -165,7 +165,7 @@ angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.g
     return {
         toSelect2: fn
     };
-}])
+}]) // Trafo
 .factory('U',                  [function() {
 // Utilities service
     function app_log() {
@@ -189,7 +189,7 @@ angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.g
         tbl_log:  tbl_log,
         flow_log: flow_log
     };
-}])
+}]) // U
 .filter('propsFilter',         [function() {
 // a NO-filter filter
   return function(items, props) {
@@ -198,17 +198,18 @@ angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.g
     out = items;
     return out;
   };
-}])
+}]) // propsFilter
 .directive("ngUploadChange",   [function() {
     return{
         scope:{
             ngUploadChange:"&"
             },
         link: function($scope, $element, $attrs) {
-            // NOTE: $element.on() adds an ebvent listener, here 'change'
+            // NOTE: $element.on() adds an event listener, here 'change'
             $element.on("change",function(event) {
                 $scope.$apply(function(){
-                    // NOTE: ngUploadChange() is bound to uploadController filechanged($event) in HTML-template
+                    /* NOTE: attribute ng-upload-change of <input>-tag in html template
+                    is bound to filechanged($event) in uploadController */
                     $scope.ngUploadChange({$event: event})
                 })
             })
@@ -218,7 +219,7 @@ angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.g
             });
         }
     }
-}]);  
+}]) // ng-upload-change
 })();
 
 /* NOTES
@@ -227,13 +228,13 @@ angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.g
 * for uibModal see: https://github.com/angular-ui/bootstrap/tree/master/src/modal
 * for <script type="text/ng-template> a.k.a. inlined template see :
 *   https://docs.angularjs.org/api/ng/directive/script
-* for AngularJS-native version of Select2 see: https://github.com/angular-ui/ui-select 
+* for AngularJS-native version of Select2 see: https://github.com/angular-ui/ui-select
 *   in relation: jQuery Select2: https://select2.org/
 * for CommonJs and ES modules: https://flaviocopes.com/commonjs/
 * for download pdf file with $http.get() see:
 *   https://stackoverflow.com/questions/14215049/how-to-download-file-using-angularjs-and-calling-mvc-api
-* and/or: 
-*   https://gist.github.com/MarkLavrynenko/5b763e36b128170cdb77   
+* and/or:
+*   https://gist.github.com/MarkLavrynenko/5b763e36b128170cdb77
 * for ui-uploader see:  https://github.com/angular-ui/ui-uploader
 * for server-side filesystem actions see: https://nodejs.org/api/fs.html and https://dev.to/mrm8488/from-callbacks-to-fspromises-to-handle-the-file-system-in-nodejs-56p2
 * for server-side MD5 creation see: https://www.npmjs.com/package/md5-file

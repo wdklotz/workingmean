@@ -1,10 +1,10 @@
 (function(){
  'use strict';
     
-const db          = require('../dbConnection/connector');
-const easypost    = require('easypost');
+const db              = require('../dbConnection/connector');
+const easypost        = require('easypost');
+let check             = require('../../duplicataHandler');
 let {app_log, tbl_log, i_was_here} = require('../../svr_helper');
-let check = require('../../duplicataHandler');
 
 const sendJsonResponse = function (res, status, content) {
     // i_was_here("sendJsonResponse");
@@ -13,7 +13,7 @@ const sendJsonResponse = function (res, status, content) {
     res.status(status);
     res.end();
 };
-const documents        = function(req,res) {      // all -> /api/lib
+const documents        = function(req,res) {        // router.get ('/lib',....
     i_was_here('documents');
     const sql =`SELECT d.*, a.Author, t.Type, s.Shelf FROM doc As d
                 INNER JOIN doc_author AS a ON a.id = d.author 
@@ -37,7 +37,7 @@ const documents        = function(req,res) {      // all -> /api/lib
         }
     })  
 };
-const documentPost     = function(req,res) {
+const documentPost     = function(req,res) {     // router.post('/lib/post',....
 /* reading from a streamed POST see: 
 *  http://www.primaryobjects.com/2012/11/11/reading-post-data-in-node-js-express-easy-manager-method/
 *  excellent anatomy of an HTTP Transaction see: https://nodejs.org/fr/docs/guides/anatomy-of-an-http-transaction/
@@ -64,7 +64,7 @@ const documentPost1 = function(req,res) {
         });
     i_was_here('documentPost1');
 };
-const documentById     = function(req,res) {      // id:38 -> /api/lib/38
+const documentById     = function(req,res) {      // router.get ('/lib/:documentId',....
     i_was_here('documentById');
     const docId  = req.params.documentId;
     const sql = `SELECT d.*, a.Author, t.Type, s.Shelf FROM doc As d
@@ -80,7 +80,7 @@ const documentById     = function(req,res) {      // id:38 -> /api/lib/38
         sendJsonResponse(res,200,row);
     });
 };
-const documentUpdate   = function(req,res) {
+const documentUpdate   = function(req,res) {    // router.put ('/lib/:documentId',....
     i_was_here('documentUpdate');
     const docId    = req.params.documentId;
     const body     = req.body;
@@ -127,11 +127,12 @@ const documentUpdate   = function(req,res) {
     });
 };
 
-module.exports.documents      = documents;
-module.exports.documentPost   = documentPost;
-module.exports.documentById   = documentById;
-module.exports.documentUpdate = documentUpdate;
-module.exports.documentDelete = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
+module.exports.documents        = documents;
+module.exports.documentPost     = documentPost;
+module.exports.documentPost1    = documentPost1;
+module.exports.documentById     = documentById;
+module.exports.documentUpdate   = documentUpdate;
+module.exports.documentDelete   = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
 
 const authors = function(req,res) {
     i_was_here('authors');

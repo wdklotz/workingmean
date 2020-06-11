@@ -17,14 +17,15 @@ angular.module('ngApp')
             }
         vm.nb_files_toggle = !vm.nb_files_selected;
     }
-    
+
     vm.btn_clean  = function() {
         vm.files = []
         vm.nb_files_selected = 0;
         vm.nb_files_toggle = !vm.nb_files_selected;
     };
-    
+
     vm.btn_remove = function(file) {
+        console.log('btn_remove',file);
         vm.files.splice(vm.files.indexOf(file), 1);
         vm.nb_files_selected = Object.entries(vm.files).length;
         vm.nb_files_toggle = !vm.nb_files_selected;
@@ -35,7 +36,7 @@ angular.module('ngApp')
         var i = (bytes === 0) ? 0 : +Math.floor(Math.log(bytes) / Math.log(1024));
         return (bytes / Math.pow(1024, i)).toFixed(i ? 1 : 0) + ' ' + sizes[isNaN(bytes) ? 0 : i + 1];
     }
-    
+
     vm.btn_upload = function() {
         console.log('Upload clicked...');
         var formData = new FormData();
@@ -47,4 +48,4 @@ angular.module('ngApp')
         xhr.open('post','/multiupload',true);
         xhr.send(formData);
     }
-}]);
+}]) // uploadController
