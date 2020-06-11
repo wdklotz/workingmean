@@ -1,9 +1,9 @@
 (function() {
 'use strict';
 
-const db              = require('../dbConnection/connector');
-// let check             = require('../../duplicataHandler');
-let {app_log, tbl_log, i_am_here} = require('../../svr_helper');
+const db     = require('../dbConnection/connector');
+const hash   = require('../../md5Handler');
+const {app_log, tbl_log, i_am_here} = require('../../svr_helper');
 
 const sendJsonResponse = function (res, status, content) {
     // i_was_here("sendJsonResponse");
@@ -57,15 +57,14 @@ const documentPost1    = function(req,res,next) {
     i_am_here('documentPost1 for multer upload...');
     // const files = req.body.file_input;  BAD: stores files but throws error
     const files = req.files;
-    const text  = req.body.text_input;
 //     console.log('req.files',files);
-//     console.log('req.body.text_input',text);
     if(!files) {
         const error = new Error('Please choose files');
         error.httpStatusCode = 400;
         return next(error);
     }
-    res.json({files: files,text:text});
+    files.forEach(file => hash.fileToHex(file));
+    res.json({files: files});
 };
 const documentById     = function(req,res) {      // router.get ('/lib/:documentId',....
     i_am_here('documentById');

@@ -2,33 +2,33 @@ angular.module('ngApp')
 
 .controller('uploadController', ['$scope','$log',function($scope, $log) {
     const vm = $scope;
-    vm.nb_files_selected = 0;
+    vm.nbof_selected = 0;
     vm.files = [];
-    vm.nb_files_toggle = !vm.nb_files_selected;
+    vm.files_toggle = !vm.nbof_selected;
 
     vm.fileChanged = function($event) {
         const filelist = $event.target.files;
-        vm.nb_files_selected = filelist.length;
+        vm.nbof_selected = filelist.length;
 
         for (var i=0; i<filelist.length; i++) {
             vm.files[i] = filelist.item(i);
             vm.files[i].active = false;
             vm.files[i].humanSize = vm.getHumanSize(vm.files[i].size);
             }
-        vm.nb_files_toggle = !vm.nb_files_selected;
+        vm.files_toggle = !vm.nbof_selected;
     }
 
     vm.btn_clean  = function() {
         vm.files = []
-        vm.nb_files_selected = 0;
-        vm.nb_files_toggle = !vm.nb_files_selected;
+        vm.nbof_selected = 0;
+        vm.files_toggle = !vm.nbof_selected;
     };
 
     vm.btn_remove = function(file) {
         console.log('btn_remove',file);
         vm.files.splice(vm.files.indexOf(file), 1);
-        vm.nb_files_selected = Object.entries(vm.files).length;
-        vm.nb_files_toggle = !vm.nb_files_selected;
+        vm.nbof_selected = Object.entries(vm.files).length;
+        vm.files_toggle = !vm.nbof_selected;
     }
 
     vm.getHumanSize = function(bytes) {

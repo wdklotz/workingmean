@@ -1,8 +1,10 @@
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+'use strict';
 
-const dbURI = path.resolve(__dirname,'./db/storage.sqlite');
-const db = new sqlite3.Database(dbURI,sqlite3.OPEN_READWRITE, (err) => {
+const sqlite3   = require('sqlite3').verbose();
+const locations = require('../../locations');
+
+const dbURI = locations.db;
+const db    = new sqlite3.Database(dbURI,sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
         return console.error(err.message);
     }
