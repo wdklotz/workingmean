@@ -17,6 +17,7 @@ pids
 build/
 dist/
 lib/
+uploads/
 
 # Dependency directories
 node_modules/
