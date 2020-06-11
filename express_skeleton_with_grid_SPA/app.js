@@ -1,3 +1,5 @@
+'use strict';
+
 var express      = require('express');
 var cors         = require('cors');     // cross-origin resource sharing
 var createError  = require('http-errors');

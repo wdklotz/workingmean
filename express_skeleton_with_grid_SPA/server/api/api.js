@@ -1,10 +1,9 @@
-(function(){
- 'use strict';
-    
+(function() {
+'use strict';
+
 const db              = require('../dbConnection/connector');
-const easypost        = require('easypost');
-let check             = require('../../duplicataHandler');
-let {app_log, tbl_log, i_was_here} = require('../../svr_helper');
+// let check             = require('../../duplicataHandler');
+let {app_log, tbl_log, i_am_here} = require('../../svr_helper');
 
 const sendJsonResponse = function (res, status, content) {
     // i_was_here("sendJsonResponse");
@@ -14,12 +13,12 @@ const sendJsonResponse = function (res, status, content) {
     res.end();
 };
 const documents        = function(req,res) {        // router.get ('/lib',....
-    i_was_here('documents');
+    i_am_here('documents');
     const sql =`SELECT d.*, a.Author, t.Type, s.Shelf FROM doc As d
-                INNER JOIN doc_author AS a ON a.id = d.author 
-                INNER JOIN doc_type   AS t ON t.id = d.type 
+                INNER JOIN doc_author AS a ON a.id = d.author
+                INNER JOIN doc_type   AS t ON t.id = d.type
                 INNER JOIN doc_shelf  AS s ON s.id = d.shelf`;
-    
+
     db.all(sql, [], (err, rows) => {
         if (err) {
           return console.error(err.message);
@@ -35,10 +34,10 @@ const documents        = function(req,res) {        // router.get ('/lib',....
        } else {     // all table-rows
             sendJsonResponse(res,200,rows);
         }
-    })  
+    })
 };
 const documentPost     = function(req,res) {     // router.post('/lib/post',....
-/* reading from a streamed POST see: 
+/* reading from a streamed POST see:
 *  http://www.primaryobjects.com/2012/11/11/reading-post-data-in-node-js-express-easy-manager-method/
 *  excellent anatomy of an HTTP Transaction see: https://nodejs.org/fr/docs/guides/anatomy-of-an-http-transaction/
 */
@@ -49,43 +48,47 @@ const documentPost     = function(req,res) {     // router.post('/lib/post',....
     req.on('end', function () {
         console.log('POSTed: ' + body);
         console.log(req.files);
-        res.writeHead(200);    
+        res.writeHead(200);
         res.end();
     });
-    i_was_here('documentPost');
+    i_am_here('documentPost');
 };
-const documentPost1 = function(req,res) {
-/*
-* using easypost see: https://www.npmjs.com/package/easypost
-*/
-    easypost.get(req,res, function(data){
-        console.log(data);
-        res.end();
-        });
-    i_was_here('documentPost1');
+const documentPost1    = function(req,res,next) {
+    i_am_here('documentPost1 for multer upload...');
+    // const files = req.body.file_input;  BAD: stores files but throws error
+    const files = req.files;
+    const text  = req.body.text_input;
+//     console.log('req.files',files);
+//     console.log('req.body.text_input',text);
+    if(!files) {
+        const error = new Error('Please choose files');
+        error.httpStatusCode = 400;
+        return next(error);
+    }
+    res.json({files: files,text:text});
 };
 const documentById     = function(req,res) {      // router.get ('/lib/:documentId',....
-    i_was_here('documentById');
+    i_am_here('documentById');
     const docId  = req.params.documentId;
     const sql = `SELECT d.*, a.Author, t.Type, s.Shelf FROM doc As d
-                 INNER JOIN doc_author AS a ON a.id = d.author 
-                 INNER JOIN doc_type   AS t ON t.id = d.type 
+                 INNER JOIN doc_author AS a ON a.id = d.author
+                 INNER JOIN doc_type   AS t ON t.id = d.type
                  INNER JOIN doc_shelf  AS s ON s.id = d.shelf
                  WHERE d.id = ${docId}`;
-    
+
     db.get(sql, [], (err,row) => {
         if (err) {
-           return console.error(err.message); 
+           return console.error(err.message);
         }
         sendJsonResponse(res,200,row);
     });
 };
 const documentUpdate   = function(req,res) {    // router.put ('/lib/:documentId',....
-    i_was_here('documentUpdate');
+    i_am_here('documentUpdate');
     const docId    = req.params.documentId;
     const body     = req.body;
     app_log('body: '+JSON.stringify(body));
-    
+
     const sql1 = `SELECT a.id FROM doc_author AS a
                     WHERE a.author='${body.Author}'`;
     app_log('sql1: '+sql1);
@@ -93,7 +96,7 @@ const documentUpdate   = function(req,res) {    // router.put ('/lib/:documentId
         app_log('authId: '+JSON.stringify(row));
         body.author = row.id;
     });
-    
+
     const sql2 = `SELECT a.id FROM doc_type AS a
                     WHERE a.type='${body.Type}'`;
     // app_log('sql2: '+sql2);
@@ -101,7 +104,7 @@ const documentUpdate   = function(req,res) {    // router.put ('/lib/:documentId
         // app_log('typeId: '+JSON.stringify(row));
         body.type = row.id;
     });
-    
+
     const sql3 = `SELECT a.id FROM doc_shelf AS a
                     WHERE a.shelf='${body.Shelf}'`;
     app_log('sql3: '+sql3);
@@ -109,7 +112,7 @@ const documentUpdate   = function(req,res) {    // router.put ('/lib/:documentId
         // app_log('shelfId: '+JSON.stringify(row));
         body.shelf = row.id;
     });
-    
+
     const sql4 = `UPDATE doc SET
                  author   = '${body.author}',
                  type     = '${body.type}',
@@ -121,7 +124,7 @@ const documentUpdate   = function(req,res) {    // router.put ('/lib/:documentId
     app_log('sql4: '+sql4);
     db.run(sql4, [], (err) => {
         if (err) {
-           return console.error(err.message); 
+           return console.error(err.message);
         }
         app_log(`Row(s) updated: ${docId}`+JSON.stringify(body));
     });
@@ -135,7 +138,7 @@ module.exports.documentUpdate   = documentUpdate;
 module.exports.documentDelete   = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
 
 const authors = function(req,res) {
-    i_was_here('authors');
+    i_am_here('authors');
     const sql = `SELECT * from doc_author`;
     db.all(sql, [], (err, rows) => {
         if (err) {
@@ -143,11 +146,11 @@ const authors = function(req,res) {
         } else {     // all table-rows
             // tbl_log(rows);
             sendJsonResponse(res,200,rows);
-        } 
+        }
     });
 };
 const types   = function(req,res) {
-    i_was_here('types');
+    i_am_here('types');
     const sql = `SELECT * from doc_type`;
     db.all(sql, [], (err, rows) => {
         if (err) {
@@ -155,11 +158,11 @@ const types   = function(req,res) {
         } else {     // all table-rows
             // tbl_log(rows);
             sendJsonResponse(res,200,rows);
-        } 
+        }
     });
 };
 const shelfs  = function(req,res) {
-    i_was_here('shelfs');
+    i_am_here('shelfs');
     const sql = `SELECT * from doc_shelf`;
     db.all(sql, [], (err, rows) => {
         if (err) {
@@ -167,7 +170,7 @@ const shelfs  = function(req,res) {
         } else {     // all table-rows
             // tbl_log(rows);
             sendJsonResponse(res,200,rows);
-        } 
+        }
     });
 };
 
