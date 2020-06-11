@@ -24,5 +24,4 @@ uploads/
 # Dependency directories
 node_modules/
 
-npm-debug.log
 express_skeleton_with_grid_SPA/public/UIGrid/store/
