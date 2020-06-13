@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ngApp')
 
 .controller('uploadController', ['$scope','$log',function($scope, $log) {

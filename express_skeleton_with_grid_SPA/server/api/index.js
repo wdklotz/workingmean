@@ -23,7 +23,13 @@ router.post  ('/lib/post',        api.documentPost);         // POST (create)
 router.get   ('/lib/:documentId', api.documentById);         // GET :id
 router.put   ('/lib/:documentId', api.documentUpdate);       // PUT :id (update)
 router.delete('/lib/:documentId', api.documentDelete);       // DELETE :id
-router.post  ('/lib/post/multer', upload.array('file_input'), api.documentPost1);        // POST (create)
+
+router.use   ('/lib/post/multer',
+                upload.array('file_input'),
+                api.documentPost1
+                );
+
+// router.use   ('/lib/post/multer', api.documentPost1);        // POST (create)
 
 router.get('/authors',    api.authors);
 router.get('/types',      api.types);

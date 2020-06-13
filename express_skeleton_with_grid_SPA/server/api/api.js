@@ -2,7 +2,7 @@
 'use strict';
 
 const db     = require('../dbConnection/connector');
-const hash   = require('../../md5Handler');
+const md5    = require('../../md5Handler');
 const {app_log, tbl_log, i_am_here} = require('../../svr_helper');
 
 const sendJsonResponse = function (res, status, content) {
@@ -53,7 +53,7 @@ const documentPost     = function(req,res) {     // router.post('/lib/post',....
     });
     i_am_here('documentPost');
 };
-const documentPost1    = function(req,res,next) {
+const documentPost1    = function(req,res) {
     i_am_here('documentPost1 for multer upload...');
     // const files = req.body.file_input;  BAD: stores files but throws error
     const files = req.files;
@@ -63,7 +63,7 @@ const documentPost1    = function(req,res,next) {
         error.httpStatusCode = 400;
         return next(error);
     }
-    files.forEach(file => hash.fileToHex(file));
+    files.forEach(file => md5.docToStore(file));
     res.json({files: files});
 };
 const documentById     = function(req,res) {      // router.get ('/lib/:documentId',....

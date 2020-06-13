@@ -1,5 +1,4 @@
 'use strict';
-
 const base_dir   = __dirname;
 const db         = base_dir+'/server/dbConnection/db/storage.sqlite';
 const upload     = base_dir+'/uploads';
