@@ -1,0 +1,20 @@
+html
+  head
+  body
+    a(href='http://localhost:3000')
+      h2 client (index.html)
+    h2 classic...
+    form(method='post' , target='_blank')
+      label(for='files', style='padding-right:1em') some files please
+      input(id='files' , type='file', multiple='', name='file_input')
+      label(for='text' , style='padding-right:1em;') some text please
+      input(id='text'  , type='text', name='text_input', style='margin-right:1em')
+      button(formaction='http://localhost:3000/edms/post/classic') Let's Go
+
+    h2 multer upload...
+    form(method='post' , target='_blank', enctype='multipart/form-data')
+      label(for='files', style='padding-right:1em') some files please
+      input(id='files' , type='file', multiple='', name='file_input')
+      label(for='text' , style='padding-right:1em;') some text please
+      input(id='text'  , type='text', name='text_input', style='margin-right:1em')
+      button(formaction='http://localhost:3000/edms/post/multer') Let's Go

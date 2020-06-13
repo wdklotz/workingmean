@@ -10,21 +10,20 @@ angular.module('ngApp')
 
     self.addFileList  = function (files) { 
         self.files = files; 
-        // console.log(self.files);
     };
-    
     self.getHumanSize = function(bytes) {
         var sizes = ['n/a', 'bytes', 'KiB', 'MiB', 'GiB', 'TB', 'PB', 'EiB', 'ZiB', 'YiB'];
         var i = (bytes === 0) ? 0 : +Math.floor(Math.log(bytes) / Math.log(1024));
         return (bytes / Math.pow(1024, i)).toFixed(i ? 1 : 0) + ' ' + sizes[isNaN(bytes) ? 0 : i + 1];
     }
-    self.startUpload  = function(options) {
+/*    self.startUpload  = function(options) {
         self.options  = options;
 
         // headers are not shared by requests
         var headers    = options.headers || {};
         var xhrOptions = options.options || {};
         let list       = self.files;
+        console.log(self.files);
 
         for (var i=0; i<list.length; i++) {
             if (self.activeUploads == self.options.concurrency) break;
@@ -33,7 +32,9 @@ angular.module('ngApp')
             self.ajaxUpload(file, options.url, options.data, options.paramName, headers, xhrOptions);
         }
         // self.ajaxUpload1(options.url);
+        xhr.send(formData);
     }
+*/
 /*    NOTE: das Prinzip....
         var pdf = doc.output(); 
         var data = new FormData();
@@ -53,7 +54,7 @@ angular.module('ngApp')
         xhr.send(data);
     };
 */
-    self.ajaxUpload = function(file, url, data, key, headers, xhrOptions) {
+/*    self.ajaxUpload = function(file, url, data, key, headers, xhrOptions) {
         // const path = 'C:/Users/wdklotz/workingmean/express_skeleton_with_grid_SPA/public/UIGrid/store/data/';
         var xhr, formData, prop;
         data = data || {};
@@ -129,6 +130,7 @@ angular.module('ngApp')
                 }
             }
         };
+        
         // Append additional data if provided:
         if (data) {
             for (prop in data) {
@@ -148,4 +150,5 @@ angular.module('ngApp')
 
         return xhr;
     }
+*/
 }]);

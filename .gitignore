@@ -2,6 +2,8 @@
 logs
 *.logs
 *.log
+*.*~
+#*#
 
 # Runtime data
 pids
@@ -17,9 +19,9 @@ pids
 build/
 dist/
 lib/
+uploads/
 
 # Dependency directories
 node_modules/
 
-npm-debug.log
 express_skeleton_with_grid_SPA/public/UIGrid/store/

@@ -31,7 +31,7 @@
 <!-- ui-select files -->
 
 <!-- Select2 -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css" rel="stylesheet">    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css" rel="stylesheet">
 <!-- Select2 -->
 
 <!-- Bootstrap -->
@@ -57,13 +57,14 @@
     <script src="./modalController.js"></script>
     <script src="./atsController.js"></script>
     <script src="./navBtnsController.js"></script>
+    <!-- <script src="./dupliCheckService.js"></script> -->
     <script src="./config.js"></script>
     <!-- <script src="./XHRformSubmit.js"></script> -->
     <link href="./ng-styles.css" type="text/css" rel="stylesheet">
 <!-- this App -->
 
     <!-- local css for editor panel and Select2 -->
-     <style>  
+     <style>
     .input-group > .label-col {
         width: 130px;
         color: #fff;
@@ -84,7 +85,7 @@
     }
     #s_box {
         width: 1200px;
-        overflow-wrap: break-word; 
+        overflow-wrap: break-word;
     }
     </style>
     <!-- select2 -->
@@ -97,130 +98,105 @@
     </style>
 </head>
 <body ng-controller="ngAppController" ng-cloak>
-    <!-- Action buttons -->
+    <!-- ======================Action buttons==================================== -->
     <div ng-controller="navBtnsController as $btnCtrl" class="modal-demo">
-        &ensp; Documents: 
+        &ensp; Documents:
         <a type="button" class="btn btn-primary" href="#/fileUpload"> Upload </a>
-        
         &emsp; Selection:
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.viewClicked()"> View </button>
-        
         <button type="button" class="btn btn-primary" ng-model="$btnCtrl.showHideDiv" ng-click="$btnCtrl.onEdit()"> Edit </button>
-        
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.deleteClicked()"  > Delete </button>
-        
         &emsp; New/Edit:
         <a type="button" class="btn btn-primary" href="#/ats"> ATS </a>
-        
          &emsp;&emsp;Test:
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.testClicked('lg')"> Details </button>
 
-    <!-- ===========document editor panel==================================== -->
-    <!-- show/hide toggled by Edit-btn with ng-click and ng-if -->
+        <!-- ===================document edit panel==================================== -->
         <div ng-controller="docEditController as ctrl" ng-if="$btnCtrl.showHideDiv" class="animate-if" >
-        <!-- Header -->
+            <!-- Header -->
             <div class="modal-header">
                 <h3 class="modal-title" id="modal-title">Document Editor <small>(click Edit again to hide)</small></h3>
             </div>
-        <!-- Body   -->
+            <!-- Body   -->
             <div class="modal-body" id="modal-body">
-        <form>
-            <div class="container">
+                <FORM>
+                    <div class="container">
+                        <!-- ID -->
+                        <div class="input-group form-group">
+                        <span class="input-group-addon label-col">Id:</span>
+                        <input type="text" class="form-control input-col" readonly ng-model="ctrl.doc.id">
+                        </div>
 
-            <!-- ID -->
-            <div class="input-group form-group">
-            <span class="input-group-addon label-col">Id:</span>
-            <input type="text" class="form-control input-col" readonly ng-model="ctrl.doc.id">
-            </div>
+                        <!-- Document -->
+                        <div class="input-group form-group">
+                        <span class="input-group-addon label-col">Document:</span>
+                        <input type="text" class="form-control input-col" readonly ng-model="ctrl.doc.Document">
+                        </div>
 
-            <!-- Document -->
-            <div class="input-group form-group">
-            <span class="input-group-addon label-col">Document:</span>
-            <input type="text" class="form-control input-col" readonly ng-model="ctrl.doc.Document">
-            </div>
+                        <!-- Author select-->
+                        <div class="input-group form-group" ng-controller="authController as actrl">
+                        <span class="input-group-addon label-col">Author:</span>
+                            <!-- ui-select -->
+                            <ui-select ng-model="actrl.choice.selectedValue" theme="select2" ng-disabled="actrl.disabled" style="min-width: 300px;" title="Choose an author" on-select="actrl.onSelect(actrl.choice.selectedValue)">
+                                <ui-select-match placeholder="Select Author in the list or search his name...">{{$select.selected.value.name}}</ui-select-match>
+                                <ui-select-choices repeat="choice.value as (key, choice) in actrl.authorObj | filter: { value: { name: $select.search }}">
+                                    <div ng-bind-html="choice.value.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>   <!--authController-->
 
-            <!-- Author select-->
-            <div class="input-group form-group" ng-controller="authController as actrl">
-            <span class="input-group-addon label-col">Author:</span>
-                <!-- <input type="text" class="form-control input-col" ng-model="actrl.choice.selectedValue.name"> -->
-                <!-- ui-select -->
-                <ui-select ng-model="actrl.choice.selectedValue" theme="select2" ng-disabled="actrl.disabled" style="min-width: 300px;" title="Choose an author" on-select="actrl.onSelect(actrl.choice.selectedValue)">
-                    <ui-select-match placeholder="Select Author in the list or search his name...">{{$select.selected.value.name}}</ui-select-match>
-                    <ui-select-choices repeat="choice.value as (key, choice) in actrl.authorObj | filter: { value: { name: $select.search }}">
-                        <div ng-bind-html="choice.value.name | highlight: $select.search"></div>
-                    </ui-select-choices>
-                </ui-select>
-            </div>   <!--authController-->
+                        <!-- Type select-->
+                        <div class="input-group form-group" ng-controller="typeController as tctrl">
+                        <span class="input-group-addon label-col">Type:</span>
+                            <!-- ui-select -->
+                            <ui-select ng-model="tctrl.choice.selectedValue" theme="select2" ng-disabled="tctrl.disabled" style="min-width: 300px;" title="Choose a type" on-select="tctrl.onSelect(tctrl.choice.selectedValue)">
+                                <ui-select-match placeholder="Select Type in the list or search his name...">{{$select.selected.value.name}}</ui-select-match>
+                                <ui-select-choices repeat="choice.value as (key, choice) in tctrl.typeObj | filter: { value: { name: $select.search }}">
+                                    <div ng-bind-html="choice.value.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>  <!--typeController-->
 
-            <!-- Type select-->
-            <div class="input-group form-group" ng-controller="typeController as tctrl">
-            <span class="input-group-addon label-col">Type:</span>
-                <!-- <input type="text" class="form-control input-col" ng-model="tctrl.choice.selectedValue.name"> -->
-                <!-- ui-select -->
-                <ui-select ng-model="tctrl.choice.selectedValue" theme="select2" ng-disabled="tctrl.disabled" style="min-width: 300px;" title="Choose a type" on-select="tctrl.onSelect(tctrl.choice.selectedValue)">
-                    <ui-select-match placeholder="Select Type in the list or search his name...">{{$select.selected.value.name}}</ui-select-match>
-                    <ui-select-choices repeat="choice.value as (key, choice) in tctrl.typeObj | filter: { value: { name: $select.search }}">
-                        <div ng-bind-html="choice.value.name | highlight: $select.search"></div>
-                    </ui-select-choices>
-                </ui-select>
-            </div>
+                        <!-- Shelf select-->
+                        <div class="input-group form-group" ng-controller="shelfController as sctrl">
+                        <span class="input-group-addon label-col">Shelf:</span>
+                            <!-- ui-select -->
+                            <ui-select ng-model="sctrl.choice.selectedValue" theme="select2" ng-disabled="sctrl.disabled" style="min-width: 300px;" title="Choose a shelf" on-select="sctrl.onSelect(sctrl.choice.selectedValue)">
+                                <ui-select-match placeholder="Select Shelf in the list or search his name...">{{$select.selected.value.name}}</ui-select-match>
+                                <ui-select-choices repeat="choice.value as (key, choice) in sctrl.shelfObj | filter: { value: { name: $select.search }}">
+                                    <div ng-bind-html="choice.value.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>  <!--shelfController-->
 
-            <!-- Shelf select-->
-            <div class="input-group form-group" ng-controller="shelfController as sctrl">
-            <span class="input-group-addon label-col">Shelf:</span>
-                <!-- <input type="text" class="form-control input-col" ng-model="sctrl.choice.selectedValue.name"> -->
-                <!-- ui-select -->
-                <ui-select ng-model="sctrl.choice.selectedValue" theme="select2" ng-disabled="sctrl.disabled" style="min-width: 300px;" title="Choose a shelf" on-select="sctrl.onSelect(sctrl.choice.selectedValue)">
-                    <ui-select-match placeholder="Select Shelf in the list or search his name...">{{$select.selected.value.name}}</ui-select-match>
-                    <ui-select-choices repeat="choice.value as (key, choice) in sctrl.shelfObj | filter: { value: { name: $select.search }}">
-                        <div ng-bind-html="choice.value.name | highlight: $select.search"></div>
-                    </ui-select-choices>
-                </ui-select>
-            </div>
+                        <!-- Keywords -->
+                        <div class="input-group form-group">
+                        <span class="input-group-addon label-col">Keywords:</span>
+                            <input type="text" class="form-control input-col" ng-model="ctrl.doc.Keywords">
+                        </div>
 
-            <!-- Keywords -->
-            <div class="input-group form-group">
-            <span class="input-group-addon label-col">Keywords:</span>
-                <input type="text" class="form-control input-col" ng-model="ctrl.doc.Keywords">
-            </div>
-
-            <!-- Favorite & Trash -->
-            <div class="row">
-                <div class="col-md-4">
-                    <label> <input type="checkbox" ng-model="ctrl.favChecked"> Favorite </label>
-                    <label> <input type="checkbox" ng-model="ctrl.trashChecked"> Trash </label>
-                </div>
-                <div class="col-md-4 col-md-offset-2">
-                    <button type="button" class=" btn btn-success" ng-class="{'btn-link':ctrl.doc_submit}" ng-click="ctrl.formSubmit()" ng-hide="ctrl.btns_hidden">Submit</button>
-                    <button type="button" class="btn btn-danger" ng-click="ctrl.formReset()" ng-hide="ctrl.btns_hidden">Reset</button>
-                </div>
-            </div>
-            </div> <!--class="container"-->
-        </form>
+                        <!-- Favorite & Trash -->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label> <input type="checkbox" ng-model="ctrl.favChecked"> Favorite </label>
+                                <label> <input type="checkbox" ng-model="ctrl.trashChecked"> Trash </label>
+                            </div>
+                            <div class="col-md-4 col-md-offset-2">
+                                <button type="button" class=" btn btn-success" ng-class="{'btn-link':ctrl.doc_submit}" ng-click="ctrl.formSubmit()" ng-hide="ctrl.btns_hidden">Submit</button>
+                                <button type="button" class="btn btn-danger" ng-click="ctrl.formReset()" ng-hide="ctrl.btns_hidden">Reset</button>
+                            </div>
+                        </div>
+                    </div> <!--class="container"-->
+                </FORM>
             </div> <!--id="modal-body"-->
-        <!-- Footer -->
+            <!-- Footer -->
             <div class="modal-footer">
             </div>
-        </div>
-    </div>
-    
-    <!-- Author/Type/Shelf -->
-    <div ng-view></div>
+        </div> <!--docEditController-->
+    </div> <!--navBtnsController-->
 
-<!-- <div style="padding:2em;padding-left:10em;" ng-controller="form1Ctrl">
-<form id="theForm">
-  <p>
-    <label for="theText">text data:</label>
-    <input id="theText" name="myText" value="Some text data" type="text">
-  </p>
-  <p>
-    <label for="theFile">file data:</label>
-    <input id="theFile" name="myFile" type="file">
-  </p>
-  <button>Send Me!</button>
-</form>
-</div>
- -->
+    <!-- ==============================Author/Type/Shelf======================= -->
+    <div ng-view></div>
 
     <!-- ==============================uiGrid================================== -->
     <div ui-grid="grid1Options" ui-grid-pagination ui-grid-resize-columns ui-grid-selection ui-grid-cellnav class="grid"></div>
@@ -232,39 +208,37 @@
             margin-top: 10px;
         }
         </style>
-        <FORM id="uploader" ng-controller="uploadController">
-            <div class="row">
-                <div class="col-md-6">
-                    <!-- <h3>What?</h3> -->
-                    <h3 style="padding-left: 1em;" >Upload multiple files at the same time. 
-                        <small>(click browser's <b>&larr;</b> arrow to close)</small></h3>
-                    <div class="well">
-                        <div>
-                            <div style="float:right;">
-                                <button ng-click="btn_upload()" class="btn btn-primary">Upload</button>
-                                <button ng-click="btn_clean()" class="btn btn-primary">Remove/Clean</button>
-                            </div>
-<!-- input -->              <input id="files" type="file" class="hidden" multiple ng-upload-change="fileChanged($event)"/>
-                            <label for="files" class="btn btn-primary">Select files</label><span style="padding-left:1em;">{{nb_files_selected}} files</span>
+        <FORM  method="post" target="_blank" enctype="multipart/form-data" action='http://localhost:3000/api/lib/post/multer'>
+        <div class="row"  ng-controller="uploadController">
+            <div class="col-md-6">
+                <h3 style="padding-left: 1em;" >Upload multiple files at the same time.<small>(click browser&apos;s <b>&larr;</b> arrow to close)</small></h3>
+                <div class="well">
+                        <input id="files" name="file_input" type="file" class="hidden" multiple ng-upload-change="fileChanged($event)"/>
+                        <label for="files" class="btn btn-primary">Select files</label>
+                        <span style="padding-left:1em;">{{nbof_selected}} files</span>
+                        <div style="float:right;">
+                            <input  type="submit" class="btn btn-primary" ng-class="{'btn-link':files_toggle}" value="Let's Go">
+                            <button type="button" class="btn btn-primary" ng-class="{'btn-link':files_toggle}" ng-click="btn_clean()">Remove/Clean</button>
                         </div>
-<!-- file_prog_list --> <div id="file_prog_list" ng-repeat="file in files">
+                        <!-- ============================file_prog_list============================= -->
+                        <div id="file_prog_list" ng-repeat="file in files">
                             <div>
                                 <span>{{file.name}}</span>
                                 <div style="float:right;">
                                     <span>{{file.humanSize}}</span>
-                                    <!-- <a ng-click="btn_remove(file)" title="Remove from list to be uploaded"></a> -->
-                                    <button ng-click="btn_remove(file)" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
+                                    <!-- <a ng-click="btn_remove(file)" title="Remove from list to be uploaded">remove</a> -->
+                                    <button type="button" ng-click="btn_remove(file)" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
                                 </div>
                             </div>
-                            <progress style="width:400px;" value="{{file.loaded ? file.loaded : 0}}" max="{{file.size}}"></progress>
+                            <!-- <progrfiles_toggleess style="width:400px;" value="{{file.loaded ? file.loaded : 0}}" max="{{file.size}}"></progress> -->
                         </div>
-                   </div>
                 </div>
             </div>
-        </fORM>
+        </div>
+        </FORM>
     </script>
 
-    <!-- ==================modalEditContent.html template====================== -->
+    <!-- ==================modalEditContent.html template========================== -->
     <script id="modalEditContent.html" type="text/ng-template">
         <div class="modal-header">
            <h4>Raw group selection content</h4>
@@ -283,8 +257,8 @@
         </div>
     </script>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="./lib/jQuery/jQuery.min.js"></script>
+    <!-- =============================javascripts=============================== -->
+    <script src="./lib/jQuery/jQuery.min.js"></script> <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="./lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script src="./lib/ui-bootstrap2.5.0/ui-bootstrap-tpls.js"></script>
     <script src="./lib/select/select.js"></script>
