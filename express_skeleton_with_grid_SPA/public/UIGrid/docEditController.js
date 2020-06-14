@@ -1,9 +1,7 @@
 angular.module('ngApp')
-
 .controller('docEditController', ['$scope','docResource','U',function($scope,docResource,U) {
     const vm = this;
     const scope = $scope;
-    
     function render() {
         // U.tbl_log("docEditController#render#vm.doc",vm.doc);
         scope.docInEditForm = vm.doc;
@@ -19,18 +17,17 @@ angular.module('ngApp')
             // console.log('ndocs: ',ndocs)
             if (ndocs === 0) {
                 vm.doc = {'Author':"",'Type':"",'Shelf':""};
-                vm.btns_hidden = true; 
+                vm.btns_hidden = true;
             } else {
                 vm.docs = vm.selection.getSelectedRows();
                 vm.doc = vm.docs[0];
                 vm.doc_0 = Object.assign({},vm.doc);
                 vm.btns_hidden = false;
-                vm.selection.unSelectRow(vm.doc);   // unselect fifo        
+                vm.selection.unSelectRow(vm.doc);   // unselect fifo
             }
         render();
     }
     init();
-    
     vm.formReset = function() {
         vm.selection.selectRow(vm.doc);
         vm.doc.Author   = vm.doc_0.Author;
@@ -43,44 +40,42 @@ angular.module('ngApp')
         vm.doc.Favorite = vm.doc_0.Favorite;
         vm.doc.Trash    = vm.doc_0.Trash;
         render();              // <-- render the grid
-        scope.AuthorChoice();  // <-- update the select2 controllers 
+        scope.AuthorChoice();  // <-- update the select2 controllers
         scope.TypeChoice();
         scope.ShelfChoice();
     };
-
 /*  // mock data
-    const docs = [   
-    {id: 24, 
-        Document: 'ssc-138.pdf', 
-        Author: 'Forest', 
+    const docs = [
+    {id: 24,
+        Document: 'ssc-138.pdf',
+        Author: 'Forest',
         Type:'Article',
         Shelf:'Integrator',
         Keywords:'canonical, integrator, circular',
         F:'F',T:'F'},
-    {id: 25, 
+    {id: 25,
         Document: 'pramana_symplectic.pdf',
-        Author: 'Rangarajan', 
+        Author: 'Rangarajan',
         Type:'Article',
         Shelf:'Integrator',
         Keywords:'symplectic, integrator, runge-kutta, hamiltonian',
         F:'T',T:'F'},
-    {id: 26, 
+    {id: 26,
         Document: 'P_J_Channell_1990_Nonlinearity_3_001.pdf',
-        Author: 'Diverse et.al', 
+        Author: 'Diverse et.al',
         Type:'Article',
         Shelf:'Accelerator',
         Keywords:'symplectic, integrator, runge-kutta, hamiltonian',
         F:'T',T:'F'},
-    {id: 27, 
+    {id: 27,
         Document: 'Generalized_Courant-Snyder...Quin.Davidson,Chung.Burby.pdf',
-        Author: 'Choose...', 
+        Author: 'Choose...',
         Type:'Article',
         Shelf:'Linear Theory',
         Keywords:'linear',
         F:'F',T:'F'}
     ];
-*/    
-
+*/
     vm.formSubmit = function() {
         // update db with form-data
         vm.doc.Favorite = (vm.favChecked)? 'T':'F';
@@ -89,11 +84,10 @@ angular.module('ngApp')
         vm.doc.docResourcePut();      //method mapped to HTTP-PUT in docResource
         vm.doc_submit = true;  // btn toggle
     };
-
-/*  // THE closure HACK!!! but it works !!!    
+/*  // THE closure HACK!!! but it works !!!
 *   using a CLOSURE here is perhaps a too big hack that isn't worth it
 *   choiceObjects: an array of {name:,id:} objects to select from
-*   choice: the selected {name:,id:} object 
+*   choice: the selected {name:,id:} object
 *   link: the link in doc-table that point to the corresponding entry in the linked table, i.e. one of doc-author,doc-shelf or doc-type
 *
 *   performs something equivalent like: SELECT * FROM choiceObjects AS c WHERE c.id = link
@@ -112,9 +106,9 @@ angular.module('ngApp')
             }
         }};
         return fn;
-    }; 
+    };
 /*  function getKeyByValue(object,value) {
         return Object.keys(object).find(key => object[key] === value);
     }
 */
-}]);
+}]);  // docEditController

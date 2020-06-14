@@ -31,7 +31,7 @@ function _hashQuery(hex_obj) {
 //         let path    = hex_obj.path;
 //         let fname   = hex_obj.fname;
         const sql   = `SELECT d.* FROM doc As d WHERE d.Hex = "${hexkey}"`;
-        console.log(sql);
+//         console.log(sql);
         db.all(sql, [], (err, rows) => {
             if (err) {
                 reject(err);
@@ -42,11 +42,11 @@ function _hashQuery(hex_obj) {
         });
 }
 function _in_store(hex_obj) {
-    console.log(`====> REPLACE ${hex_obj.hexkey} in store?`);
+//     console.log(`====> REPLACE ${hex_obj.hexkey} in store?`);
     _deleteFromUploads(hex_obj);
     }
 function _not_in_store(hex_obj) {
-    console.log(`====> NOTHING like ${hex_obj.hexkey} in store`);
+//     console.log(`====> NOTHIƒNG like ${hex_obj.hexkey} in store`);
     _copyToStore(hex_obj);
     _dbInsert(hex_obj);
     }
@@ -58,7 +58,7 @@ function _copyToStore(hex_obj) {
     fs.copyFile(src, dest, (err) => {
         if (err) throw err;
         else {
-            console.log(`success coppy ${src} ==> ${dest}`);
+//             console.log(`success copy ${src} ==> ${dest}`);
             _deleteFromUploads(hex_obj);
              }
         })
@@ -69,15 +69,16 @@ function _deleteFromUploads(hex_obj) {
     const src   = path.join(spath,fname);
     fs.unlink(src, (err) => {
         if (err) throw err;
-        else
-            console.log(`success delete ${src}`);
-        });
-    }
+        else {
+//             console.log(`success delete ${src}`);
+             };
+    })
+}
 function _dbInsert(hex_obj) {
     const fname  = hex_obj.fname;
     const hexkey = hex_obj.hexkey;
     const sql = `INSERT INTO doc (Favorite, author, type , shelf, Keywords, Trash, Hex, Document) VALUES("F","1","1","1","?","F","${hexkey}","${fname}")`;
-    console.log(sql);
+//     console.log(sql);
     db.run(sql, [], function(err) {
         if (err) {
             return console.error(err.message);

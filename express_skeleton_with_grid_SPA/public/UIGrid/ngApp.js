@@ -1,6 +1,5 @@
-(function() {
+// (function() {
 'use strict';
-
 angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.grid.resizeColumns','ui.grid.selection','ui.grid.cellNav','ngAnimate','ui.bootstrap','ngResource','ngSanitize','ui.select'])
 .controller('ngAppController', ['$scope', '$http', 'uiGridConstants', 'docResource',function($scope, $http, uiGridConstants, docResource) {
 
@@ -198,7 +197,7 @@ angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.g
     out = items;
     return out;
   };
-}]) // propsFilter
+}])  // propsFilter
 .directive("ngUploadChange",   [function() {
     return{
         scope:{
@@ -220,7 +219,7 @@ angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.g
         }
     }
 }]) // ng-upload-change
-})();
+// })();
 
 /* NOTES
 * for reduce see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce

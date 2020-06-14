@@ -51,15 +51,17 @@
 
 <!-- this App -->
     <script src="./ngApp.js"></script>
+<!--
     <script src="./uploadService.js"></script>
+ -->
     <script src="./uploadController.js"></script>
     <script src="./docEditController.js"></script>
     <script src="./modalController.js"></script>
     <script src="./atsController.js"></script>
     <script src="./navBtnsController.js"></script>
-    <!-- <script src="./dupliCheckService.js"></script> -->
+    <script src="./deleteDocController.js"></script>
     <script src="./config.js"></script>
-    <!-- <script src="./XHRformSubmit.js"></script> -->
+
     <link href="./ng-styles.css" type="text/css" rel="stylesheet">
 <!-- this App -->
 
@@ -105,7 +107,10 @@
         &emsp; Selection:
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.viewClicked()"> View </button>
         <button type="button" class="btn btn-primary" ng-model="$btnCtrl.showHideDiv" ng-click="$btnCtrl.onEdit()"> Edit </button>
+<!--
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.deleteClicked()"  > Delete </button>
+ -->
+        <a type="button" class="btn btn-primary" href="#/deleteDoc"> Delete </a>
         &emsp; New/Edit:
         <a type="button" class="btn btn-primary" href="#/ats"> ATS </a>
          &emsp;&emsp;Test:
