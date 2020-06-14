@@ -17,5 +17,6 @@ angular.module('ngApp')
 //         vm.selection.unSelectRow(vm.doc);   // unselect fifo
     }
     console.log(vm.notice);
+    scope.doc_to_delete = vm.doc.Document;
     scope.notice = vm.notice;
 }]); // deleteDocController

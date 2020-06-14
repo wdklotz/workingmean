@@ -1,11 +1,31 @@
 <div ng-controller="deleteDocController">
 <!-- <h3>templateUrl:'deleteDoc.html'</h3> -->
-<p id="back-arrow-notice">click browser's <b>&larr;</b> arrow to go back</p>
-<p>{{notice}}</p>
+
+<div id="well-div" class="row">
+    <div class="col-md-10">
+        <div class="well">
+            <label for="yes">Remove record <span id="doc-name">"{{doc_to_delete}}"</span> from data base </label>
+            <input id="yes" type="button" class="btn btn-secondary" value="Delete">
+            <input id="no" type="button" class="btn btn-secondary" value="Cancel">
+            <div>
+                <label for="file">Delete document contents from disk</label>
+                <input id="file" type="checkbox">
+                <span id="back-arrow-notice">click browser's <b>&larr;</b> arrow to go back</span>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- <p>{{notice}}</p> -->
 
 <style>
 #back-arrow-notice {
-    padding-left: 75em;
+    padding-left: 50em;
+}
+#doc-name {
+    color: red;
+}
+#well-div {
+    padding-top: 1em;
 }
 </style>
