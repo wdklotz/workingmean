@@ -1,13 +1,42 @@
-<h3>templateUrl: 'ats.html'</h3>
-<ul>
-    <li ng-repeat="contact in contacts">
-      <a href="#">{{contact.name}}</a>: {{contact.number}}
-    </li>
-</ul>
-<p id="back-arrow-notice">click browser's <b>&larr;</b> arrow to go back</p>
+<div id="outer" class="row">
+    <div class="col-md-10">
+        <div class="well">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="a-form" class="col-sm-2 control-label">Author</label>
+                    <div class="col-sm-10">
+                        <input id="a-form" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="t-form" class="col-sm-2 control-label">Type</label>
+                    <div class="col-sm-10">
+                        <input id="t-form" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="s-form" class="col-sm-2 control-label">Shelf</label>
+                    <div class="col-sm-10">
+                        <input id="s-form" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">Submit</button>
+                        <span id="back-arrow-notice">click browser's <b>&larr;</b> arrow to go back</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <style>
 #back-arrow-notice {
-    padding-left: 75em;
+    padding-left: 49em;
+}
+#outer {
+    padding-top: 1em;
+    padding-left: 0.5em
 }
 </style>
