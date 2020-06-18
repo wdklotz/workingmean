@@ -1,13 +1,12 @@
 angular.module('ngApp')
-
 .controller('navBtnsController', ['$scope','$uibModal','$document','U',function ($scope,$uibModal,$document,U) {
     const scope = $scope;
     const vm = this;
     vm.animationsEnabled = true;
     vm.showHideDiv = false;
-    
+
     vm.uploadClicked = function () {
-        console.log("uploadClicked");  
+        console.log("uploadClicked");
         };
     vm.viewClicked = function () {
         let selection = scope.gridApi.selection;
@@ -17,8 +16,8 @@ angular.module('ngApp')
         vm.docs = selection.getSelectedRows();
         vm.doc = vm.docs[0];
         U.tbl_log('viewClicked#vm.doc',vm.doc);
-        selection.unSelectRow(vm.doc);   // unselect fifo 
-        
+        selection.unSelectRow(vm.doc);   // unselect fifo
+
         let a = document.createElement("a");
         let host = 'http://127.0.0.1:3000/';
         let path = '/UIGrid/store/data/';
@@ -34,9 +33,9 @@ angular.module('ngApp')
     vm.testClicked = function (size) {
         vm.selectedRows = scope.gridApi.selection.getSelectedRows();
         console.log("testClicked: " + vm.selectedRows.length + ' docs selected');
-        
+
         // instantiate modal controller
-        const modalInstance = $uibModal.open( { 
+        const modalInstance = $uibModal.open( {
             animation: vm.animationsEnabled,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -53,7 +52,6 @@ angular.module('ngApp')
                     }
                 }
             });
-        
         modalInstance.result.then(function (selectedItem) {
             vm.selected = selectedItem;
             // console.log(selectedItem);
@@ -61,7 +59,7 @@ angular.module('ngApp')
                 // console.log('Modal dismissed at: ' + new Date());
             });
         };
-    vm.ATSClicked = function () {
-        console.log("ng-click=ATSClicked()");  
-        };
-}]);
+//     vm.ATSClicked = function () {
+//         console.log("ng-click=ATSClicked()");
+//         };
+}]);  // navBtnsController

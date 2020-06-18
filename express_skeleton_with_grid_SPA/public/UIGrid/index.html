@@ -16,13 +16,6 @@
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-resource.js"></script> -->
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-sanitize.js"></script> -->
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-route.js"></script> -->
-
-    <script src="./lib/angular1.7.9/angular.js"></script>
-    <script src="./lib/angular1.7.9/angular-touch.js"></script>
-    <script src="./lib/angular1.7.9/angular-animate.js"></script>
-    <script src="./lib/angular1.7.9/angular-resource.js"></script>
-    <script src="./lib/angular1.7.9/angular-sanitize.js"></script>
-    <script src="./lib/angular1.7.9/angular-route.js"></script>
 <!-- Angular -->
 
 <!-- ui-select files -->
@@ -50,16 +43,6 @@
 <!-- UI-Grid -->
 
 <!-- this App -->
-    <script src="./ngApp.js"></script>
-    <script src="./uploadService.js"></script>
-    <script src="./uploadController.js"></script>
-    <script src="./docEditController.js"></script>
-    <script src="./modalController.js"></script>
-    <script src="./atsController.js"></script>
-    <script src="./navBtnsController.js"></script>
-    <!-- <script src="./dupliCheckService.js"></script> -->
-    <script src="./config.js"></script>
-    <!-- <script src="./XHRformSubmit.js"></script> -->
     <link href="./ng-styles.css" type="text/css" rel="stylesheet">
 <!-- this App -->
 
@@ -97,21 +80,21 @@
     }
     </style>
 </head>
-<body ng-controller="ngAppController" ng-cloak>
+<body id="ngAppBody" ng-controller="ngAppController" ng-cloak> <!-- onload="window.scroll(0,0)" -->
     <!-- ======================Action buttons==================================== -->
     <div ng-controller="navBtnsController as $btnCtrl" class="modal-demo">
         &ensp; Documents:
         <a type="button" class="btn btn-primary" href="#/fileUpload"> Upload </a>
         &emsp; Selection:
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.viewClicked()"> View </button>
-        <button type="button" class="btn btn-primary" ng-model="$btnCtrl.showHideDiv" ng-click="$btnCtrl.onEdit()"> Edit </button>
-        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.deleteClicked()"  > Delete </button>
+        <button type="button" class="btn btn-primary" ng-click="$btnCtrl.onEdit()" ng-model="$btnCtrl.showHideDiv"> Edit </button>
+        <a type="button" class="btn btn-primary" href="#/deleteDoc"> Delete </a>
         &emsp; New/Edit:
         <a type="button" class="btn btn-primary" href="#/ats"> ATS </a>
          &emsp;&emsp;Test:
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.testClicked('lg')"> Details </button>
 
-        <!-- ===================document edit panel==================================== -->
+        <!-- ===================doc edit panel==================================== -->
         <div ng-controller="docEditController as ctrl" ng-if="$btnCtrl.showHideDiv" class="animate-if" >
             <!-- Header -->
             <div class="modal-header">
@@ -196,10 +179,10 @@
     </div> <!--navBtnsController-->
 
     <!-- ==============================Author/Type/Shelf======================= -->
-    <div ng-view></div>
+    <div ng-view autoscroll="true"></div>
 
     <!-- ==============================uiGrid================================== -->
-    <div ui-grid="grid1Options" ui-grid-pagination ui-grid-resize-columns ui-grid-selection ui-grid-cellnav class="grid"></div>
+    <div ui-grid="gridOptions" ui-grid-pagination ui-grid-resize-columns ui-grid-selection ui-grid-cellnav class="grid"></div>
 
     <!-- ============================file uploader============================= -->
     <script id="fileUpload.html"  type="text/ng-template">
@@ -259,9 +242,26 @@
 
     <!-- =============================javascripts=============================== -->
     <script src="./lib/jQuery/jQuery.min.js"></script> <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
+    <script src="./lib/angular1.7.9/angular.js"></script>
+    <script src="./lib/angular1.7.9/angular-touch.js"></script>
+    <script src="./lib/angular1.7.9/angular-animate.js"></script>
+    <script src="./lib/angular1.7.9/angular-resource.js"></script>
+    <script src="./lib/angular1.7.9/angular-sanitize.js"></script>
+    <script src="./lib/angular1.7.9/angular-route.js"></script>
     <script src="./lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
     <script src="./lib/ui-bootstrap2.5.0/ui-bootstrap-tpls.js"></script>
     <script src="./lib/select/select.js"></script>
     <script src="./lib/ui-grid4.8.0/ui-grid.js"></script>
+
+    <script src="./ngApp.js"></script>
+    <script src="./uploadController.js"></script>
+    <script src="./docEditController.js"></script>
+    <script src="./modalController.js"></script>
+    <script src="./atsController.js"></script>
+    <script src="./navBtnsController.js"></script>
+    <script src="./deleteDocController.js"></script>
+    <script src="./config.js"></script>
 </body>
 </html>

@@ -1,0 +1,27 @@
+<div ng-controller="deleteDocController">
+
+<div id="del-well-div" class="row">
+    <div class="col-md-10">
+        <div class="well">
+            <label for="del-yes">Delete data base record: <span id="del-doc-name">[{{doc_to_delete.id}}] {{doc_to_delete.Document}}</span> </label>&ensp;
+            <input id="del-yes" type="button" class="btn btn-default" value="Delete" ng-click="delFromDb(doc_to_delete.id)">&ensp;&ensp;
+       <!-- <input id="no" type="button"  class="btn btn-default" value="Cancel"> -->
+            <div>
+                <label for="del-file"><input id="del-file" type="checkbox">&ensp;Delete document contents also from disk</label>
+                <span id="del-back-arrow-notice">click browser's <b>&larr;</b> arrow to go back</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+#del-back-arrow-notice {
+    padding-left: 45em;
+}
+#del-doc-name {
+    color: red;
+}
+#del-well-div {
+    padding-top: 1em;
+}
+</style>
