@@ -1,31 +1,27 @@
 <div ng-controller="deleteDocController">
-<!-- <h3>templateUrl:'deleteDoc.html'</h3> -->
 
-<div id="well-div" class="row">
+<div id="del-well-div" class="row">
     <div class="col-md-10">
         <div class="well">
-            <label for="yes">Remove record <span id="doc-name">"{{doc_to_delete}}"</span> from data base </label>
-            <input id="yes" type="button" class="btn btn-secondary" value="Delete">
-            <input id="no" type="button" class="btn btn-secondary" value="Cancel">
+            <label for="del-yes">Delete data base record: <span id="del-doc-name">[{{doc_to_delete.id}}] {{doc_to_delete.Document}}</span> </label>&ensp;
+            <input id="del-yes" type="button" class="btn btn-default" value="Delete" ng-click="delFromDb(doc_to_delete.id)">&ensp;&ensp;
+       <!-- <input id="no" type="button"  class="btn btn-default" value="Cancel"> -->
             <div>
-                <label for="file">Delete document contents from disk</label>
-                <input id="file" type="checkbox">
-                <span id="back-arrow-notice">click browser's <b>&larr;</b> arrow to go back</span>
+                <label for="del-file"><input id="del-file" type="checkbox">&ensp;Delete document contents also from disk</label>
+                <span id="del-back-arrow-notice">click browser's <b>&larr;</b> arrow to go back</span>
             </div>
         </div>
     </div>
 </div>
 
-<!-- <p>{{notice}}</p> -->
-
 <style>
-#back-arrow-notice {
-    padding-left: 50em;
+#del-back-arrow-notice {
+    padding-left: 45em;
 }
-#doc-name {
+#del-doc-name {
     color: red;
 }
-#well-div {
+#del-well-div {
     padding-top: 1em;
 }
 </style>

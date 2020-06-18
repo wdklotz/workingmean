@@ -1,10 +1,11 @@
 // (function() {
 'use strict';
 angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.grid.resizeColumns','ui.grid.selection','ui.grid.cellNav','ngAnimate','ui.bootstrap','ngResource','ngSanitize','ui.select'])
-.controller('ngAppController', ['$scope', '$http', 'uiGridConstants', 'docResource',function($scope, $http, uiGridConstants, docResource) {
 
+.controller('ngAppController', ['$scope', '$http', 'uiGridConstants', 'docResource',function($scope, $http, uiGridConstants, docResource) {
     const scope = $scope;
-    scope.grid1Options = {
+    // grid options ...
+    scope.gridOptions = {
         enableRowSelection: true,
         enableSelectAll: true,
         multiSelect: true,
@@ -25,30 +26,20 @@ angular.module('ngApp',['ngRoute','ngTouch','ui.grid','ui.grid.pagination','ui.g
             { name: 'Keywords', enableSorting: true, cellTooltip: true},
             { name: 'Favorite', enableSorting: true, width: 63, displayName: 'FAV'},
             { name: 'Trash',    enableSorting: true, width: 65, displayName: 'TR'}
-        ]};
-
-    scope.grid1Options.onRegisterApi = function(gridApi){
-        // set gridApi on scope but ignore rowSelectionChanged event
-        scope.gridApi = gridApi;
-
-        // gridApi.selection.on.rowSelectionChanged($scope,function(row){
-        // const msg = 'row changed ';
-        // console.log(msg,row);
-        // console.log(gridApi.selection.getSelectedRows());
-        // });
-    };
-
-    // call DB-API via docResource resource
-    scope.grid1Options.data = docResource.query();
-/*
-    // call DB-API via $http
-    $http.get('/api/lib/38').then(function (response) {
-        scope.grid1Options.data = response.data;
-        console.log('$http response: ',scope.grid1Options.data);
-    }, function(errResponse) {
-        console.error('Error while fetching document');
-    });
-*/
+        ],
+        onRegisterApi: function(gridApi) {
+            // bind gridApi to scope
+            scope.gridApi = gridApi;
+            // register callback: here 'rowSelectionChanged'
+//             gridApi.selection.on.rowSelectionChanged(scope,function(row) {
+//                 const msg = 'row changed ';
+//                 console.log(msg,row);
+//                 scope.sel_change_at_row = row.entity;
+//                 console.log(gridApi.selection.getSelectedRows());
+//                 })}
+        }};
+    // call DB-API via docResource service
+    scope.gridOptions.data = docResource.query();
 }]) // ngAppController
 .controller('authController',  ['$scope','authResource','Trafo','U', function ($scope,authResource,Trafo,U) {
     const vm = this;

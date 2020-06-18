@@ -6,8 +6,8 @@ const md5    = require('../../md5Handler');
 const {app_log, tbl_log, i_am_here} = require('../../svr_helper');
 
 const sendJsonResponse = function (res, status, content) {
-    // i_was_here("sendJsonResponse");
-    // app_log(content);
+    i_am_here("sendJsonResponse");
+    app_log(content);
     res.json(content);
     res.status(status);
     res.end();
@@ -128,13 +128,25 @@ const documentUpdate   = function(req,res) {    // router.put ('/lib/:documentId
         app_log(`Row(s) updated: ${docId}`+JSON.stringify(body));
     });
 };
+const documentDelete   = function(req,res) {
+    i_am_here('documentDelete');
+    const id = req.params.documentId;
+    const sql = `DELETE FROM doc WHERE doc.id=${id}`;
+//     console.log(sql);
+    db.run(sql, [], function(err) {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(`${this.changes} row(s) deleted: `+` [${id}]`);
+    });
+};
 
 module.exports.documents        = documents;
 module.exports.documentPost     = documentPost;
 module.exports.documentPost1    = documentPost1;
 module.exports.documentById     = documentById;
 module.exports.documentUpdate   = documentUpdate;
-module.exports.documentDelete   = function(req,res) {sendJsonResponse(res,200,{"status":"success"})};
+module.exports.documentDelete   = documentDelete;
 
 const authors = function(req,res) {
     i_am_here('authors');
