@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ngApp')
 .controller('docEditController', ['$scope','docResource','U',function($scope,docResource,U) {
     const vm = this;

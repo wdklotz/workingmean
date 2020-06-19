@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ngApp')
 .config(['$routeProvider','$locationProvider',function($routeProvider,$locationProvider) {
     $routeProvider.when('/first', {

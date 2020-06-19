@@ -3,11 +3,14 @@ angular.module('ngApp')
 .controller('atsController', ['$scope','$log','authResource','typeResource','shelfResource','U',function($scope, $log, authResource,typeResource,shelfResource,U) {
     const scope = $scope;
     const vm    = scope;
-    // Authors
     scope.a_titles = [];
+    scope.ar = 'rep';
+    scope.tr = 'rep';
+    scope.sr = 'rep';
+    // Authors
     authResource.query([],function(value) {
         vm.authTable = value;  //<-- that's the table from db
-//         U.tbl_log('atsController#query#vm.authorObj',vm.authTable);  // check
+        U.tbl_log('atsController#query#vm.authTable',vm.authTable);  // check
         vm.authTable.forEach(item => scope.a_titles.push(item.Author));
     });
     // Types

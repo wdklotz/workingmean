@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ngApp')
 .controller('navBtnsController', ['$scope','$uibModal','$document','U',function ($scope,$uibModal,$document,U) {
     const scope = $scope;

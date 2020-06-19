@@ -111,9 +111,11 @@
                                     <input id="a-form" type="text" class="form-control" list="a-list" ng-model="author">
                                     <datalist id="a-list">
                                         <div ng-repeat="title in a_titles">
-                                            <option class="option" value={{title}}>
+                                            <option class="option" value="{{title}}"></option>
                                         </div>
                                     </datalist>
+                                <input type="radio" id="r-add" value="add" ng-model="ar"><label for="r-add">Add</label>
+                                <input type="radio" id="r-rep" value="rep" ng-model="ar"><label for="r-rep">Rename</label>
                                 </div>
                             </div>
 
@@ -123,9 +125,11 @@
                                     <input id="t-form" type="text" class="form-control" list="t-list" ng-model="type">
                                     <datalist id="t-list">
                                         <div ng-repeat="title in t_titles">
-                                            <option class="option" value={{title}}>
+                                            <option class="option" value="{{title}}"></option>
                                         </div>
                                     </datalist>
+                                <input type="radio" id="r-add" value="add" ng-model="tr"><label for="r-add">Add</label>
+                                <input type="radio" id="r-rep" value="rep" ng-model="tr"><label for="r-rep">Rename</label>
                                 </div>
                             </div>
 
@@ -135,9 +139,11 @@
                                     <input id="s-form" type="text" class="form-control" list="s-list" ng-model="shelf">
                                     <datalist id="s-list">
                                         <div ng-repeat="title in s_titles">
-                                            <option class="option" value={{title}}>
+                                            <option class="option" value="{{title}}"></option>
                                         </div>
                                     </datalist>
+                                <input type="radio" id="r-add" value="add" ng-model="sr"><label for="r-add">Add</label>
+                                <input type="radio" id="r-rep" value="rep" ng-model="sr"><label for="r-rep">Rename</label>
                                 </div>
                             </div>
 
