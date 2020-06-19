@@ -1,6 +1,5 @@
 'use strict';
 angular.module('ngApp')
-
 .controller('uploadController', ['$scope','$log',function($scope, $log) {
     const vm = $scope;
     vm.nbof_selected = 0;

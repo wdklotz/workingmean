@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ngApp')
 .controller('deleteDocController', ['$scope','$document','docResource',function($scope,$document,docResource) {
     const scope = $scope;

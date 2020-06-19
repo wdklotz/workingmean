@@ -94,15 +94,13 @@
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.onEdit()" ng-model="$btnCtrl.showHideDiv"> Edit </button>
         <a type="button" class="btn btn-primary" href="#/deleteDoc"> Delete </a>
         &emsp; New/Edit:
-<!--
-<a type="button" class="btn btn-primary" href="#/ats"> ATS </a>
- -->
+        <!--<a type="button" class="btn btn-primary" href="#/ats"> ATS </a>--> <!-- ng-view version -->
          <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseATS" aria-expanded="false" aria-controls="collapseATS">ATS</a>
          &emsp;&emsp;Test:
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.testClicked('lg')"> Details </button>
 
-        <!-- ===================collapsing well: ATS=============================== -->
-         <div class="collapse" id="collapseATS">
+        <!-- ===================collapsing well: ATS=========================== -->
+         <div class="collapse" id="collapseATS" ng-controller="atsController">
              <div class="row">
                  <div class="col-md-10">
                     <div class="well">
@@ -110,24 +108,42 @@
                             <div class="form-group">
                                 <label for="a-form" class="col-sm-2 control-label">Author</label>
                                 <div class="col-sm-10">
-                                    <input id="a-form" type="text" class="form-control">
+                                    <input id="a-form" type="text" class="form-control" list="a-list" ng-model="author">
+                                    <datalist id="a-list">
+                                        <div ng-repeat="title in a_titles">
+                                            <option class="option" value={{title}}>
+                                        </div>
+                                    </datalist>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label for="t-form" class="col-sm-2 control-label">Type</label>
                                 <div class="col-sm-10">
-                                    <input id="t-form" type="text" class="form-control">
+                                    <input id="t-form" type="text" class="form-control" list="t-list" ng-model="type">
+                                    <datalist id="t-list">
+                                        <div ng-repeat="title in t_titles">
+                                            <option class="option" value={{title}}>
+                                        </div>
+                                    </datalist>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label for="s-form" class="col-sm-2 control-label">Shelf</label>
                                 <div class="col-sm-10">
-                                    <input id="s-form" type="text" class="form-control">
+                                    <input id="s-form" type="text" class="form-control" list="s-list" ng-model="shelf">
+                                    <datalist id="s-list">
+                                        <div ng-repeat="title in s_titles">
+                                            <option class="option" value={{title}}>
+                                        </div>
+                                    </datalist>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-default">Submit</button>
+                                    <button type="submit" class="btn btn-default" ng-click="ats_submit()">Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -135,7 +151,8 @@
                 </div>
             </div>
         </div>
-        <!-- ===================doc edit panel==================================== -->
+
+        <!-- ===================doc edit panel================================= -->
         <div ng-controller="docEditController as ctrl" ng-if="$btnCtrl.showHideDiv" class="animate-if" >
             <!-- Header -->
             <div class="modal-header">
@@ -219,7 +236,7 @@
         </div> <!--docEditController-->
     </div> <!--navBtnsController-->
 
-    <!-- ==============================Author/Type/Shelf======================= -->
+    <!-- ==============================ng-view================================= -->
     <div ng-view autoscroll="true"></div>
 
     <!-- ==============================uiGrid================================== -->
@@ -262,7 +279,7 @@
         </FORM>
     </script>
 
-    <!-- ==================modalEditContent.html template========================== -->
+    <!-- ==================modalEditContent.html template======================= -->
     <script id="modalEditContent.html" type="text/ng-template">
         <div class="modal-header">
            <h4>Raw group selection content</h4>
