@@ -100,22 +100,24 @@
         <button type="button" class="btn btn-primary" ng-click="$btnCtrl.testClicked('lg')"> Details </button>
 
         <!-- ===================collapsing well: ATS=========================== -->
-         <div class="collapse" id="collapseATS" ng-controller="atsController">
-             <div class="row">
-                 <div class="col-md-10">
+        <div class="collapse" id="collapseATS" ng-controller="atsController">
+            <div class="row">
+                <div class="col-md-10">
                     <div class="well">
                         <form class="form-horizontal">
+
                             <div class="form-group">
                                 <label for="a-form" class="col-sm-2 control-label">Author</label>
                                 <div class="col-sm-10">
                                     <input id="a-form" type="text" class="form-control" list="a-list" ng-model="author">
                                     <datalist id="a-list">
                                         <div ng-repeat="title in a_titles">
-                                            <option class="option" value="{{title}}"></option>
+<!--                                             <option class="option" value="{{title}}">{{title}}</option> -->
+                                            <option>{{title}}</option>
                                         </div>
                                     </datalist>
-                                <input type="radio" id="r-add" value="add" ng-model="ar"><label for="r-add">Add</label>
-                                <input type="radio" id="r-rep" value="rep" ng-model="ar"><label for="r-rep">Rename</label>
+                                <input type="radio" id="r-add-auth" value="add" ng-model="ar"><label for="r-add">Add</label>
+                                <input type="radio" id="r-ren-auth" value="ren" ng-model="ar"><label for="r-ren">Rename</label>
                                 </div>
                             </div>
 
@@ -128,8 +130,8 @@
                                             <option class="option" value="{{title}}"></option>
                                         </div>
                                     </datalist>
-                                <input type="radio" id="r-add" value="add" ng-model="tr"><label for="r-add">Add</label>
-                                <input type="radio" id="r-rep" value="rep" ng-model="tr"><label for="r-rep">Rename</label>
+                                <input type="radio" id="r-add-type" value="add" ng-model="tr"><label for="r-add">Add</label>
+                                <input type="radio" id="r-rep-type" value="rep" ng-model="tr"><label for="r-rep">Rename</label>
                                 </div>
                             </div>
 
@@ -142,8 +144,8 @@
                                             <option class="option" value="{{title}}"></option>
                                         </div>
                                     </datalist>
-                                <input type="radio" id="r-add" value="add" ng-model="sr"><label for="r-add">Add</label>
-                                <input type="radio" id="r-rep" value="rep" ng-model="sr"><label for="r-rep">Rename</label>
+                                <input type="radio" id="r-add-shelf" value="add" ng-model="sr"><label for="r-add">Add</label>
+                                <input type="radio" id="r-rep-shelf" value="rep" ng-model="sr"><label for="r-rep">Rename</label>
                                 </div>
                             </div>
 
