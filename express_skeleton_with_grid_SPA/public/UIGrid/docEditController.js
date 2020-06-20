@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ngApp')
 .controller('docEditController', ['$scope','docResource','U',function($scope,docResource,U) {
     const vm = this;
@@ -21,7 +22,7 @@ angular.module('ngApp')
             } else {
                 vm.docs = vm.selection.getSelectedRows();
                 vm.doc = vm.docs[0];
-                vm.doc_0 = Object.assign({},vm.doc);
+                vm.doc_0 = Object.assign({},vm.doc);  // copy
                 vm.btns_hidden = false;
                 vm.selection.unSelectRow(vm.doc);   // unselect fifo
             }

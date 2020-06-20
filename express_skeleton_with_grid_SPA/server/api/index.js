@@ -1,4 +1,4 @@
-(function() {
+// (function() {
 'use strict';
 
 var express = require('express');
@@ -36,5 +36,4 @@ router.get('/types',      api.types);
 router.get('/shelfs',     api.shelfs);
 
 module.exports = router;
-
-})()
+// })()

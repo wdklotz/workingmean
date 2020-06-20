@@ -1,13 +1,12 @@
-(function() {
+// (function() {
 'use strict';
-
 const db     = require('../dbConnection/connector');
 const md5    = require('../../md5Handler');
 const {app_log, tbl_log, i_am_here} = require('../../svr_helper');
 
 const sendJsonResponse = function (res, status, content) {
-    i_am_here("sendJsonResponse");
-    app_log(content);
+//     i_am_here("sendJsonResponse");
+//     app_log(content);
     res.json(content);
     res.status(status);
     res.end();
@@ -140,7 +139,6 @@ const documentDelete   = function(req,res) {
       console.log(`${this.changes} row(s) deleted: `+` [${id}]`);
     });
 };
-
 module.exports.documents        = documents;
 module.exports.documentPost     = documentPost;
 module.exports.documentPost1    = documentPost1;
@@ -184,9 +182,7 @@ const shelfs  = function(req,res) {
         }
     });
 };
-
 module.exports.authors  = authors;
 module.exports.types    = types;
 module.exports.shelfs   = shelfs;
-
-})();
+// })();
