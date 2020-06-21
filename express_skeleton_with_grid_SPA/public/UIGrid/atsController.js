@@ -7,6 +7,28 @@ angular.module('ngApp')
     scope.tr = 'ren';
     scope.sr = 'ren';
 //     scope.titles = {auth:[],type:[],shelf:[]};
+
+    // Authors
+    scope.a_titles = [];
+    authResource.query([]).$promise.then(function(value) {
+        vm.authTable = value;  //<-- that's the table from db
+//         U.tbl_log('atsController#query#vm.authTable',vm.authTable);  // check
+        vm.authTable.forEach(item => scope.a_titles.push(item));
+        U.tbl_log('atsController#query#scope.a_titles',scope.a_titles);  // check
+//         scope.a_titles = fillOptionsArray(vm.authTable, scope.ar);
+    });
+
+    scope.ats_replace = function() {
+        console.log('replace ',scope.selected, 'with ', scope.replace);
+    };
+    scope.ats_add = function() {
+        console.log('add ', scope.replace);
+    };
+
+
+
+
+/*
     // Authors
     scope.a_titles = [];
     authResource.query([]).$promise.then(function(value) {
@@ -45,4 +67,5 @@ angular.module('ngApp')
         U.tbl_log('atsController#fillOptionsArray#titles',titles);  // check
         return titles;
     }
+    */
 }]); // atsController
