@@ -104,23 +104,39 @@
             <div class="row">
                 <div class="col-md-10">
                     <div class="well">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3" id="select-hdr">Select</div>
+                        <div class="col-md-5" id="edit-hdr">Edit</div>
+                    </div>
                         <form class="form-horizontal">
 
-<div class="form-group">
-    <div class="wrapper">
-        <select class="selectBox" ng-model="selected" ng-options="item as item.Author for item in a_titles track by item.id"></select>
-        <input  class="inputBox" name="timebox" class="form-control" ng-init="selected" ng-model="replace"/>
-    </div>
-</div>
+                        <div class="form-group">
+                            <label for="a-form" class="col-md-1 control-label">Author</label>
+                            <select class="selectBox" ng-model="selected" ng-options="item as item.Author for item in a_titles track by item.id"></select>
+                            <input  class="inputBox" name="timebox" class="form-control" ng-init="selected" ng-model="replace"/>
+                            <button type="submit" class="btn btn-default" ng-click="ats_replace()">Replace Select</button>
+                            <button type="submit" class="btn btn-default" ng-click="ats_add()">Add Edit</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 <style>
+#select-hdr,#edit-hdr {
+//    border: 3px solid red;
+    border: none;
+    text-align: center;
+}
 .selectBox {
 /*     width: 75px; */
-    width: 15em;
+    width: 20em;
     height: 30px;
 }
 .inputBox {
 /*     width: 24px; */
-    width: 45em;
+    width: 30em;
 /*     margin-left: -78px; */
     margin-left: 10px;
     height: 30px;
@@ -172,17 +188,21 @@
                             </div>
  -->
 
+<!--
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
                                     <button type="submit" class="btn btn-default" ng-click="ats_replace()">Replace</button>
                                     <button type="submit" class="btn btn-default" ng-click="ats_add()">Add</button>
                                 </div>
                             </div>
+ -->
+<!--
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+ -->
 
         <!-- ===================doc edit panel================================= -->
         <div ng-controller="docEditController as ctrl" ng-if="$btnCtrl.showHideDiv" class="animate-if" >

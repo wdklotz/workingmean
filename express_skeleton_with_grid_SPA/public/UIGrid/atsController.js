@@ -14,7 +14,7 @@ angular.module('ngApp')
         vm.authTable = value;  //<-- that's the table from db
 //         U.tbl_log('atsController#query#vm.authTable',vm.authTable);  // check
         vm.authTable.forEach(item => scope.a_titles.push(item));
-        U.tbl_log('atsController#query#scope.a_titles',scope.a_titles);  // check
+//         U.tbl_log('atsController#query#scope.a_titles',scope.a_titles);  // check
 //         scope.a_titles = fillOptionsArray(vm.authTable, scope.ar);
     });
 
