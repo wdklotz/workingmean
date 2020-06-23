@@ -133,6 +133,26 @@
                 </div>
             </div>
         </div>
+<style>
+.hdr {
+//    border: 1px solid red;
+    text-align: center;
+    padding-left: 220px;
+    padding-right: 220px;
+}
+.sel_box, .in_box {
+//    border: 1px solid red;
+    width: 400px;
+    height: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+#cpy_btn {
+//    border: 1px solid red;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+</style>
 <!--
         <div class="collapse" id="collapseATS" ng-controller="atsController">
             <div class="row">
@@ -189,26 +209,6 @@
                         </form>
                         </div>
  -->
-<style>
-.hdr {
-//    border: 1px solid red;
-    text-align: center;
-    padding-left: 220px;
-    padding-right: 220px;
-}
-.sel_box, .in_box {
-//    border: 1px solid red;
-    width: 400px;
-    height: 30px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-#cpy_btn {
-//    border: 1px solid red;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-</style>
 
         <!-- ===================doc edit panel================================= -->
         <div ng-controller="docEditController as ctrl" ng-if="$btnCtrl.showHideDiv" class="animate-if" >
@@ -380,7 +380,6 @@
     <script src="./navBtnsController.js"></script>
     <script src="./deleteDocController.js"></script>
     <script src="./config.js"></script>
-
 <script>
 $(document).ready(function(){
     $("#a_selector").change(function(){
@@ -403,9 +402,5 @@ $(document).ready(function(){
 //     });
 // });
 </script>
-
-
-
-
 </body>
 </html>
