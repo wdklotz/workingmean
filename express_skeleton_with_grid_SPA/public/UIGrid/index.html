@@ -115,17 +115,17 @@
                                 <span>
                                     <select id="a_selector" class="sel_box" ng-model="a_sel" ng-options="item as item.Author for item in a_titles track by item.id"></select>
                                 </span>
-                                <span><button id="cpy_btn">></button></span>
+                                <span><button id="cpy_btn" ng-click="cpy_select('author')">></button></span>
                                 <span>
                                     <input  id="a_input" class="in_box" ng-model="a_input" ng-init="a_sel"/>
                                 </span>
                                 <span>
-                                    <input type="radio" name="r1">Edit</input>
-                                    <input type="radio" name="r1" checked>Add</input>
-                                    <input type="radio" name="r1">Delete</input>
+                                    <input type="radio" ng-model="r1.name" value="edit">Edit</input>
+                                    <input type="radio" ng-model="r1.name" value="add">Add</input>
+                                    <input type="radio" ng-model="r1.name" value="delete">Delete</input>
                                 </span>
                                 <span>
-                                    <button type="submit" class="btn btn-default" ng-click="ats_add('author')">Go</button>
+                                    <button type="submit" class="btn btn-default" ng-click="ats_go('author')">Go</button>
                                 </span>
                             </form>
                         </div>
@@ -381,14 +381,14 @@
     <script src="./deleteDocController.js"></script>
     <script src="./config.js"></script>
 <script>
-$(document).ready(function(){
-    $("#a_selector").change(function(){
-        var selected = $(this).children("option:selected").html();
-        console.log("You have selected - " + selected);
-        $("#a_input").val($(this).children("option:selected").html());
-//         alert($(this).text("click detected"));
-    });
-});
+// $(document).ready(function(){
+//     $("#a_selector").change(function(){
+//         var selected = $(this).children("option:selected").html();
+//         console.log("You have selected - " + selected);
+//         $("#a_input").val($(this).children("option:selected").html());
+// //         alert($(this).text("click detected"));
+//     });
+// });
 // $(document).ready(function(){
 //     $("#authors select").change(function() {
 //         var elm = $("#authors select");
