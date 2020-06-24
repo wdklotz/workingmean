@@ -2,10 +2,12 @@
 angular.module('ngApp')
 .controller('atsController', ['$scope','$log','authResource','typeResource','shelfResource','U',function($scope, $log, authResource,typeResource,shelfResource,U) {
     const scope = $scope;
-    const vm    = scope;
-    scope.r1 = {name: "add"};
+    const vm    = this;
+    scope.r1    = {name: "add"};
 
-    // Authors
+/*************************************************
+* Authors
+*************************************************/
     scope.a_titles = [];
     authResource.query([]).$promise.then(function(value) {
         vm.authTable = value;  //<-- that's the table from db
@@ -41,7 +43,9 @@ angular.module('ngApp')
         }
     };
 
-    // Types
+/*************************************************
+* Types
+*************************************************/
     scope.t_titles = [];
     typeResource.query([]).$promise.then(function(value) {
         vm.typeTable = value;  //<-- that's the table from db
@@ -51,7 +55,9 @@ angular.module('ngApp')
         console.log(what," type");
     };
 
-    // Shelfs
+/*************************************************
+* Shelfs
+*************************************************/
     scope.s_titles = [];
     shelfResource.query([]).$promise.then(function(value) {
         vm.shelfTable = value;  //<-- that's the table from db
@@ -67,7 +73,6 @@ angular.module('ngApp')
         const radio = scope.r1.name;
         go_route[what](radio);
     };
-
     scope.cpy_select = function(what){
         //console.log(`${what} cpy_select clicked`);
         const radio = scope.r1.name;
