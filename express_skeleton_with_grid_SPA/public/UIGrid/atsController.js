@@ -3,23 +3,42 @@ angular.module('ngApp')
 .controller('atsController', ['$scope','$log','authResource','typeResource','shelfResource','U',function($scope, $log, authResource,typeResource,shelfResource,U) {
     const scope = $scope;
     const vm    = scope;
-    scope.ar = 'ren';
-    scope.tr = 'ren';
-    scope.sr = 'ren';
     scope.r1 = {name: "add"};
-//     scope.titles = {auth:[],type:[],shelf:[]};
 
     // Authors
     scope.a_titles = [];
     authResource.query([]).$promise.then(function(value) {
         vm.authTable = value;  //<-- that's the table from db
-//         U.tbl_log('atsController#query#vm.authTable',vm.authTable);  // check
+        //U.tbl_log('atsController#query#vm.authTable',vm.authTable);  // check
         vm.authTable.forEach(item => scope.a_titles.push(item));
-//         U.tbl_log('atsController#query#scope.a_titles',scope.a_titles);  // check
-//         scope.a_titles = fillOptionsArray(vm.authTable, scope.ar);
+        //U.tbl_log('atsController#query#scope.a_titles',scope.a_titles);  // check
     });
     const go_author = function(what) {
-        console.log(what," author");
+        //console.log(what," author");
+        switch (what) {
+            case ("edit"): {
+                if (scope.a_input === undefined || scope.a_input === "") break;
+                var id = scope.a_sel.id;
+                for (var i=0; i<scope.a_titles.length; i++) {
+                    if(scope.a_titles[i].id === id) {
+                        var before = Object.assign(new Object(),scope.a_titles[i]);
+                        scope.a_titles[i].Author = scope.a_input;
+                        //console.log('rename ',JSON.stringify(before),' to ',JSON.stringify(scope.a_titles[i]));
+                        scope.a_input=undefined;
+                        break;
+                    }
+                }
+                break;
+            }
+            case ("add"): {
+                console.log('add ',`${scope.a_input}`,' to author');
+                break;
+            }
+            case ("delete"): {
+                console.log('delete for author not implementd');
+                break;
+            }
+        }
     };
 
     // Types
@@ -42,51 +61,31 @@ angular.module('ngApp')
         console.log(what," shelf");
     };
 
-    const groute={'author':go_author,'type':go_type,'shelf':go_shelf};
+    const go_route={'author':go_author,'type':go_type,'shelf':go_shelf};
+
     scope.ats_go = function(what) {
         const radio = scope.r1.name;
-        groute[what](radio);
-
+        go_route[what](radio);
     };
 
     scope.cpy_select = function(what){
-//         console.log(`${what} cpy_select clicked`);
+        //console.log(`${what} cpy_select clicked`);
         const radio = scope.r1.name;
         switch (what) {
             case 'author': {
+                //console.log(scope.a_sel);
                 if (scope.a_sel === undefined || scope.a_sel === "") break;
                 if (radio !== 'edit') break;
-//                 console.log(scope.a_sel.Author);
-                scope.a_input = scope.a_sel.Author;
-                break;
+                var id = scope.a_sel.id;
+                var i = 0;
+                for (var i=0; i<scope.a_titles.length; i++) {
+                    if(scope.a_titles[i].id === id) {
+                        scope.a_input = scope.a_titles[i].Author;
+                    break;
+                    }
+                }
+            break;
             }
         }
     };
-//     scope.ats_replace = function(what) {
-//         switch (what) {
-//             case 'author': {
-//                 if (scope.a_input === undefined || scope.a_input === "") break;
-//                 console.log('replace ', scope.a_sel, 'with ', scope.a_input);
-//                 var id = scope.a_sel.id;
-//                 var i = 0;
-//                 while (i<scope.a_titles.length) {
-//                     if(scope.a_titles[i].id === id) {
-//                         scope.a_titles[i].Author = scope.a_input;
-//                         scope.a_input=undefined;
-//                         break;
-//                     }
-//                     i++;
-//                 }
-//                 scope.a_titles.forEach( item => {
-//                     if (item.id === id) {
-//                         item.Author = scope.a_input;
-//                         scope.a_input=undefined;
-// //                         break;
-//                         }
-//                     }
-//                 )
-//                 break;
-//             }
-//         }
-//     };
 }]); // atsController
