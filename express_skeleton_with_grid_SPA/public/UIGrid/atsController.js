@@ -4,7 +4,6 @@ angular.module('ngApp')
     const scope = $scope;
     const vm    = this;
     scope.r1    = {name: "add"};
-
 /*************************************************
 * Authors
 *************************************************/
@@ -42,7 +41,6 @@ angular.module('ngApp')
             }
         }
     };
-
 /*************************************************
 * Types
 *************************************************/
@@ -54,7 +52,6 @@ angular.module('ngApp')
     const go_type = function(what) {
         console.log(what," type");
     };
-
 /*************************************************
 * Shelfs
 *************************************************/
@@ -66,10 +63,9 @@ angular.module('ngApp')
     const go_shelf = function(what) {
         console.log(what," shelf");
     };
-
-    const go_route={'author':go_author,'type':go_type,'shelf':go_shelf};
-
+/*************************************************/
     scope.ats_go = function(what) {
+        const go_route={'author':go_author,'type':go_type,'shelf':go_shelf};
         const radio = scope.r1.name;
         go_route[what](radio);
     };
