@@ -113,7 +113,7 @@
                             <form class="form-horizontal">
                                 <span><label>Author</label></span>
                                 <span>
-                                    <select id="a_selector" class="sel_box" ng-model="a_sel" ng-options="item as item.Author for item in a_titles track by item.id"></select>
+                                    <select id="a_selector" class="sel_box" ng-model="a_sel" ng-options="item as item.Author for item in a_titles | orderBy:'Author' track by item.id"></select>
                                 </span>
                                 <span><button id="cpy_btn" ng-click="cpy_select('author')">></button></span>
                                 <span>
