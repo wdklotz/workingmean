@@ -47,43 +47,43 @@
     <link href="./ng-styles.css" type="text/css" rel="stylesheet">
 <!-- this App -->
 
-    <!-- local css for editor panel and Select2 -->
-     <style>
-    .input-group > .label-col {
-        width: 130px;
-        color: #fff;
-        background-color: #337ab7;
-        border-radius: 4px;
-        border: 1px solid transparent;
-     }
-    .input-group > .input-col {
-        width: 600px;
-        background-color: #faf6c5;
-     }
-    .form-group {
-        /*padding: 3px;*/
-        margin-bottom: 5px;
-    }
-    .container {
-        background-color: transparent;
-    }
-    #s_box {
-        width: 1200px;
-        overflow-wrap: break-word;
-    }
-    </style>
-    <!-- select2 -->
-    <style>
-    .select2 > .select2-choice.ui-select-match {
-        /* Because of the inclusion of Bootstrap */
-        height: 29px;
-        width: 600px;  /*wdk*/
-    }
-    #collapseATS {
-        padding-top: 1em;
-        padding-left: 0.5em
-    }
-    </style>
+<!-- local css for editor panel and Select2 -->
+ <style>
+.input-group > .label-col {
+    width: 130px;
+    color: #fff;
+    background-color: #337ab7;
+    border-radius: 4px;
+    border: 1px solid transparent;
+ }
+.input-group > .input-col {
+    width: 600px;
+    background-color: #faf6c5;
+ }
+.form-group {
+    /*padding: 3px;*/
+    margin-bottom: 5px;
+}
+.container {
+    background-color: transparent;
+}
+#s_box {
+    width: 1200px;
+    overflow-wrap: break-word;
+}
+</style>
+<!-- select2 -->
+<style>
+.select2 > .select2-choice.ui-select-match {
+    /* Because of the inclusion of Bootstrap */
+    height: 29px;
+    width: 600px;  /*wdk*/
+}
+#collapseATS {
+    padding-top: 1em;
+    padding-left: 0.5em
+}
+</style>
 </head>
 <body id="ngAppBody" ng-controller="ngAppController" ng-cloak> <!-- onload="window.scroll(0,0)" -->
     <!-- ======================Action buttons==================================== -->
@@ -380,27 +380,5 @@
     <script src="./navBtnsController.js"></script>
     <script src="./deleteDocController.js"></script>
     <script src="./config.js"></script>
-<script>
-// $(document).ready(function(){
-//     $("#a_selector").change(function(){
-//         var selected = $(this).children("option:selected").html();
-//         console.log("You have selected - " + selected);
-//         $("#a_input").val($(this).children("option:selected").html());
-// //         alert($(this).text("click detected"));
-//     });
-// });
-// $(document).ready(function(){
-//     $("#authors select").change(function() {
-//         var elm = $("#authors select");
-//         console.log("xxx",elm.filter(":selected"));
-//         $("input, #ai").val($("#as option:selected").html());
-//         $("#ai").val("xxxxxxxxxx");
-//     $("#ts,.selectBox").change(function(){
-//         $("#ti,.inputBox").val($("#ts,.selectBox option:selected").html());};
-//     $("#ss,.selectBox").change(function(){
-//         $("#si,.inputBox").val($("#ss,.selectBox option:selected").html());};
-//     });
-// });
-</script>
 </body>
 </html>
